@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html lang="ko" itemscope itemtype="http://schema.org/WebPage">
+  <head prefix="og: http://ogp.me/ns#">
+    <title>Monogatari Visual Novel</title>
+
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; script-src-elem blob: 'self' 'unsafe-inline' 'unsafe-eval'"
+    />
+    <meta name="description" content="Visual Novel" />
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Monogatari CSS Libraries -->
+    <link rel="stylesheet" href="./engine/core/monogatari.css" />
+    <link rel="stylesheet" href="./style/main.css" />
+
+    <!-- Debug Library -->
+    <script src="./engine/debug/debug.js"></script>
+
+    <!-- Monogatari JavaScript Libraries -->
+    <script src="./engine/core/monogatari.js"></script>
+    <script src="./js/options.js"></script>
+    <script src="./js/storage.js"></script>
+
+    <!-- Visual Novel Scenario Scripts -->
+    <script src="./js/scenarios/00_prologue/prologue.js"></script>
+    <script src="./js/scenarios/01_chapter1/01_weapon_shop_fail.js"></script>
+    <script src="./js/scenarios/01_chapter1/02_jewelry_shop_branch.js"></script>
+    <script src="./js/scenarios/02_chapter2/01_christmas_market.js"></script>
+    <script src="./js/scenarios/02_chapter2/02_souvenir_shop.js"></script>
+    <script src="./js/scenarios/02_chapter2/03_beverage_stall.js"></script>
+    <script src="./js/scenarios/02_chapter2/04_ice_rink.js"></script>
+    <script src="./js/scenarios/03_chapter3/01_christmas_tree.js"></script>
+    <script src="./js/scenarios/03_chapter3/02_candy_ring_fail.js"></script>
+    <script src="./js/scenarios/03_chapter3/03_gold_ring_fail.js"></script>
+    <script src="./js/scenarios/03_chapter3/04_diamond_ring_success.js"></script>
+    <script src="./js/scenarios/04_epilogue/epilogue.js"></script>
+
+    <script src="./js/script.js"></script>
+    <script src="./js/main.js"></script>
+  </head>
+
+  <body>
+    <!-- Fallback when JavaScript is not available -->
+    <noscript>
+      <div class="middle text--center">
+        <h2>JavaScript Disabled or not Supported.</h2>
+        <small
+          >To play this game, please enable JavaScript executing or use a
+          different browser.</small
+        >
+      </div>
+    </noscript>
+
+    <div id="monogatari">
+      <visual-novel>
+        <language-selection-screen></language-selection-screen>
+        <loading-screen></loading-screen>
+        <main-screen>
+          <main-menu></main-menu>
+        </main-screen>
+        <game-screen>
+          <dialog-log></dialog-log>
+          <text-box></text-box>
+          <quick-menu></quick-menu>
+        </game-screen>
+        <gallery-screen></gallery-screen>
+        <credits-screen></credits-screen>
+        <load-screen></load-screen>
+        <save-screen></save-screen>
+        <settings-screen></settings-screen>
+        <help-screen></help-screen>
+      </visual-novel>
+    </div>
+  </body>
+</html>
