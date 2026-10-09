@@ -191,7 +191,7 @@
             el.disabled = true;
             el.classList.add('merchant-dismissed');
             el.setAttribute('aria-hidden', 'true');
-            effects.add({ el, until: elapsed + (reducedMotion ? 180 : 720),
+            effects.add({ el, until: elapsed + 720,
               flight: { started: elapsed, x, y, dx: dx * travel, dy: dy * travel, transform: el.style.transform } });
           };
           const endRound = success => {
@@ -223,7 +223,6 @@
               if (!effect.flight) continue;
               const flight = effect.flight;
               const t = (elapsed - flight.started) / (effect.until - flight.started);
-              if (reducedMotion) { effect.el.style.opacity = String(1 - t); continue; }
               const p = 1 - Math.pow(1 - t, 2);
               effect.el.style.left = flight.x + flight.dx * p + 'px';
               effect.el.style.top = flight.y + flight.dy * p + 'px';

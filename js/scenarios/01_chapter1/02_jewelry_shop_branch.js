@@ -4,6 +4,16 @@ window.scenario_Ch1_JewelryShop_Branch = [
   "centered 정오, 번화가의 가게 앞.",
 
   "show character r normal at center",
+  "r 혹시 모르니까 수첩에 잘 적어놔야겠다……!",
+  {
+    Function: {
+      Apply: async function () {
+        await this.saveTo("AutoSaveLabel", 1, "수첩 · 제1장 2번. 보석상");
+      },
+      Revert: function () {},
+    },
+  },
+  "레이나는 수첩에 기록을 저장했다.",
   "r 음, 맞아. 이쪽이었어.",
 
   "레이나는 보석상으로 향했다.",

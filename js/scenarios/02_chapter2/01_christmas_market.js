@@ -2,6 +2,18 @@
 
 let scenario_Ch2_ChristmasMarket = [
   "centered 오후, 크리스마스 마켓.",
+  "show character r normal at center",
+  "r 혹시 모르니까 수첩에 잘 적어놔야겠다……!",
+  {
+    Function: {
+      Apply: async function () {
+        await this.saveTo("AutoSaveLabel", 2, "수첩 · 제2장 1번. 크리스마스 마켓");
+      },
+      Revert: function () {},
+    },
+  },
+  "레이나는 수첩에 기록을 저장했다.",
+  "hide character r",
 
   "이 도시는 크리스마스를 앞두고 지역 축제와 같이 마켓을 연다.",
   "올해도 넓은 공터에 천막을 펼치고 다종다양한 부스와 가판대가 들어서 있다.",
