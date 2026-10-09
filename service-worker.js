@@ -4,7 +4,7 @@
 const name = "Monogatari";
 
 // The cache version.
-const version = "0.1.1";
+const version = "0.1.2";
 
 // Name of the Cache Storage bucket this worker owns.
 const cacheName = `${name}-v${version}`;
@@ -32,6 +32,7 @@ const files = [
   "js/storage.js",
   "js/script.js",
   "js/main.js",
+  "js/mobile-display.js",
 
   // App Images
   "favicon.ico",

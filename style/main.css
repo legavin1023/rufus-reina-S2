@@ -262,3 +262,33 @@ html.theme-off, html.theme-off body { background: #f5f5f5 !important; color: #22
 .test-tool-buttons button:hover { background: #d5d5d5; color: #222; }
 .test-tool-buttons button[hidden] { display: none; }
 .test-tool-status { margin: 0; color: #333; font-size: 11px; }
+/* Keep the fullscreen entry available above the engine's rotation notice. */
+.mobile-display-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #15131c;
+  color: #fff;
+  text-align: center;
+}
+.mobile-display-prompt[hidden], .mobile-fullscreen-button[hidden] { display: none; }
+.mobile-display-prompt button, .mobile-fullscreen-button {
+  border: 1px solid #dbc392;
+  border-radius: 8px;
+  padding: 12px 20px;
+  background: #292332;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.mobile-fullscreen-button {
+  position: fixed;
+  top: max(8px, env(safe-area-inset-top));
+  right: max(8px, env(safe-area-inset-right));
+  z-index: 2147483646;
+  padding: 6px 10px;
+  font-size: 12px;
+}
