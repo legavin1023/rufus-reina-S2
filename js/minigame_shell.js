@@ -164,8 +164,8 @@
           instructions.hidden = true; panel.classList.add('merchant-playing'); panel.classList.remove('merchant-result');
           stage.classList.remove('reina-hit');
           const speedFactor = 1.8;
-          const spawnInterval = 1500;
-          const minInterval = 750;
+          const spawnInterval = 1350;
+          const minInterval = 675;
           const spawnCutoff = Math.max(...lives) * speedFactor + 300;
           let elapsed = 0, last = null, spawnAt = 1100, missed = 0, cleared = 0, impactUntil = 0;
           let deck = shuffle(objects.map((_, i) => i));
@@ -206,7 +206,7 @@
               spawnAt = elapsed + Math.max(minInterval, spawnInterval - elapsed / 45);
               if (!deck.length) deck = shuffle(objects.map((_, i) => i));
               const index = deck.pop(), object = objects[index];
-              const count = repeatable.has(moves[index]) ? (Math.random() < .3 ? 3 : 2) : 1;
+                const count = repeatable.has(moves[index]) ? (Math.random() < .4 ? 3 : 2) : 1;
               const firstEdge = Math.floor(Math.random() * 4);
               for (let copy = 0; copy < count; copy++) {
                 const edge = (firstEdge + copy) % 4, scatter = .12 + Math.random() * .76;
