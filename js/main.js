@@ -76,7 +76,7 @@ $_ready(() => {
     const testTools = document.createElement("details");
     testTools.className = "game-test-tools";
     testTools.innerHTML =
-      '<summary>테스트</summary><div class="test-tool-buttons"><button type="button" class="theme-toggle" aria-pressed="false">색상·테두리 켜기</button><button type="button" data-test-game="tree">트리 게임 테스트</button><button type="button" data-test-game="retry">야바위 게임 테스트</button><button type="button" class="test-game-exit" hidden>테스트 종료</button><p class="test-tool-status" role="status"></p></div>';
+      '<summary>테스트</summary><div class="test-tool-buttons"><button type="button" class="theme-toggle" aria-pressed="false">색상·테두리 켜기</button><button type="button" data-test-game="globe">스노 글로브 테스트</button><button type="button" data-test-game="tree">트리 게임 테스트</button><button type="button" data-test-game="retry">야바위 게임 테스트</button><button type="button" class="test-game-exit" hidden>테스트 종료</button><p class="test-tool-status" role="status"></p></div>';
     document.body.appendChild(testTools);
     const themeToggle = testTools.querySelector(".theme-toggle");
     themeToggle?.addEventListener("click", () => {

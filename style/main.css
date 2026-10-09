@@ -254,9 +254,8 @@ body:has(.merchant-game) game-screen centered-dialog { visibility: hidden !impor
 /* Neutral preview changes paint only: borders retain their layout dimensions. */
 html.theme-off { --ink: #f5f5f5; --night: #f5f5f5; --panel: #eee; --paper: #222; --muted: #444; --gold: #333; --gold-dim: #555; --rose: #444; --line: transparent; --main-color: #f5f5f5; --text-color: #222; --character-name-color: #222; }
 html.theme-off, html.theme-off body { background: #f5f5f5 !important; color: #222 !important; }
-.theme-off #monogatari *, .theme-off #monogatari *::before, .theme-off #monogatari *::after,
-.theme-off .proposal-game, .theme-off .proposal-game *, .theme-off .proposal-game *::before, .theme-off .proposal-game *::after { color: #222 !important; border-color: transparent !important; background-image: none !important; background-color: transparent !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; backdrop-filter: none !important; }
-.theme-off #monogatari, .theme-off #monogatari [data-screen], .theme-off .proposal-game, .theme-off .proposal-game-card,
+.theme-off #monogatari *:not(.proposal-game, .proposal-game *), .theme-off #monogatari *:not(.proposal-game, .proposal-game *)::before, .theme-off #monogatari *:not(.proposal-game, .proposal-game *)::after { color: #222 !important; border-color: transparent !important; background-image: none !important; background-color: transparent !important; box-shadow: none !important; text-shadow: none !important; filter: none !important; backdrop-filter: none !important; }
+.theme-off #monogatari, .theme-off #monogatari [data-screen],
 .theme-off .modal, .theme-off .modal__content { background: #f5f5f5 !important; }
 .theme-off #game-snow { opacity: 0; }
 .theme-off button:focus-visible { outline-color: #333; }

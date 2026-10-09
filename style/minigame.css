@@ -1,0 +1,472 @@
+/* Dedicated minigame presentation; story layout remains in main.css. */
+.proposal-game {
+  --paper: #f5efe5;
+  --muted: #b3bdc3;
+  --gold: #d5b989;
+  --rose: #d5a3a5;
+  --line: rgba(213, 185, 137, 0.28);
+}
+.globe-game .globe-field {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr);
+  place-items: center;
+  margin: 24px 0;
+}
+.globe-game .snow-globe {
+  position: relative;
+  display: block;
+  width: 230px;
+  height: 265px;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.globe-glass {
+  position: absolute;
+  inset: 0 0 35px;
+  border: 2px solid #c5dfec88;
+  border-radius: 50%;
+  outline: 1px solid #c5dfec55;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 30% 20%,
+    #ffffff40,
+    #acd7ec14 40%,
+    #132b3d80
+  );
+  box-shadow:
+    inset -15px -10px 30px #d2edff18,
+    0 0 50px #b0e2ff15;
+}
+.globe-glass::after {
+  content: "";
+  position: absolute;
+  left: 17%;
+  top: 13%;
+  width: 22%;
+  height: 12%;
+  border-radius: 50%;
+  background: #ffffff38;
+  transform: rotate(-35deg);
+}
+.globe-ground {
+  position: absolute;
+  bottom: -10px;
+  left: 8%;
+  right: 8%;
+  height: 65px;
+  background: #e2edf3;
+  border-radius: 50%;
+}
+.globe-tree {
+  position: absolute;
+  bottom: 45px;
+  left: calc(50% - 47px);
+  width: 94px;
+  height: 120px;
+  padding-top: 2px;
+  background: linear-gradient(135deg, #709c8e, #224d46);
+  clip-path: polygon(
+    50% 0,
+    78% 35%,
+    65% 35%,
+    90% 65%,
+    75% 65%,
+    100% 90%,
+    56% 90%,
+    56% 100%,
+    44% 100%,
+    44% 90%,
+    0 90%,
+    25% 65%,
+    10% 65%,
+    35% 35%,
+    22% 35%
+  );
+  color: #ffe4a1;
+  font-size: 22px;
+}
+.globe-star {
+  position: absolute;
+  bottom: 154px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  color: #ffe4a1;
+  font-size: 22px;
+  z-index: 2;
+}
+.globe-pedestal {
+  position: absolute;
+  bottom: 0;
+  left: 16%;
+  width: 68%;
+  height: 49px;
+  border-radius: 15px 15px 8px 8px;
+  border: 1px solid #c7a86c;
+  outline: 1px solid #c7a86c55;
+  background: linear-gradient(100deg, #483c32, #927b55, #483c32);
+  color: #f4d9a1;
+  font:
+    italic 28px/49px Georgia,
+    serif;
+}
+.globe-snow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+.globe-snow i {
+  position: absolute;
+  left: var(--x);
+  top: -5px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff4c9;
+  box-shadow: 0 0 4px #fff;
+  animation: globe-fall var(--duration) var(--delay) linear 2 both;
+}
+.globe-shaking {
+  animation: globe-shake 0.5s ease;
+}
+@keyframes globe-fall {
+  from {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(12px, 225px);
+    opacity: 0;
+  }
+}
+@keyframes globe-shake {
+  20%,
+  60% {
+    transform: rotate(-5deg);
+  }
+  40%,
+  80% {
+    transform: rotate(5deg);
+  }
+}
+.merchant-hud {
+  position: relative;
+  z-index: 35;
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 36px);
+  padding: 10px 24px;
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #101923e8;
+  pointer-events: none;
+}
+.merchant-hud > div {
+  display: grid;
+  gap: 3px;
+  min-width: 65px;
+}
+.merchant-hud small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.merchant-hud strong {
+  font:
+    24px/1.1 Georgia,
+    serif;
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+.merchant-hud .hud-time small {
+  display: inline;
+  margin-left: 4px;
+}
+.hud-hearts {
+  color: var(--rose);
+  letter-spacing: 0.1em;
+  font-size: 21px;
+  line-height: 1.2;
+}
+.merchant-playing .game-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.merchant-playing .game-controls {
+  width: auto;
+  left: auto;
+  right: max(16px, env(safe-area-inset-right));
+  transform: none;
+}
+.merchant-playing .game-controls button {
+  width: auto;
+  padding: 8px 14px;
+  font-size: 12px;
+}
+.merchant-summary {
+  position: absolute;
+  z-index: 35;
+  bottom: max(95px, 17vh);
+  padding: 16px 26px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #101923ed;
+}
+.merchant-summary strong {
+  font-family: var(--serif);
+  font-size: 23px;
+  color: var(--gold);
+}
+.merchant-summary p {
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+.merchant-summary[hidden],
+.merchant-pause[hidden] {
+  display: none;
+}
+.merchant-pause {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #080f19ee;
+  backdrop-filter: blur(12px);
+}
+.merchant-pause > div {
+  width: min(360px, 86vw);
+  padding: 28px;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #1b2a37;
+}
+.merchant-pause h3 {
+  font: 26px var(--serif);
+  margin: 0 0 14px;
+}
+.merchant-pause p {
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+.merchant-paused .reina-aura::after {
+  animation-play-state: paused;
+}
+.merchant-game .merchant-progress {
+  z-index: 45;
+  height: 6px;
+}
+.merchant-result .merchant-hud {
+  opacity: 0.65;
+}
+/* Vector ring cases: no external images or emoji dependence. */
+.ring-game .shell-game-field {
+  height: 250px;
+}
+.ring-game .shell-game-box {
+  top: 48px;
+  min-height: 160px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 14px 4px;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.ring-box-art {
+  position: relative;
+  display: block;
+  width: clamp(66px, 12vw, 115px);
+  height: 88px;
+  perspective: 300px;
+}
+.ring-box-base,
+.ring-box-lid {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ba9b67;
+  border-radius: 8px;
+  outline: 1px solid #ba9b6755;
+}
+.ring-box-base {
+  bottom: 0;
+  height: 55px;
+  background: linear-gradient(135deg, #563b54, #231e33);
+  box-shadow: 0 12px 18px #0005;
+}
+.ring-box-base::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 4px;
+  background: #13101f;
+}
+.ring-box-lid {
+  z-index: 3;
+  bottom: 30px;
+  height: 40px;
+  background: linear-gradient(135deg, #785773, #35253d);
+  transform-origin: 50% 100%;
+  transition: transform 0.35s ease;
+}
+.ring-box-lid::after {
+  content: "✦";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #e7c995;
+  font-size: 23px;
+}
+.box-open .ring-box-lid {
+  transform: translateY(-27px) rotateX(-35deg);
+}
+.ring-jewel {
+  position: absolute;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border: 4px solid #e5c568;
+  border-radius: 50%;
+  left: calc(50% - 12px);
+  top: 14px;
+  opacity: 0;
+}
+.box-open .ring-jewel {
+  opacity: 1;
+}
+[data-ring="diamond"] .ring-jewel {
+  border-color: #d5e4ef;
+}
+[data-ring="diamond"] .ring-jewel::after {
+  content: "";
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  top: -12px;
+  left: 2px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #fff, #86b4d0, #fff);
+  border: 1px solid #edfaff;
+  box-shadow: 0 0 20px #dcf4ff;
+}
+[data-ring="candy"] .ring-jewel {
+  border-color: #eb97b2;
+}
+[data-ring="empty"] .ring-jewel {
+  display: none;
+}
+.ring-box-label {
+  font-size: clamp(11px, 1.8vw, 14px);
+}
+.box-selected .ring-box-art {
+  filter: drop-shadow(0 0 18px #e5c56866);
+}
+.ring-game .shell-game-box:focus-visible .ring-box-art,
+.ring-game .shell-game-box:not(:disabled):hover .ring-box-art {
+  translate: 0 -5px;
+}
+@media (max-height: 500px) {
+  .globe-game .proposal-game-card {
+    padding: 14px 24px;
+  }
+  .globe-game h2 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .globe-game .game-instructions {
+    margin-bottom: 4px;
+  }
+  .globe-game .game-status {
+    margin: 6px 0;
+  }
+  .globe-game .globe-field {
+    margin: 0;
+    height: 160px;
+  }
+  .globe-game .snow-globe {
+    transform: scale(0.6);
+    animation: none;
+  }
+  .merchant-hud {
+    position: absolute;
+    top: max(8px, env(safe-area-inset-top));
+    padding: 6px 16px;
+    margin: 0;
+    gap: 20px;
+  }
+  .merchant-hud strong {
+    font-size: 20px;
+  }
+  .merchant-game .game-instructions {
+    margin-top: 64px;
+    max-width: 75%;
+  }
+  .merchant-summary {
+    bottom: 68px;
+    padding: 8px 20px;
+  }
+  .merchant-summary strong {
+    font-size: 19px;
+  }
+  .ring-game .proposal-game-card {
+    padding: 14px 24px;
+  }
+  .ring-game h2 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .ring-game .game-instructions {
+    margin-bottom: 4px;
+  }
+  .ring-game .shell-game-field {
+    height: 155px;
+    margin: 0;
+  }
+  .ring-game .shell-game-box {
+    top: 8px;
+    min-height: 135px;
+  }
+}
+@media (max-width: 480px) {
+  .merchant-hud {
+    gap: 10px;
+    padding: 8px 12px;
+  }
+  .merchant-hud > div {
+    min-width: 44px;
+  }
+  .hud-hearts {
+    font-size: 17px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ring-box-lid {
+    transition: none;
+  }
+  .globe-shaking,
+  .globe-snow i {
+    animation: none;
+  }
+  .globe-snow i {
+    top: 40%;
+    opacity: 0.8;
+  }
+}
