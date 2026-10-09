@@ -47,6 +47,7 @@ monogatari.translation("한국어", {
 
 $_ready(() => {
   monogatari.init("#monogatari").then(() => {
+    window.initStoryReactions();
     const mainMenu = monogatari.component("main-menu");
     const titleScreen = document.querySelector("main-screen");
     // if (titleScreen && !titleScreen.querySelector('.title-composition')) {

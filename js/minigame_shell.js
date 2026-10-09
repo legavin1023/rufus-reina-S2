@@ -190,10 +190,16 @@
           };
           items.className = "shell-game-field";
           panel.classList.add("ring-game");
+          const ringEmoji = {
+            empty: "📦",
+            candy: "🍬",
+            gold: "💍",
+            diamond: "💎",
+          };
           const renderBox = (el, ring, label, closed = false) => {
             el.dataset.ring = closed ? "closed" : ring;
             el.classList.toggle("box-open", !closed);
-            el.textContent = label;
+            el.textContent = closed ? "🎁" : ringEmoji[ring];
             el.setAttribute("aria-label", label);
           };
           let phase = "ready";

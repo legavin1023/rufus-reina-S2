@@ -280,6 +280,7 @@
 }
 .ring-game .shell-game-box {
   top: 48px;
+  font-size: 64px;
   min-height: 160px;
   display: grid;
   justify-items: center;
