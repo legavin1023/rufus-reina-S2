@@ -1,27 +1,10 @@
-/* Shapes on an independent overlay; no changes to character artwork. */
-#monogatari .story-reactions { position:fixed; inset:0; z-index:15; pointer-events:none; overflow:visible; --reaction-paint:#dcb77b; }
-#monogatari .story-reactions span { position:absolute; left:var(--reaction-x); top:var(--reaction-y); width:4px; height:4px; border-radius:50%; background:var(--reaction-paint) !important; scale:1.65; opacity:0; animation:reaction-rise 1.8s ease-out both; animation-delay:calc(var(--i) * 85ms); }
-#monogatari .story-reactions[data-reaction="flustered"] span { width:3px; height:15px; border-radius:2px; --reaction-paint:#a5b6c4; animation:reaction-fluster .65s ease-out both; animation-delay:calc(var(--i) * 140ms); }
-#monogatari .story-reactions[data-reaction="surprise"] span { width:3px; height:19px; border-radius:2px; animation:reaction-rays .7s ease-out both; }
-#monogatari .story-reactions[data-reaction="resolve"] span,
-#monogatari .story-reactions[data-reaction="relief"] span { width:42px; height:68px; background:transparent !important; border:2px solid var(--reaction-paint) !important; animation:reaction-ring 1.6s ease-out both; }
-#monogatari .story-reactions[data-reaction="relief"] span { --reaction-paint:#b3c9ce; width:32px; height:32px; animation-duration:2.1s; }
-#monogatari .story-reactions[data-reaction="heart"] span { width:55px; height:80px; background:radial-gradient(ellipse, #dca3b438, transparent 70%) !important; animation:reaction-bloom 2.2s ease-in-out both; }
-#monogatari .story-reactions[data-reaction="anger"] span,
-#monogatari .story-reactions[data-reaction="anger-strong"] span { width:3px; height:28px; border-radius:0; --reaction-paint:#485164; animation:reaction-down 1.3s ease-out both; }
-#monogatari .story-reactions[data-reaction="anger-strong"] span { width:3px; height:46px; --reaction-paint:#32394c; }
-#monogatari .story-reactions[data-reaction="glitter"] span { width:5px; height:5px; animation:reaction-down 2s ease-in-out both; animation-delay:calc(var(--i) * 40ms); }
-html.theme-off #monogatari .story-reactions span { --reaction-paint:#888; }
-html.theme-off #monogatari .story-reactions[data-reaction="heart"] span { background:radial-gradient(ellipse, #8883, transparent 70%) !important; }
-@keyframes reaction-rise { 0% { opacity:0; transform:translate(var(--spread),22px) scale(.5); } 25% { opacity:.8; } 100% { opacity:0; transform:translate(var(--spread),-30px) scale(.7); } }
-@keyframes reaction-fluster { 0%,100% { opacity:0; transform:translate(var(--spread),10px) rotate(-20deg); } 35% { opacity:.65; transform:translate(var(--spread),0) rotate(15deg); } }
-@keyframes reaction-rays { 0% { opacity:0; transform:rotate(calc(var(--i) * 30deg - 45deg)) translateY(-8px) scaleY(.3); } 20% { opacity:.8; } 100% { opacity:0; transform:rotate(calc(var(--i) * 30deg - 45deg)) translateY(-30px); } }
-@keyframes reaction-ring { 0% { opacity:0; transform:translate(-50%,-30%) scale(.65); } 25% { opacity:.65; } 100% { opacity:0; transform:translate(-50%,-30%) scale(1.25); } }
-@keyframes reaction-bloom { 0%,100% { opacity:0; transform:translate(-50%,-25%) scale(.8); } 50% { opacity:.7; transform:translate(-50%,-25%) scale(1.1); } }
-@keyframes reaction-down { 0% { opacity:0; transform:translate(var(--spread),-30px); } 25% { opacity:.7; } 100% { opacity:0; transform:translate(var(--spread),25px); } }
-@media (prefers-reduced-motion:reduce) { #monogatari .story-reactions span { animation:reaction-still 1.8s both; } @keyframes reaction-still { 0%,100% { opacity:0; transform:translate(var(--spread),0); } 20%,75% { opacity:.5; transform:translate(var(--spread),0); } } }
-
-/* Hide presentation when a menu or minigame covers the story. */
+/* Clear emotion icons, one per reaction; outline is a separate pixel-derived layer. */
+#monogatari .story-reactions { position:fixed; inset:0; z-index:15; pointer-events:none; overflow:visible; }
+#monogatari .story-reactions .reaction-emoji { position:absolute; left:var(--reaction-x); top:var(--reaction-y); display:block; width:72px; height:72px; font-size:54px; line-height:72px; text-align:center; background:transparent; animation:reaction-pop 2.2s ease-out both; }
+#monogatari .story-reactions .reaction-outline { position:absolute; pointer-events:none; animation:reaction-outline 2.2s ease-out both; }
 #monogatari:has([data-screen]:not([data-screen="game"]).active) .story-reactions,
 #monogatari:has(.proposal-game) .story-reactions { visibility:hidden; }
-@media (max-height:450px) { #monogatari .story-reactions span { scale:1.3; } }
+@keyframes reaction-pop { 0% { opacity:0; transform:translate(-50%,-50%) scale(.7); } 15% { opacity:1; transform:translate(-50%,-55%) scale(1.08); } 30%,75% { opacity:1; transform:translate(-50%,-50%) scale(1); } 100% { opacity:0; transform:translate(-50%,-65%) scale(.95); } }
+@keyframes reaction-outline { 0%,100% { opacity:0; } 25%,65% { opacity:.65; } }
+@media (max-height:450px), (max-width:500px) { #monogatari .story-reactions .reaction-emoji { width:60px; height:60px; font-size:44px; line-height:60px; } }
+@media (prefers-reduced-motion:reduce) { #monogatari .story-reactions .reaction-emoji { animation:reaction-outline 2.2s both; transform:translate(-50%,-50%); } }

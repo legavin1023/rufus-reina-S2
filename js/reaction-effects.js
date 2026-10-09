@@ -11,12 +11,96 @@
     [/가슴이 두근|이 두근거림|앞으로도 평생을|루퍼스와 함께 와도|한참이 아니라, 평생|곁에 두고두고/, "heart"],
     [/20골드\?|장난하십니까/, "anger"],
     [/재테크에 손|이상한 소리로 당신|가만히 둘 수/, "anger-strong"],
-    [/후우|휴우, 다행|침착하자\. 잘할/, "relief"],
+    [/저 말입니까\?|이걸…… 말입니까|무슨 고민|생각이 많아|이 다음은 뭡니까|^……\?$/, "question"],
     [/예스야, 무조건 예스야|앞으로 평생 함께/, "glitter"],
   ];
-  const counts = { flustered: 3, resolve: 1, surprise: 4, joy: 5, heart: 1, anger: 3, "anger-strong": 5, relief: 1, glitter: 9 };
+  const emoji = { flustered: "💦", resolve: "✨", surprise: "❗", joy: "✨", heart: "💗", anger: "💢", "anger-strong": "💢", question: "❓", glitter: "💖" };
   let layer, timer, anchor;
+  let revision = 0;
+  const masks = new Map();
+  // Read pixels in memory only. The source image and sprite styling never change.
+  const silhouette = (image) => {
+    const source = image.currentSrc || image.src;
+    if (masks.has(source)) return masks.get(source);
+    const result = (async () => {
+      try {
+        await image.decode();
+        const scale = Math.min(1, 320 / Math.max(image.naturalWidth, image.naturalHeight));
+        const mask = document.createElement("canvas");
+        mask.width = Math.max(1, Math.round(image.naturalWidth * scale));
+        mask.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        const context = mask.getContext("2d", { willReadFrequently: true });
+        context.drawImage(image, 0, 0, mask.width, mask.height);
+        const pixels = context.getImageData(0, 0, mask.width, mask.height);
+        const data = pixels.data;
+        const total = mask.width * mask.height;
+        let transparent = false;
+        for (let i = 3; i < data.length; i += 4) {
+          if (data[i] < 16) { transparent = true; break; }
+        }
+        if (!transparent) {
+          // Only remove a plain near-white background connected to image edges.
+          const corners = [0, mask.width - 1, total - mask.width, total - 1];
+          if (!corners.every(i => data[i * 4] > 240 && data[i * 4 + 1] > 240 && data[i * 4 + 2] > 240)) return null;
+          const visited = new Uint8Array(total);
+          const queue = new Int32Array(total);
+          let head = 0, tail = 0;
+          const visit = i => {
+            if (visited[i]) return;
+            visited[i] = 1;
+            const p = i * 4;
+            if (data[p] > 235 && data[p + 1] > 235 && data[p + 2] > 235) queue[tail++] = i;
+          };
+          for (let x = 0; x < mask.width; x++) { visit(x); visit(total - mask.width + x); }
+          for (let y = 0; y < mask.height; y++) { visit(y * mask.width); visit(y * mask.width + mask.width - 1); }
+          while (head < tail) {
+            const i = queue[head++];
+            data[i * 4 + 3] = 0;
+            if (i % mask.width) visit(i - 1);
+            if (i % mask.width < mask.width - 1) visit(i + 1);
+            if (i >= mask.width) visit(i - mask.width);
+            if (i < total - mask.width) visit(i + mask.width);
+          }
+          if (tail < total * .1 || tail > total * .995) return null;
+        }
+        for (let i = 0; i < data.length; i += 4) {
+          data[i] = data[i + 1] = data[i + 2] = 255;
+        }
+        context.putImageData(pixels, 0, 0);
+        return mask;
+      } catch (_) { return null; }
+    })();
+    masks.set(source, result);
+    return result;
+  };
+  const addOutline = async (image, reaction, token) => {
+    if (!(image instanceof HTMLImageElement) || reaction === "question") return;
+    const source = image.currentSrc || image.src;
+    const mask = await silhouette(image);
+    if (!mask || token !== revision || !image.isConnected || source !== (image.currentSrc || image.src)) return;
+    const outline = document.createElement("canvas");
+    outline.className = "reaction-outline";
+    outline.width = mask.width + 16;
+    outline.height = mask.height + 16;
+    const ctx = outline.getContext("2d");
+    const warm = reaction === "heart" || reaction === "glitter";
+    const angry = reaction.startsWith("anger");
+    const color = document.documentElement.classList.contains("theme-off") ? "#888" : angry ? "#cb7373" : warm ? "#edafc8" : "#e6c487";
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 5;
+    for (const [x, y] of [[-2, 0], [2, 0], [0, -2], [0, 2]]) ctx.drawImage(mask, 8 + x, 8 + y);
+    ctx.shadowBlur = 0;
+    ctx.globalCompositeOperation = "source-in";
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, outline.width, outline.height);
+    // Erase the complete interior: only the external edge remains visible.
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.drawImage(mask, 8, 8);
+    layer.prepend(outline);
+    place();
+  };
   const clear = () => {
+    revision++;
     clearTimeout(timer);
     layer?.replaceChildren();
     anchor = null;
@@ -24,6 +108,12 @@
   const place = () => {
     if (!anchor?.isConnected || !layer) return;
     const rect = anchor.getBoundingClientRect();
+    const outline = layer.querySelector(".reaction-outline");
+    if (outline) {
+      const padX = rect.width * 8 / (outline.width - 16);
+      const padY = rect.height * 8 / (outline.height - 16);
+      Object.assign(outline.style, { left: `${rect.left - padX}px`, top: `${rect.top - padY}px`, width: `${rect.width + padX * 2}px`, height: `${rect.height + padY * 2}px` });
+    }
     const box = document.querySelector("text-box")?.getBoundingClientRect();
     const margin = Math.min(110, innerWidth * 0.24, innerHeight * 0.24);
     const ceiling = box && box.height > 0 ? box.top - margin : innerHeight - margin;
@@ -52,12 +142,11 @@
       anchor = document.querySelector(`#monogatari [data-character="${dialogue[1]}"]:not([data-visibility="invisible"])`);
       if (!anchor) return;
       layer.dataset.reaction = cue[1];
-      Array.from({ length: counts[cue[1]] }).forEach((_, index) => {
-        const particle = document.createElement("span");
-        particle.style.setProperty("--i", index);
-        particle.style.setProperty("--spread", `${(index - (counts[cue[1]] - 1) / 2) * 12}px`);
-        layer.appendChild(particle);
-      });
+      const particle = document.createElement("span");
+      particle.className = "reaction-emoji";
+      particle.textContent = emoji[cue[1]];
+      layer.appendChild(particle);
+      addOutline(anchor, cue[1], revision);
       place();
       timer = setTimeout(clear, 2400);
     });
