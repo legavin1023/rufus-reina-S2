@@ -207,6 +207,7 @@ body:has(.merchant-game) game-screen centered-dialog { visibility: hidden !impor
 .merchant-game .game-instructions { max-width: 580px; font-size: 13px; }
 .merchant-game .game-controls { position: absolute; z-index: 4; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: min(380px, 86%); }
 .merchant-game .proposal-game-card { overflow: visible; }
+.merchant-game .proposal-game-card { height: 100vh; max-height: 100vh; height: 100dvh; max-height: 100dvh; padding-top: max(18px, env(safe-area-inset-top)); }
 .merchant-game { z-index: 2000; }
 .merchant-field { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 10; overflow: visible; pointer-events: none; }
 .merchant-game h2, .merchant-game .game-status, .merchant-game .game-instructions { z-index: 30; }
@@ -234,7 +235,7 @@ body:has(.merchant-game) game-screen centered-dialog { visibility: hidden !impor
 @keyframes merchant-burst { from { opacity: 1; transform: translate(-50%, -50%) scale(.5); } to { opacity: 0; transform: translate(-50%, -50%) scale(2); } }
 @keyframes reina-impact { 0%, 100% { transform: translate(-50%, -50%); } 25% { transform: translate(-54%, -50%); filter: brightness(1.5); } 65% { transform: translate(-46%, -50%); } }
 @media (max-width: 700px) {
-  .merchant-game .proposal-game-card { padding: 12px; }
+  .merchant-game .proposal-game-card { padding: 12px; padding-top: max(12px, env(safe-area-inset-top)); }
   .merchant-game .game-status { font-size: 11px; padding: 4px 8px; }
   .merchant-game .game-instructions { font-size: 12px; }
   .merchant-reina { width: 160px; height: 230px; }
@@ -280,6 +281,7 @@ html.theme-off, html.theme-off body { background: #f5f5f5 !important; color: #22
 }
 .mobile-display-prompt[hidden], .mobile-fullscreen-button[hidden] { display: none; }
 .mobile-display-prompt > div { min-width: 0; max-width: 100%; }
+.mobile-display-prompt { padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left)); }
 .mobile-display-prompt button, .mobile-fullscreen-button {
   box-sizing: border-box;
   width: auto;
