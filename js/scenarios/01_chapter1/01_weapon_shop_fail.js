@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch1_WeaponShop_Fail = [
-  "scene square", // 배경 예시 (필요시 수정)
   "centered 정오, 번화가의 가게 앞.",
 
   "show character r normal at center",

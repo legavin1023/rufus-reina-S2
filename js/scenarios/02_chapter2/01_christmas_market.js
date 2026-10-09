@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch2_ChristmasMarket = [
-  "scene market", // 배경 예시 (필요시 수정)
   "centered 오후, 크리스마스 마켓.",
 
   "이 도시는 크리스마스를 앞두고 지역 축제와 같이 마켓을 연다.",

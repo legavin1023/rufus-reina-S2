@@ -7,7 +7,8 @@
     "@electron/notarize": "^3.1.1",
     "dotenv": "^16.4.5",
     "electron": "^42.4.0",
-    "electron-builder": "^26.15.3"
+    "electron-builder": "^26.15.3",
+    "gh-pages": "^6.3.0"
   },
   "build": {
     "directories": {
@@ -55,7 +56,8 @@
     "build:windows": "yarn electron-builder -w",
     "build:mac": "yarn electron-builder -m",
     "build:linux": "yarn electron-builder -l",
-    "build:web": "bun build-web.ts",
+    "build:web": "node build-web.ts",
+    "deploy": "npm run build:web && gh-pages -d build/web --dotfiles",
     "build:electrobun": "bunx electrobun build"
   },
   "dependencies": {

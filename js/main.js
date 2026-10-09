@@ -34,6 +34,8 @@ function stopConfetti() {
 
 monogatari.translation("한국어", {
   Settings: "설정",
+  Save: "저장",
+  Load: "불러오기",
   Audio: "음량",
   Music: "음악",
   Sound: "효과음",
@@ -46,18 +48,133 @@ monogatari.translation("한국어", {
 $_ready(() => {
   monogatari.init("#monogatari").then(() => {
     const mainMenu = monogatari.component("main-menu");
+    const titleScreen = document.querySelector("main-screen");
+    // if (titleScreen && !titleScreen.querySelector('.title-composition')) {
+    //   titleScreen.insertAdjacentHTML('afterbegin', `
+    //     <div class="title-composition">
+    //       <div class="title-copy">
+    //         <p class="title-eyebrow">RUFUS &amp; REINA · 15TH ANNIVERSARY</p>
+    //         <h1>루퍼스 <span>&amp;</span> 레이나</h1>
+    //         <p class="title-subtitle">열다섯 번째 크리스마스</p>
+    //         <div class="title-divider" aria-hidden="true"><span>✦</span></div>
+    //         <p class="title-description">지금까지의 15년처럼,<br>앞으로도 평생을 너와 함께.</p>
+    //       </div>
+    //       <div class="anniversary-art" aria-hidden="true">
+    //         <span class="anniversary-number">15</span>
+    //         <div class="anniversary-orbit"></div>
+    //         <div class="title-ring ring-one"></div><div class="title-ring ring-two"></div>
+    //         <span class="art-star star-one">✦</span><span class="art-star star-two">✧</span>
+    //         <span class="anniversary-caption">FIFTEEN YEARS, AND FOREVER</span>
+    //       </div>
+    //     </div>
+    //     <p class="title-footer">A CHRISTMAS LOVE STORY <span>12.24</span></p>
+    //   `);
+    // }
 
-    // 메인 메뉴에서 불러오기 제거
-    mainMenu.removeButton("Load");
+    // Temporary visual and minigame testing controls; never advance the story.
+    document.documentElement.classList.add("theme-off");
+    const testTools = document.createElement("details");
+    testTools.className = "game-test-tools";
+    testTools.innerHTML =
+      '<summary>테스트</summary><div class="test-tool-buttons"><button type="button" class="theme-toggle" aria-pressed="false">색상·테두리 켜기</button><button type="button" data-test-game="tree">트리 게임 테스트</button><button type="button" data-test-game="retry">야바위 게임 테스트</button><button type="button" class="test-game-exit" hidden>테스트 종료</button><p class="test-tool-status" role="status"></p></div>';
+    document.body.appendChild(testTools);
+    const themeToggle = testTools.querySelector(".theme-toggle");
+    themeToggle?.addEventListener("click", () => {
+      const off = document.documentElement.classList.toggle("theme-off");
+      themeToggle.textContent = off ? "색상·테두리 켜기" : "색상·테두리 끄기";
+      themeToggle.setAttribute("aria-pressed", String(!off));
+    });
+    const testButtons = [...testTools.querySelectorAll("[data-test-game]")];
+    const testExit = testTools.querySelector(".test-game-exit");
+    const testStatus = testTools.querySelector(".test-tool-status");
+    let previewGame = null;
+    testExit.addEventListener("click", () => previewGame?.cancel());
+    for (const testButton of testButtons) {
+      testButton.addEventListener("click", async () => {
+        const Game = monogatari.action("ProposalGame");
+        if (Game.blocking) {
+          testStatus.textContent = "현재 미니게임을 마친 뒤 테스트해 주세요.";
+          return;
+        }
+        const snapshot = structuredClone(monogatari.storage());
+        testButtons.forEach((button) => {
+          button.disabled = true;
+        });
+        testExit.hidden = false;
+        testStatus.textContent = "";
+        // Provide a valid original ring only for this isolated shell-game preview.
+        if (testButton.dataset.testGame === "retry")
+          monogatari.storage().ringChoice = "candy";
+        previewGame = new Game(["proposal-game", testButton.dataset.testGame]);
+        try {
+          await previewGame.apply();
+          testStatus.textContent = previewGame.cancelled
+            ? "테스트 종료"
+            : "테스트 완료";
+        } finally {
+          const storage = monogatari.storage();
+          Object.keys(storage).forEach((key) => {
+            delete storage[key];
+          });
+          Object.assign(storage, snapshot);
+          previewGame = null;
+          testExit.hidden = true;
+          testButtons.forEach((button) => {
+            button.disabled = false;
+          });
+        }
+      });
+    }
 
     // 메인 메뉴에서 도움말 제거
     mainMenu.removeButton("Help");
 
-    // 게임 중 Quick Menu에서 저장/불러오기 제거
-    const quickMenu = monogatari.component("quick-menu");
+    // Load always returns to the title, regardless of the screen it was opened from.
+    const returnToMain = () => {
+      monogatari.autoPlay(false);
+      monogatari.action("ProposalGame")?.reset();
+      stopConfetti();
+      monogatari.showMainScreen();
+    };
+    monogatari.registerListener("load-to-main", { callback: returnToMain });
 
-    quickMenu.removeButton("Save");
-    quickMenu.removeButton("Load");
+    // Mouse side buttons and browser Back must stay within the game.
+    // A same-document history entry lets Back reach popstate before leaving.
+    const armBrowserBack = () => {
+      window.history.pushState(
+        { ...window.history.state, rufusReinaBackGuard: true },
+        "",
+        window.location.href,
+      );
+    };
+    armBrowserBack();
+    window.addEventListener("popstate", () => {
+      returnToMain();
+      armBrowserBack();
+    });
+    monogatari.component("load-screen").template(`
+      <button class="top left" data-action="load-to-main" aria-label="메인 메뉴로 돌아가기">
+        <span class="fas fa-arrow-left"></span>
+      </button>
+      <h2 data-string="Load">불러오기</h2>
+      <div data-ui="saveSlots">
+        <h3 data-string="LoadSlots">저장된 게임</h3>
+        <div data-ui="slots">
+          <slot-container label="${monogatari.setting("SaveLabel")}" type="load"></slot-container>
+        </div>
+      </div>
+      ${
+        monogatari.setting("AutoSave") > 0
+          ? `
+        <div data-ui="autoSaveSlots">
+          <h3 data-string="LoadAutoSaveSlots">자동 저장된 게임</h3>
+          <div data-ui="slots" data-content="slots">
+            <slot-container label="${monogatari.setting("AutoSaveLabel")}" type="load"></slot-container>
+          </div>
+        </div>`
+          : ""
+      }
+    `);
 
     // 크레딧 추가
     mainMenu.addButton({
@@ -147,30 +264,6 @@ $_ready(() => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const cursor = "url('./assets/cursor/snowflake.cur') 4 2, auto";
-
-  document.documentElement.style.setProperty("cursor", cursor, "important");
-
-  document.body.style.setProperty("cursor", cursor, "important");
-
-  const applyCursor = () => {
-    document.querySelectorAll("*").forEach((element) => {
-      element.style.setProperty("cursor", cursor, "important");
-    });
-  };
-
-  applyCursor();
-
-  const observer = new MutationObserver(() => {
-    applyCursor();
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-});
 function createGameSnow() {
   if (document.getElementById("game-snow")) {
     return;
@@ -179,7 +272,7 @@ function createGameSnow() {
   const snowContainer = document.createElement("div");
   snowContainer.id = "game-snow";
 
-  const snowCount = 120;
+  const snowCount = 44;
 
   for (let i = 0; i < snowCount; i++) {
     const snowflake = document.createElement("div");

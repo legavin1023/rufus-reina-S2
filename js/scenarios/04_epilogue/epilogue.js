@@ -153,7 +153,6 @@ function stopConfetti() {
 }
 // 3. 에필로그
 window.scenario_Epilogue = [
-  "scene wedding",
 
   () => {
     startConfetti();

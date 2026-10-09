@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch3_ChristmasTree = [
-  "scene christmas_tree", // 배경 예시 (필요시 수정)
   "centered 밤, 크리스마스 트리 근처.",
 
   "순식간에 해가 져서 날이 어둑해졌다.",
@@ -68,7 +67,7 @@ let scenario_Ch3_ChristmasTree = [
 
   "show character ru normal at right",
   "ru 그럴지도 모르겠다는 가능성을 잠깐 생각해 보았습니다.",
-  "ru 만일 제가 잘못 생각한 거라면……. ",
+  "ru 만일 제가 잘못 생각한 거라면…….",
 
   "show character r smile at left",
   "r {happy}맞아!! 사실 준비한 건 따로 있어!!{/happy}",
@@ -83,17 +82,30 @@ let scenario_Ch3_ChristmasTree = [
   "show character r closed at center",
   "hide character ru",
 
-  "r 큼큼.",
-  "show character r normal at center",
-  "r 있잖아 루퍼스. 내가 예전에 그랬었잖아.",
-  "r 사랑은 빛나는 것이라고.",
-  "r {glow}그 어떤 것과도 견줄 수 없이 반짝반짝 빛이 나서, 한참을 들여다보고 또 보고 싶은 거라고.{/glow}",
-  "show character r closed at center",
-  "r {dreamy}지난 15년 동안 너와 함께하면서 나는 매일매일 그걸 느꼈어.{/dreamy}",
-  "r {glow}이 반짝거림이 조금도 사그라들지 않고 언제나와 같기에…….{/glow}",
-  "show character r shy at center",
-  "r {dreamy}한참이 아니라, 평생을, 곁에 두고두고 함께 보고 싶다고 생각했어.{/dreamy}",
+  "r 후우…….",
+  "show character r flustered at center",
+  "r ‘으으…… 이번엔 잘해야 해……!’",
+  "r ‘으아아, 그렇지만……!! 혹시라도 망치면 어떡하지……!!’",
+  "proposal-game tree",
+  { Conditional: { Condition: function () { return this.storage().treeGameResult; }, success: "jump Ch3_Proposal", failure: "jump Ch3_TreeGame_Fail" } },
+];
 
+let scenario_Ch3_Proposal = [
+  "show character r closed at center",
+  "r 아니야, 침착하자. 잘할 수 있을 거야.",
+  "show character r normal at center",
+  "r 있잖아 루퍼스.",
+  "r 내가 예전에 그랬었잖아.",
+  "r 사랑은 빛나는 것이라고.",
+  "r 그 어떤 것과도 견줄 수 없이 반짝반짝 빛이 나서…….",
+  "r 한참을 들여다보고 또 보고 싶은 거라고.",
+  "show character r closed at center",
+  "r 지난 15년 동안 너와 함께하면서…….",
+  "r 나는 매일매일 그걸 느꼈어.",
+  "r 이 반짝거림이 조금도 사그라들지 않고 언제나와 같기에…….",
+  "show character r shy at center",
+  "r 한참이 아니라, 평생을.",
+  "r 곁에 두고두고 함께 보고 싶다고 생각했어.",
   "레이나가 루퍼스 앞에 한 쪽 무릎을 꿇는다.",
   "떨리는 손으로 조심스럽게, 정사각형 상자의 뚜껑을 열어보인다.",
   {

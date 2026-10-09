@@ -1,7 +1,6 @@
 /* global monogatari */
 
 window.scenario_Ch1_JewelryShop_Branch = [
-  "scene square",
   "centered 정오, 번화가의 가게 앞.",
 
   "show character r normal at center",
@@ -21,7 +20,7 @@ window.scenario_Ch1_JewelryShop_Branch = [
 
   "r 레이나예요. R로 시작하는.",
 
-  "s 잠시 가게를 둘러보고 계시면 금방 물건을 가져다 드지요.",
+  "s 잠시 가게를 둘러보고 계시면 금방 물건을 가져다 드리지요.",
 
   "r 네. 감사합니다.",
 

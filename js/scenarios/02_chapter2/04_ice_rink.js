@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch2_IceRink = [
-  "scene ice_rink", // 배경 예시 (필요시 수정)
   "centered  아이스링크장",
   "어느덧 완연한 해질녘, 눈사람 장식을 빙 두른 원형의 아이스링크장을 찾은 두 사람.",
   "하지만 이용객은 온데간데 없고, 직원 몇 명만이 남아서 스케이트화를 닦고 있다.",

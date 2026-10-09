@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch3_GoldRing_Fail = [
-  "scene christmas_tree", // 배경 예시 (필요시 수정)
 
   "show character r shy at center",
   "r {glow}루퍼스, 나와 결혼해 줄래?{/glow}",
@@ -25,7 +24,7 @@ let scenario_Ch3_GoldRing_Fail = [
   "r {bold}그래서 앞으로도 금값은 오를 날밖에 안 남았다는 거야!{/bold}",
   "r 이거면 여차하면 나중에 우리 집값 삼아도 되겠다 싶어서……!",
 
-  "showcharacter ru shadowed at right",
+  "show character ru shadowed at right",
   "ru …….",
 
   "레이나가 뒤늦게 정신을 차렸을 땐, 루퍼스의 눈빛이 흉흉하게 변해 있었다.",
@@ -59,7 +58,7 @@ let scenario_Ch3_GoldRing_Fail = [
   "r {sad}히잉……. 정말로 진짜로 실패해 버렸어!{/sad}",
   "r {sad}어쩔 수 없지……!{/sad}",
   "r {sad}프로포즈는 내년을 기약할 수밖에……!{/sad}",
-  "end",
+  { Conditional: { Condition: function () { return this.storage().proposalRetried ? "done" : "retry"; }, done: "end", retry: "jump Ch3_Retry" } },
 ];
 
 if (typeof window !== "undefined") {

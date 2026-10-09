@@ -152,7 +152,7 @@ monogatari.script({
 
   // 제1장 분기 선택지
   Ch1_Main: [
-    "c:- 제1장 -",
+    "centered 제1장",
     {
       Choice: {
         WeaponShop: { Text: "1번. 무기점", Do: "jump Ch1_WeaponShop_Fail" },
@@ -208,6 +208,13 @@ monogatari.script({
     typeof scenario_Ch3_ChristmasTree !== "undefined"
       ? scenario_Ch3_ChristmasTree
       : ["centered 제3장 크리스마스 트리 장면을 불러올 수 없습니다.", "end"],
+  Ch3_Proposal: scenario_Ch3_Proposal,
+  Ch3_TreeGame_Fail: scenario_Ch3_TreeGame_Fail,
+  Ch3_Retry: scenario_Ch3_Retry,
+  Ch3_Retry_Empty: scenario_Ch3_Retry_Empty,
+  Ch3_Retry_Candy: scenario_Ch3_Retry_Candy,
+  Ch3_Retry_Gold: scenario_Ch3_Retry_Gold,
+  Ch3_Retry_Diamond: scenario_Ch3_Retry_Diamond,
   Ch3_CandyRing_Fail:
     typeof scenario_Ch3_CandyRing_Fail !== "undefined"
       ? scenario_Ch3_CandyRing_Fail
@@ -230,7 +237,6 @@ monogatari.script({
       : [
           "centered 에필로그",
           // "show scene wedding_bg", // 배경 일러스트 예시
-          "centered [결혼식 일러스트 출력]",
           "end",
         ],
 });

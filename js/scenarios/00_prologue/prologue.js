@@ -1,6 +1,7 @@
 /* global monogatari */
 
 let scenario_Start = [
+  function () { Object.assign(this.storage(), {ringChoice: null, proposalRetried: false, treeGameResult: null, retryRing: null}); return true; },
   "centered 정오, 분수가 있는 번화가의 광장.",
   "간밤에 내린 하얀 눈이 길가에 소복이 쌓여 있다.",
   "거리는 온통 붉은색과 초록색으로 크리스마스가 성큼 다가왔음을 한눈에 알 수 있다.",

@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch2_BeverageStall = [
-  "scene beverage_stall", // 배경 예시 (필요시 수정)
   "centered 오후, 음료 가판대.",
 
   "음료를 파는 가판대에는 다행히 사람이 많이 없었다.",

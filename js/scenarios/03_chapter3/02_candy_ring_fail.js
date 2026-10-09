@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch3_CandyRing_Fail = [
-  "scene christmas_tree", // 배경 예시 (필요시 수정)
   "show character r shy at center",
   "r {glow}루퍼스, 나와 결혼해 줄래?{/glow}",
 
@@ -30,7 +29,7 @@ let scenario_Ch3_CandyRing_Fail = [
   "r {sad}히잉……. 정말로 진짜로 실패해 버렸어!{/sad}",
   "r {sad}어쩔 수 없지……!{/sad}",
   "r {sad}프로포즈는 내년을 기약할 수밖에……!{/sad}",
-  "end",
+  { Conditional: { Condition: function () { return this.storage().proposalRetried ? "done" : "retry"; }, done: "end", retry: "jump Ch3_Retry" } },
 ];
 
 if (typeof window !== "undefined") {

@@ -29,5 +29,6 @@ const cleanedHtml = html
   .replace(/\s*<!-- Debug Library\..*?-->\s*\n/s, "\n")
   .replace(/\s*<script src="\.\/engine\/debug\/debug\.js"><\/script>\s*\n/, "\n");
 writeFileSync(join(OUT_DIR, "index.html"), cleanedHtml);
+writeFileSync(join(OUT_DIR, ".nojekyll"), "");
 
 console.log(`Web build output: ${OUT_DIR}`);

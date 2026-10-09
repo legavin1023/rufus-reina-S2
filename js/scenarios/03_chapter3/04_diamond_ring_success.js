@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch3_DiamondRing_Success = [
-  "scene christmas_tree", // 배경 예시 (필요시 수정)
 
   "show character r shy at center",
   "r {glow}루퍼스, 나와 결혼해 줄래?{/glow}",
