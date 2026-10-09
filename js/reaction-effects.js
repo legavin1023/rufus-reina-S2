@@ -25,19 +25,21 @@
     if (!anchor?.isConnected || !layer) return;
     const rect = anchor.getBoundingClientRect();
     const box = document.querySelector("text-box")?.getBoundingClientRect();
-    const ceiling = box && box.height > 0 ? box.top - 58 : innerHeight - 80;
+    const margin = Math.min(110, innerWidth * 0.24, innerHeight * 0.24);
+    const ceiling = box && box.height > 0 ? box.top - margin : innerHeight - margin;
     const center = rect.left + rect.width / 2;
     // Place beside the sprite, never over its face or the dialogue.
-    const x = center > innerWidth / 2 ? rect.left - 24 : rect.right + 24;
-    layer.style.setProperty("--reaction-x", `${Math.max(48, Math.min(innerWidth - 48, x))}px`);
-    layer.style.setProperty("--reaction-y", `${Math.max(65, Math.min(ceiling, rect.top + rect.height * 0.18))}px`);
+    const x = center > innerWidth / 2 ? rect.left - 48 : rect.right + 48;
+    layer.style.setProperty("--reaction-x", `${Math.max(margin, Math.min(innerWidth - margin, x))}px`);
+    layer.style.setProperty("--reaction-y", `${Math.max(margin, Math.min(ceiling, rect.top + rect.height * 0.22))}px`);
   };
   window.initStoryReactions = () => {
     if (layer) return;
     layer = document.createElement("div");
     layer.className = "story-reactions";
     layer.setAttribute("aria-hidden", "true");
-    document.querySelector("game-screen")?.appendChild(layer);
+    // Keep the overlay outside screen containers that can clip or transform it.
+    document.querySelector("#monogatari")?.appendChild(layer);
     monogatari.on("didRunAction", (event) => {
       clear();
       const statement = event.detail?.action?._statement;
