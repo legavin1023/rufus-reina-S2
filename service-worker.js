@@ -4,7 +4,7 @@
 const name = "Monogatari";
 
 // The cache version.
-const version = "0.1.4";
+const version = "0.1.5";
 
 // Name of the Cache Storage bucket this worker owns.
 const cacheName = `${name}-v${version}`;

@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   panel.className = "mobile-display-prompt";
   panel.innerHTML = '<div><p class="mobile-display-message" role="status">가로 전체화면으로 게임을 시작하세요.</p><button type="button">가로 전체화면 시작</button></div>';
   document.body.appendChild(panel);
-  const message = panel.querySelector("p");
   const button = panel.querySelector("button");
   const fullscreen = () => document.fullscreenElement || document.webkitFullscreenElement;
   let started = false;
@@ -18,9 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let fullscreenUnavailable = false;
 
   function update() {
-    const portrait = matchMedia("(orientation: portrait)").matches;
-    panel.hidden = started && !portrait;
-    if (started && portrait) message.textContent = "휴대폰을 가로로 돌려 주세요.";
+    panel.hidden = started;
     button.textContent = started ? "전체화면 다시 시도" : "가로 전체화면 시작";
     let restore = document.querySelector(".mobile-fullscreen-button");
     if (!restore) {
@@ -31,18 +28,20 @@ document.addEventListener("DOMContentLoaded", () => {
       restore.addEventListener("click", enter);
       document.body.appendChild(restore);
     }
-    restore.hidden = !started || portrait || Boolean(fullscreen()) || fullscreenUnavailable;
+    restore.hidden = !started || Boolean(fullscreen()) || fullscreenUnavailable;
   }
 
   async function enter() {
     if (busy) return;
     busy = true;
     button.disabled = true;
+    started = true;
+    update();
     try {
       const root = document.documentElement;
       const request = root.requestFullscreen || root.webkitRequestFullscreen;
       if (!fullscreen() && request) {
-        try { await request.call(root); } catch (_) { /* Continue with rotation guidance. */ }
+        try { await request.call(root); } catch (_) { /* Continue playing without fullscreen. */ }
       } else if (!request) {
         fullscreenUnavailable = true;
       }
