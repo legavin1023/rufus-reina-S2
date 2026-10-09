@@ -2,6 +2,18 @@
 
 let scenario_Ch3_ChristmasTree = [
   "centered 밤, 크리스마스 트리 근처.",
+  "show character r normal at center",
+  "r 혹시 모르니까 수첩에 잘 적어놔야겠다……!",
+  {
+    Function: {
+      Apply: async function () {
+        await this.saveTo("AutoSaveLabel", 3, "수첩 · 제3장 1번. 크리스마스 트리");
+      },
+      Revert: function () {},
+    },
+  },
+  "레이나는 수첩에 기록을 저장했다.",
+  "hide character r",
 
   "순식간에 해가 져서 날이 어둑해졌다.",
   "사람들이 길게 줄 서 있던 회전목마는 작동을 멈춘지 오래다.",

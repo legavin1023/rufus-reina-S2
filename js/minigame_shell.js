@@ -156,18 +156,18 @@
         panel.querySelector('.proposal-game-card').appendChild(progressBar);
         const moves = ['snowman','gift','cocoa','globe','lemon','cat','skater','coins','deer','merchant'];
         const lives = [6200,4400,5000,5500,4800,5500,3400,5100,4700,3700];
+        const repeatable = new Set(['snowman', 'gift', 'cocoa', 'globe', 'lemon', 'coins', 'deer']);
         const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
         let failures = 0;
         const round = () => {
           cleanup(); items.replaceChildren(); items.appendChild(stage); controls.replaceChildren();
           instructions.hidden = true; panel.classList.add('merchant-playing'); panel.classList.remove('merchant-result');
           stage.classList.remove('reina-hit');
-          const mobile = window.matchMedia('(max-width: 700px), (pointer: coarse) and (max-width: 1024px)').matches;
-          const speedFactor = mobile ? 1.45 : 1;
-          const spawnInterval = mobile ? 2200 : 1500;
-          const minInterval = mobile ? 1300 : 750;
-          const spawnCutoff = mobile ? Math.max(...lives) * speedFactor + 300 : 6500;
-          let elapsed = 0, last = null, spawnAt = mobile ? 1900 : 1100, missed = 0, cleared = 0, impactUntil = 0;
+          const speedFactor = 1.8;
+          const spawnInterval = 1350;
+          const minInterval = 675;
+          const spawnCutoff = Math.max(...lives) * speedFactor + 300;
+          let elapsed = 0, last = null, spawnAt = 1100, missed = 0, cleared = 0, impactUntil = 0;
           let deck = shuffle(objects.map((_, i) => i));
           const total = 35000, obstacles = new Set(), effects = new Set();
           const burst = (x, y, hit = false) => {
@@ -175,6 +175,24 @@
             el.textContent = hit ? '!' : '✦'; el.setAttribute('aria-hidden', 'true');
             el.style.left = x + '%'; el.style.top = y + '%'; items.appendChild(el);
             effects.add({ el, until: elapsed + 600 });
+          };
+          const knockAway = el => {
+            const x = parseFloat(el.style.left), y = parseFloat(el.style.top);
+            const width = items.clientWidth, height = items.clientHeight;
+            let dx = x - width / 2, dy = y - height / 2;
+            if (Math.hypot(dx, dy) < 1) { dx = 0; dy = -1; }
+            const distance = Math.hypot(dx, dy);
+            dx /= distance; dy /= distance;
+            const margin = Math.max(el.offsetWidth, el.offsetHeight) + 32;
+            const travel = Math.max(0, Math.min(
+              dx > 0 ? (width + margin - x) / dx : dx < 0 ? (-margin - x) / dx : Infinity,
+              dy > 0 ? (height + margin - y) / dy : dy < 0 ? (-margin - y) / dy : Infinity
+            ));
+            el.disabled = true;
+            el.classList.add('merchant-dismissed');
+            el.setAttribute('aria-hidden', 'true');
+            effects.add({ el, until: elapsed + 720,
+              flight: { started: elapsed, x, y, dx: dx * travel, dy: dy * travel, transform: el.style.transform } });
           };
           const endRound = success => {
             cleanup(); obstacles.clear(); effects.clear(); items.replaceChildren(); items.appendChild(stage);
@@ -200,23 +218,44 @@
             if (status.textContent !== hud) status.textContent = hud;
             panel.classList.toggle('merchant-danger', total - elapsed <= 8000);
             if (elapsed >= impactUntil) stage.classList.remove('reina-hit');
-            for (const effect of effects) if (elapsed >= effect.until) { effect.el.remove(); effects.delete(effect); }
+            for (const effect of effects) {
+              if (elapsed >= effect.until) { effect.el.remove(); effects.delete(effect); continue; }
+              if (!effect.flight) continue;
+              const flight = effect.flight;
+              const t = (elapsed - flight.started) / (effect.until - flight.started);
+              const p = 1 - Math.pow(1 - t, 2);
+              effect.el.style.left = flight.x + flight.dx * p + 'px';
+              effect.el.style.top = flight.y + flight.dy * p + 'px';
+              effect.el.style.transform = flight.transform + ' rotate(' + (t * 240) + 'deg)';
+              effect.el.style.opacity = String((.35 + .65 * (.5 + .5 * Math.cos(t * Math.PI * 4))) * Math.min(1, (1 - t) / .15));
+            }
             if (elapsed >= total) { endRound(true); return; }
             if (elapsed >= spawnAt && elapsed < total - spawnCutoff) {
               spawnAt = elapsed + Math.max(minInterval, spawnInterval - elapsed / 45);
               if (!deck.length) deck = shuffle(objects.map((_, i) => i));
               const index = deck.pop(), object = objects[index];
-              const edge = Math.floor(Math.random() * 4), scatter = .12 + Math.random() * .76;
-              const origin = edge === 0 ? [scatter, .06] : edge === 1 ? [.94, scatter] : edge === 2 ? [scatter, .94] : [.06, scatter];
-              let obstacle;
-              const el = button(items, object[0], () => {
-                if (!obstacles.has(obstacle)) return;
-                obstacles.delete(obstacle); el.remove(); cleared++; burst(obstacle.x * 100, obstacle.y * 100);
+              const count = repeatable.has(moves[index]) ? (Math.random() < .4 ? 3 : 2) : 1;
+              const firstEdge = Math.floor(Math.random() * 4);
+              for (let copy = 0; copy < count; copy++) {
+                const edge = (firstEdge + copy) % 4, scatter = .12 + Math.random() * .76;
+                // Keep the entire button outside the field until it moves inward.
+                const marginX = 80 / Math.max(items.clientWidth, 1);
+                const marginY = 80 / Math.max(items.clientHeight, 1);
+                const origin = edge === 0 ? [scatter, -marginY] : edge === 1 ? [1 + marginX, scatter] : edge === 2 ? [scatter, 1 + marginY] : [-marginX, scatter];
+                let obstacle;
+                const el = button(items, object[0], () => {
+                  if (!obstacles.has(obstacle)) return;
+                  obstacles.delete(obstacle); cleared++;
+                  knockAway(el); burst(obstacle.x * 100, obstacle.y * 100);
               });
               el.className = 'merchant-obstacle object-' + moves[index];
+              el.style.left = origin[0] * items.clientWidth + 'px';
+              el.style.top = origin[1] * items.clientHeight + 'px';
+              el.style.transform = 'translate(-50%, -50%) scale(.8)';
               el.title = object[1]; el.setAttribute('aria-label', object[1] + ' 없애기');
               obstacle = { el, age: 0, life: lives[index] * speedFactor, move: moves[index], origin, x: origin[0], y: origin[1], side: Math.random() < .5 ? -1 : 1 };
               obstacles.add(obstacle);
+              }
             }
             const width = items.clientWidth, height = items.clientHeight;
             for (const obstacle of obstacles) {
@@ -239,9 +278,8 @@
               const curve = reducedMotion ? 0 : bend * obstacle.side;
               obstacle.x = obstacle.origin[0] + dx * p - dy / distance * curve;
               obstacle.y = obstacle.origin[1] + dy * p + dx / distance * curve;
-              const radius = obstacle.el.offsetWidth * .55 + 2;
-              const x = Math.max(radius, Math.min(width - radius, obstacle.x * width));
-              const y = Math.max(radius, Math.min(height - radius, obstacle.y * height + (reducedMotion ? 0 : bounce)));
+              const x = obstacle.x * width;
+              const y = obstacle.y * height + (reducedMotion ? 0 : bounce);
               obstacle.el.style.left = x + 'px'; obstacle.el.style.top = y + 'px';
               obstacle.el.style.transform = 'translate(-50%, -50%) rotate(' + (reducedMotion ? 0 : rotation) + 'deg) scale(' + (.8 + p * .3) + ')';
               if (t >= 1) {

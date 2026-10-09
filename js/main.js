@@ -163,17 +163,12 @@ $_ready(() => {
           <slot-container label="${monogatari.setting("SaveLabel")}" type="load"></slot-container>
         </div>
       </div>
-      ${
-        monogatari.setting("AutoSave") > 0
-          ? `
         <div data-ui="autoSaveSlots">
           <h3 data-string="LoadAutoSaveSlots">자동 저장된 게임</h3>
           <div data-ui="slots" data-content="slots">
             <slot-container label="${monogatari.setting("AutoSaveLabel")}" type="load"></slot-container>
           </div>
-        </div>`
-          : ""
-      }
+        </div>
     `);
 
     // 크레딧 추가
