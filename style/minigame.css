@@ -274,7 +274,7 @@
 .merchant-result .merchant-hud {
   opacity: 0.65;
 }
-/* Vector ring cases: no external images or emoji dependence. */
+/* Shell-game layout only; decorative cases and rings removed. */
 .ring-game .shell-game-field {
   height: 250px;
 }
@@ -288,100 +288,6 @@
   background: transparent;
   border-color: transparent;
   box-shadow: none;
-}
-.ring-box-art {
-  position: relative;
-  display: block;
-  width: clamp(66px, 12vw, 115px);
-  height: 88px;
-  perspective: 300px;
-}
-.ring-box-base,
-.ring-box-lid {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  border: 1px solid #ba9b67;
-  border-radius: 8px;
-  outline: 1px solid #ba9b6755;
-}
-.ring-box-base {
-  bottom: 0;
-  height: 55px;
-  background: linear-gradient(135deg, #563b54, #231e33);
-  box-shadow: 0 12px 18px #0005;
-}
-.ring-box-base::before {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  border-radius: 4px;
-  background: #13101f;
-}
-.ring-box-lid {
-  z-index: 3;
-  bottom: 30px;
-  height: 40px;
-  background: linear-gradient(135deg, #785773, #35253d);
-  transform-origin: 50% 100%;
-  transition: transform 0.35s ease;
-}
-.ring-box-lid::after {
-  content: "✦";
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: #e7c995;
-  font-size: 23px;
-}
-.box-open .ring-box-lid {
-  transform: translateY(-27px) rotateX(-35deg);
-}
-.ring-jewel {
-  position: absolute;
-  z-index: 2;
-  width: 24px;
-  height: 24px;
-  border: 4px solid #e5c568;
-  border-radius: 50%;
-  left: calc(50% - 12px);
-  top: 14px;
-  opacity: 0;
-}
-.box-open .ring-jewel {
-  opacity: 1;
-}
-[data-ring="diamond"] .ring-jewel {
-  border-color: #d5e4ef;
-}
-[data-ring="diamond"] .ring-jewel::after {
-  content: "";
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  top: -12px;
-  left: 2px;
-  transform: rotate(45deg);
-  background: linear-gradient(135deg, #fff, #86b4d0, #fff);
-  border: 1px solid #edfaff;
-  box-shadow: 0 0 20px #dcf4ff;
-}
-[data-ring="candy"] .ring-jewel {
-  border-color: #eb97b2;
-}
-[data-ring="empty"] .ring-jewel {
-  display: none;
-}
-.ring-box-label {
-  font-size: clamp(11px, 1.8vw, 14px);
-}
-.box-selected .ring-box-art {
-  filter: drop-shadow(0 0 18px #e5c56866);
-}
-.ring-game .shell-game-box:focus-visible .ring-box-art,
-.ring-game .shell-game-box:not(:disabled):hover .ring-box-art {
-  translate: 0 -5px;
 }
 @media (max-height: 500px) {
   .globe-game .proposal-game-card {
@@ -458,9 +364,6 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ring-box-lid {
-    transition: none;
-  }
   .globe-shaking,
   .globe-snow i {
     animation: none;

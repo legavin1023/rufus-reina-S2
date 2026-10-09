@@ -193,9 +193,7 @@
           const renderBox = (el, ring, label, closed = false) => {
             el.dataset.ring = closed ? "closed" : ring;
             el.classList.toggle("box-open", !closed);
-            el.innerHTML =
-              '<span class="ring-box-art" aria-hidden="true"><span class="ring-box-lid"></span><span class="ring-box-base"><span class="ring-jewel"></span></span></span><span class="ring-box-label"></span>';
-            el.querySelector(".ring-box-label").textContent = label;
+            el.textContent = label;
             el.setAttribute("aria-label", label);
           };
           let phase = "ready";
