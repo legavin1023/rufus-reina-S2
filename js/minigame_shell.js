@@ -156,18 +156,18 @@
         panel.querySelector('.proposal-game-card').appendChild(progressBar);
         const moves = ['snowman','gift','cocoa','globe','lemon','cat','skater','coins','deer','merchant'];
         const lives = [6200,4400,5000,5500,4800,5500,3400,5100,4700,3700];
+        const repeatable = new Set(['snowman', 'gift', 'cocoa', 'globe', 'lemon', 'coins', 'deer']);
         const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
         let failures = 0;
         const round = () => {
           cleanup(); items.replaceChildren(); items.appendChild(stage); controls.replaceChildren();
           instructions.hidden = true; panel.classList.add('merchant-playing'); panel.classList.remove('merchant-result');
           stage.classList.remove('reina-hit');
-          const mobile = window.matchMedia('(max-width: 700px), (pointer: coarse) and (max-width: 1024px)').matches;
-          const speedFactor = mobile ? 1.45 : 1;
-          const spawnInterval = mobile ? 2200 : 1500;
-          const minInterval = mobile ? 1300 : 750;
-          const spawnCutoff = mobile ? Math.max(...lives) * speedFactor + 300 : 6500;
-          let elapsed = 0, last = null, spawnAt = mobile ? 1900 : 1100, missed = 0, cleared = 0, impactUntil = 0;
+          const speedFactor = 1.8;
+          const spawnInterval = 1500;
+          const minInterval = 750;
+          const spawnCutoff = Math.max(...lives) * speedFactor + 300;
+          let elapsed = 0, last = null, spawnAt = 1100, missed = 0, cleared = 0, impactUntil = 0;
           let deck = shuffle(objects.map((_, i) => i));
           const total = 35000, obstacles = new Set(), effects = new Set();
           const burst = (x, y, hit = false) => {
@@ -206,17 +206,27 @@
               spawnAt = elapsed + Math.max(minInterval, spawnInterval - elapsed / 45);
               if (!deck.length) deck = shuffle(objects.map((_, i) => i));
               const index = deck.pop(), object = objects[index];
-              const edge = Math.floor(Math.random() * 4), scatter = .12 + Math.random() * .76;
-              const origin = edge === 0 ? [scatter, .06] : edge === 1 ? [.94, scatter] : edge === 2 ? [scatter, .94] : [.06, scatter];
-              let obstacle;
-              const el = button(items, object[0], () => {
-                if (!obstacles.has(obstacle)) return;
-                obstacles.delete(obstacle); el.remove(); cleared++; burst(obstacle.x * 100, obstacle.y * 100);
+              const count = repeatable.has(moves[index]) ? (Math.random() < .3 ? 3 : 2) : 1;
+              const firstEdge = Math.floor(Math.random() * 4);
+              for (let copy = 0; copy < count; copy++) {
+                const edge = (firstEdge + copy) % 4, scatter = .12 + Math.random() * .76;
+                // Keep the entire button outside the field until it moves inward.
+                const marginX = 80 / Math.max(items.clientWidth, 1);
+                const marginY = 80 / Math.max(items.clientHeight, 1);
+                const origin = edge === 0 ? [scatter, -marginY] : edge === 1 ? [1 + marginX, scatter] : edge === 2 ? [scatter, 1 + marginY] : [-marginX, scatter];
+                let obstacle;
+                const el = button(items, object[0], () => {
+                  if (!obstacles.has(obstacle)) return;
+                  obstacles.delete(obstacle); el.remove(); cleared++; burst(obstacle.x * 100, obstacle.y * 100);
               });
               el.className = 'merchant-obstacle object-' + moves[index];
+              el.style.left = origin[0] * items.clientWidth + 'px';
+              el.style.top = origin[1] * items.clientHeight + 'px';
+              el.style.transform = 'translate(-50%, -50%) scale(.8)';
               el.title = object[1]; el.setAttribute('aria-label', object[1] + ' 없애기');
               obstacle = { el, age: 0, life: lives[index] * speedFactor, move: moves[index], origin, x: origin[0], y: origin[1], side: Math.random() < .5 ? -1 : 1 };
               obstacles.add(obstacle);
+              }
             }
             const width = items.clientWidth, height = items.clientHeight;
             for (const obstacle of obstacles) {
@@ -239,9 +249,8 @@
               const curve = reducedMotion ? 0 : bend * obstacle.side;
               obstacle.x = obstacle.origin[0] + dx * p - dy / distance * curve;
               obstacle.y = obstacle.origin[1] + dy * p + dx / distance * curve;
-              const radius = obstacle.el.offsetWidth * .55 + 2;
-              const x = Math.max(radius, Math.min(width - radius, obstacle.x * width));
-              const y = Math.max(radius, Math.min(height - radius, obstacle.y * height + (reducedMotion ? 0 : bounce)));
+              const x = obstacle.x * width;
+              const y = obstacle.y * height + (reducedMotion ? 0 : bounce);
               obstacle.el.style.left = x + 'px'; obstacle.el.style.top = y + 'px';
               obstacle.el.style.transform = 'translate(-50%, -50%) rotate(' + (reducedMotion ? 0 : rotation) + 'deg) scale(' + (.8 + p * .3) + ')';
               if (t >= 1) {
