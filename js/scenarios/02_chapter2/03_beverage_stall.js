@@ -43,7 +43,7 @@ let scenario_Ch2_BeverageStall = [
   "s 음료를 다 드시고 머그컵을 반납하시면, 요금 절반을 돌려드려요!",
 
   "그제서야 루퍼스의 기세가 차분하게 가라앉았다.",
-  "곁에서 깜짝 놀랐던 레이나도 {fade}안도의 한숨{/fade}을 내쉰다.",
+  "곁에서 깜짝 놀랐던 레이나도 안도의 한숨을 내쉰다.",
 
   "show character ru normal at right",
   "ru 그정도는 괜찮겠네요.",

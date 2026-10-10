@@ -16,6 +16,7 @@
   ];
   const emoji = { flustered: "💦", resolve: "✨", surprise: "❗", joy: "✨", heart: "💗", anger: "💢", "anger-strong": "💢", question: "❓", glitter: "💖" };
   let layer, timer, anchor;
+  let visibleBounds = null;
   let revision = 0;
   const masks = new Map();
   // Read pixels in memory only. The source image and sprite styling never change.
@@ -63,6 +64,24 @@
           }
           if (tail < total * .1 || tail > total * .995) return null;
         }
+        let left = mask.width, right = 0, top = mask.height, bottom = 0;
+        for (let y = 0; y < mask.height; y++) {
+          for (let x = 0; x < mask.width; x++) {
+            if (data[(y * mask.width + x) * 4 + 3] < 64) continue;
+            left = Math.min(left, x); right = Math.max(right, x);
+            top = Math.min(top, y); bottom = Math.max(bottom, y);
+          }
+        }
+        if (left > right || top > bottom) return null;
+        // Measure beside the head, excluding the wider arms and transparent padding.
+        let headRight = left;
+        const headY = top + (bottom - top) * .22;
+        for (let y = Math.floor(top + (bottom - top) * .12); y <= Math.ceil(top + (bottom - top) * .32); y++) {
+          for (let x = left; x <= right; x++) {
+            if (data[(y * mask.width + x) * 4 + 3] >= 64) headRight = Math.max(headRight, x);
+          }
+        }
+        mask.reactionBounds = { right: (headRight + 1) / mask.width, y: headY / mask.height };
         for (let i = 0; i < data.length; i += 4) {
           data[i] = data[i + 1] = data[i + 2] = 255;
         }
@@ -74,10 +93,14 @@
     return result;
   };
   const addOutline = async (image, reaction, token) => {
-    if (!(image instanceof HTMLImageElement) || reaction === "question") return;
+    if (!(image instanceof HTMLImageElement)) return;
     const source = image.currentSrc || image.src;
     const mask = await silhouette(image);
-    if (!mask || token !== revision || !image.isConnected || source !== (image.currentSrc || image.src)) return;
+    if (token !== revision || !image.isConnected || source !== (image.currentSrc || image.src)) return;
+    visibleBounds = mask?.reactionBounds || null;
+    layer.querySelector(".reaction-emoji")?.style.setProperty("visibility", "visible");
+    place();
+    if (!mask || reaction === "question") return;
     const outline = document.createElement("canvas");
     outline.className = "reaction-outline";
     outline.width = mask.width + 16;
@@ -104,6 +127,7 @@
     clearTimeout(timer);
     layer?.replaceChildren();
     anchor = null;
+    visibleBounds = null;
   };
   const place = () => {
     if (!anchor?.isConnected || !layer) return;
@@ -115,13 +139,13 @@
       Object.assign(outline.style, { left: `${rect.left - padX}px`, top: `${rect.top - padY}px`, width: `${rect.width + padX * 2}px`, height: `${rect.height + padY * 2}px` });
     }
     const box = document.querySelector("text-box")?.getBoundingClientRect();
-    const margin = Math.min(110, innerWidth * 0.24, innerHeight * 0.24);
+    const icon = layer.querySelector(".reaction-emoji");
+    const halfIcon = (icon?.offsetWidth || 72) / 2;
+    const margin = halfIcon * 1.1 + 8;
     const ceiling = box && box.height > 0 ? box.top - margin : innerHeight - margin;
-    const center = rect.left + rect.width / 2;
-    // Place beside the sprite, never over its face or the dialogue.
-    const x = center > innerWidth / 2 ? rect.left - 48 : rect.right + 48;
+    const x = rect.left + rect.width * (visibleBounds?.right ?? 1) + halfIcon + 10;
     layer.style.setProperty("--reaction-x", `${Math.max(margin, Math.min(innerWidth - margin, x))}px`);
-    layer.style.setProperty("--reaction-y", `${Math.max(margin, Math.min(ceiling, rect.top + rect.height * 0.22))}px`);
+    layer.style.setProperty("--reaction-y", `${Math.max(margin, Math.min(ceiling, rect.top + rect.height * (visibleBounds?.y ?? .22)))}px`);
   };
   window.initStoryReactions = () => {
     if (layer) return;
@@ -144,6 +168,7 @@
       layer.dataset.reaction = cue[1];
       const particle = document.createElement("span");
       particle.className = "reaction-emoji";
+      particle.style.visibility = "hidden";
       particle.textContent = emoji[cue[1]];
       layer.appendChild(particle);
       addOutline(anchor, cue[1], revision);
