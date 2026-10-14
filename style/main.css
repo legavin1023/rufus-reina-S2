@@ -180,9 +180,9 @@ a {
   margin: 0;
   color: var(--paper);
   font-family: var(--serif);
-  font-size: clamp(34px, 4.6vw, 74px);
+  font-size: clamp(25.5px, 3.45vw, 55.5px);
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.1;
   letter-spacing: -0.05em;
   white-space: nowrap;
 }
@@ -194,10 +194,11 @@ a {
   padding: 0 0.1em;
 }
 .title-subtitle {
-  margin: 14px 0 24px;
+  margin: 6px 0 14px;
+  line-height: 1.2;
   color: var(--paper);
   font-family: var(--serif);
-  font-size: clamp(17px, 1.5vw, 25px);
+  font-size: clamp(20px, 1.75vw, 29px);
   letter-spacing: 0.22em;
 }
 .title-divider {
@@ -223,7 +224,7 @@ a {
   color: var(--muted);
   font-family: var(--serif);
   font-size: clamp(14px, 1.25vw, 20px);
-  line-height: 2;
+  line-height: 1.5;
 }
 .anniversary-art {
   position: absolute;
@@ -234,8 +235,8 @@ a {
 }
 .anniversary-number {
   position: absolute;
-  top: 8%;
-  left: 12%;
+  top: 20%;
+  left: 6%;
   font-family: Georgia, serif;
   font-size: clamp(190px, 29vw, 460px);
   line-height: 1;
@@ -812,10 +813,10 @@ body:has(.proposal-game) #game-snow {
     letter-spacing: 0.2em;
   }
   .title-copy h1 {
-    font-size: clamp(32px, 7.6vw, 46px);
+    font-size: clamp(24px, 5.7vw, 34.5px);
   }
   .title-subtitle {
-    font-size: 17px;
+    font-size: 12.75px;
     letter-spacing: 0.14em;
   }
   .title-divider {
@@ -923,7 +924,7 @@ body:has(.proposal-game) #game-snow {
     margin-bottom: 10px;
   }
   .title-subtitle {
-    margin: 10px 0 14px;
+    margin: 4px 0 10px;
   }
   .title-description {
     margin-top: 10px;
@@ -949,7 +950,7 @@ body:has(.proposal-game) #game-snow {
     top: 9%;
   }
   .title-copy h1 {
-    font-size: 32px;
+    font-size: 24px;
   }
   .title-eyebrow {
     margin-bottom: 8px;
@@ -1103,6 +1104,7 @@ body:has(.merchant-game) game-screen centered-dialog {
 .merchant-reina img {
   position: relative;
   z-index: 1;
+  transform: scale(2);
   width: 100%;
   height: 100%;
   object-fit: contain;

@@ -315,6 +315,8 @@
           }).focus();
           return;
         }
+        // The HUD and result summary already display this game's status.
+        status.remove();
         title.textContent = "크리스마스 미니게임";
         instructions.textContent =
           "35초 동안 레이나에게 다가오는 장애물을 클릭해 막아주세요. 5번 부딪히면 실패하며 총 3번 도전할 수 있어요. 고백은 게임이 끝난 뒤 이어집니다.";
@@ -322,7 +324,7 @@
         const stage = document.createElement("div");
         stage.className = "merchant-reina";
         stage.innerHTML =
-          '<div class="reina-aura"></div><img src="./assets/characters/reina/stand_flustered.png" alt="레이나"><span class="reina-name">REINA</span>';
+          '<div class="reina-aura"></div><img src="./assets/images/상점게임.gif" alt="레이나"><span class="reina-name">REINA</span>';
         const progressBar = document.createElement("div");
         progressBar.className = "merchant-progress";
         progressBar.setAttribute("role", "progressbar");
@@ -510,10 +512,9 @@
             panel.classList.add("merchant-result");
             status.setAttribute("aria-live", "polite");
             stage.classList.remove("reina-hit");
-            stage.querySelector("img").src =
-              "./assets/characters/reina/stand_" +
-              (success ? "smile" : "crying") +
-              ".png";
+            stage.querySelector("img").src = success
+              ? "./assets/images/상점게임성공.png"
+              : "./assets/images/상점게임.gif";
             pauseGame = null;
             controls.replaceChildren();
             summary.hidden = false;
@@ -529,6 +530,9 @@
                 failures === 3
                   ? "실패 · 도전 종료"
                   : "실패 · 남은 도전 " + (3 - failures) + "회";
+              const attempts = document.createElement("p");
+              attempts.textContent = status.textContent;
+              summary.appendChild(attempts);
               button(
                 controls,
                 failures === 3 ? "이야기로 돌아가기" : "다시 도전하기",
@@ -539,7 +543,7 @@
             }
           };
           stage.querySelector("img").src =
-            "./assets/characters/reina/stand_flustered.png";
+            "./assets/images/상점게임.gif";
           const frame = (now) => {
             if (paused || document.hidden) {
               last = null;

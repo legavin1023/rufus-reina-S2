@@ -274,6 +274,7 @@
 .merchant-result .merchant-hud {
   opacity: 0.65;
 }
+/* GIF and success PNG share .merchant-reina img sizing and scale(2). */
 /* Shell-game layout only; decorative cases and rings removed. */
 .ring-game .shell-game-field {
   height: 250px;

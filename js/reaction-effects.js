@@ -92,34 +92,13 @@
     masks.set(source, result);
     return result;
   };
-  const addOutline = async (image, reaction, token) => {
+  const positionFromImage = async (image, token) => {
     if (!(image instanceof HTMLImageElement)) return;
     const source = image.currentSrc || image.src;
     const mask = await silhouette(image);
     if (token !== revision || !image.isConnected || source !== (image.currentSrc || image.src)) return;
     visibleBounds = mask?.reactionBounds || null;
     layer.querySelector(".reaction-emoji")?.style.setProperty("visibility", "visible");
-    place();
-    if (!mask || reaction === "question") return;
-    const outline = document.createElement("canvas");
-    outline.className = "reaction-outline";
-    outline.width = mask.width + 16;
-    outline.height = mask.height + 16;
-    const ctx = outline.getContext("2d");
-    const warm = reaction === "heart" || reaction === "glitter";
-    const angry = reaction.startsWith("anger");
-    const color = document.documentElement.classList.contains("theme-off") ? "#888" : angry ? "#cb7373" : warm ? "#edafc8" : "#e6c487";
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 5;
-    for (const [x, y] of [[-2, 0], [2, 0], [0, -2], [0, 2]]) ctx.drawImage(mask, 8 + x, 8 + y);
-    ctx.shadowBlur = 0;
-    ctx.globalCompositeOperation = "source-in";
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, outline.width, outline.height);
-    // Erase the complete interior: only the external edge remains visible.
-    ctx.globalCompositeOperation = "destination-out";
-    ctx.drawImage(mask, 8, 8);
-    layer.prepend(outline);
     place();
   };
   const clear = () => {
@@ -132,12 +111,6 @@
   const place = () => {
     if (!anchor?.isConnected || !layer) return;
     const rect = anchor.getBoundingClientRect();
-    const outline = layer.querySelector(".reaction-outline");
-    if (outline) {
-      const padX = rect.width * 8 / (outline.width - 16);
-      const padY = rect.height * 8 / (outline.height - 16);
-      Object.assign(outline.style, { left: `${rect.left - padX}px`, top: `${rect.top - padY}px`, width: `${rect.width + padX * 2}px`, height: `${rect.height + padY * 2}px` });
-    }
     const box = document.querySelector("text-box")?.getBoundingClientRect();
     const icon = layer.querySelector(".reaction-emoji");
     const halfIcon = (icon?.offsetWidth || 72) / 2;
@@ -171,7 +144,7 @@
       particle.style.visibility = "hidden";
       particle.textContent = emoji[cue[1]];
       layer.appendChild(particle);
-      addOutline(anchor, cue[1], revision);
+      positionFromImage(anchor, revision);
       place();
       timer = setTimeout(clear, 2400);
     });

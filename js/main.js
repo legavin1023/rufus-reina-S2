@@ -50,27 +50,27 @@ $_ready(() => {
     window.initStoryReactions();
     const mainMenu = monogatari.component("main-menu");
     const titleScreen = document.querySelector("main-screen");
-    // if (titleScreen && !titleScreen.querySelector('.title-composition')) {
-    //   titleScreen.insertAdjacentHTML('afterbegin', `
-    //     <div class="title-composition">
-    //       <div class="title-copy">
-    //         <p class="title-eyebrow">RUFUS &amp; REINA · 15TH ANNIVERSARY</p>
-    //         <h1>루퍼스 <span>&amp;</span> 레이나</h1>
-    //         <p class="title-subtitle">열다섯 번째 크리스마스</p>
-    //         <div class="title-divider" aria-hidden="true"><span>✦</span></div>
-    //         <p class="title-description">지금까지의 15년처럼,<br>앞으로도 평생을 너와 함께.</p>
-    //       </div>
-    //       <div class="anniversary-art" aria-hidden="true">
-    //         <span class="anniversary-number">15</span>
-    //         <div class="anniversary-orbit"></div>
-    //         <div class="title-ring ring-one"></div><div class="title-ring ring-two"></div>
-    //         <span class="art-star star-one">✦</span><span class="art-star star-two">✧</span>
-    //         <span class="anniversary-caption">FIFTEEN YEARS, AND FOREVER</span>
-    //       </div>
-    //     </div>
-    //     <p class="title-footer">A CHRISTMAS LOVE STORY <span>12.24</span></p>
-    //   `);
-    // }
+    if (titleScreen && !titleScreen.querySelector(".title-composition")) {
+      titleScreen.insertAdjacentHTML(
+        "afterbegin",
+        `
+        <div class="title-composition">
+          <div class="title-copy">
+            <p class="title-eyebrow">RUFUS &amp; REINA · 15TH ANNIVERSARY</p>
+            <h1>루퍼스 <span>&amp;</span> 레이나</h1>
+            <p class="title-subtitle">✦열다섯 번째 크리스마스✦</p>
+            <div class="title-divider" aria-hidden="true"><span>✦</span></div>
+            <p class="title-description">지금까지의 15년처럼,<br>앞으로도 평생을 너와 함께.</p>
+          </div>
+          <div class="anniversary-art" aria-hidden="true">
+            <span class="anniversary-number">15</span>
+            <div class="anniversary-orbit"></div>
+            <span class="art-star star-one">✦</span><span class="art-star star-two">✧</span>
+          </div>
+        </div>
+      `,
+      );
+    }
 
     // Temporary visual and minigame testing controls; never advance the story.
     document.documentElement.classList.add("theme-off");
