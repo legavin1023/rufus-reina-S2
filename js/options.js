@@ -88,7 +88,8 @@ monogatari.settings({
   // to portrait or landscape, a warning message will be displayed so the
   // player rotates its device.
   // Possible values: any, portrait or landscape.
-  Orientation: "landscape",
+  // mobile-display.js owns the landscape guard to avoid duplicate prompts.
+  Orientation: "any",
 
   // Allow players to skip through the game. Similar to the auto play feature,
   // skipping will allow players to go through the game really fast.

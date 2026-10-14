@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const button = panel.querySelector("button");
   const message = panel.querySelector("p");
   const fullscreen = () => document.fullscreenElement || document.webkitFullscreenElement;
-  const landscape = () => window.innerWidth > window.innerHeight;
+  const orientationQuery = matchMedia("(orientation: landscape)");
+  const landscape = () => orientationQuery.matches;
   let started = false;
   let busy = false;
   let fullscreenUnavailable = !canFullscreen();
@@ -32,7 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function update() {
     const portrait = !landscape();
-    panel.hidden = started && !portrait;
+    if (!portrait) started = true;
+    panel.hidden = !portrait;
     root.classList.toggle("mobile-portrait", portrait);
     document.querySelector("#monogatari")?.toggleAttribute("inert", !panel.hidden);
     const available = canFullscreen() && !fullscreenUnavailable && !standalone();
@@ -79,6 +81,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   button.addEventListener("click", enter);
   window.addEventListener("resize", update);
+  window.addEventListener("orientationchange", () => {
+    update();
+    setTimeout(update, 250);
+  });
+  window.visualViewport?.addEventListener("resize", update);
+  orientationQuery.addEventListener?.("change", update);
   document.addEventListener("fullscreenchange", update);
   document.addEventListener("webkitfullscreenchange", update);
   window.screen?.orientation?.addEventListener?.("change", update);
