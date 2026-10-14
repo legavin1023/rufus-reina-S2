@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const button = panel.querySelector("button");
   const message = panel.querySelector("p");
   const fullscreen = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const landscape = () => window.innerWidth > window.innerHeight;
   let started = false;
   let busy = false;
   let fullscreenUnavailable = !canFullscreen();
@@ -30,10 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function update() {
-    panel.hidden = started;
+    const portrait = !landscape();
+    panel.hidden = started && !portrait;
+    root.classList.toggle("mobile-portrait", portrait);
+    document.querySelector("#monogatari")?.toggleAttribute("inert", !panel.hidden);
     const available = canFullscreen() && !fullscreenUnavailable && !standalone();
-    message.textContent = available ? "버튼을 눌러 게임을 시작하세요. 전체화면으로 전환합니다." : "버튼을 눌러 게임을 시작하세요.";
-    button.textContent = available ? "전체화면으로 시작" : "게임 시작";
+    message.textContent = portrait
+      ? "가로 화면에서만 플레이할 수 있어요. 기기를 가로로 돌려주세요."
+      : available ? "가로 전체화면으로 게임을 시작하세요." : "가로 화면으로 게임을 시작하세요.";
+    button.textContent = available ? "가로 전체화면" : "게임 시작";
+    button.hidden = started && portrait && !available;
+    if (portrait) window.dispatchEvent(new Event("mobileorientationblocked"));
     let restore = document.querySelector(".mobile-fullscreen-button");
     if (!restore) {
       restore = document.createElement("button");
@@ -58,9 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
         try { await bounded(requestFullscreen.call(root)); }
         catch (_) { fullscreenUnavailable = true; }
       }
-      if (fullscreen() && typeof window.screen?.orientation?.lock === "function") {
+      if ((fullscreen() || standalone()) && typeof window.screen?.orientation?.lock === "function") {
         try { await bounded(window.screen.orientation.lock("landscape")); }
-        catch (_) { /* Playing remains available without an orientation lock. */ }
+        catch (_) { /* The portrait guard remains until the user rotates. */ }
       }
     } finally {
       busy = false;
