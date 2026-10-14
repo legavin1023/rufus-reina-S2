@@ -38,7 +38,7 @@ let scenario_Ch3_GoldRing_Fail = [
   "ru {angry}그런 중요한 결정은, 금전에 관련한 문제는, 저와 함께 의논해주셨으면 합니다.{/angry}",
 
   "show character ru terrifying at right",
-  "ru {terrifying}무엇보다, 어떤 인간이 그런 이상한 소리로 당신을 현혹한 겁니까?{/terrifying}",
+  "ru {angry}무엇보다, 어떤 인간이 그런 이상한 소리로 당신을 현혹한 겁니까?{/angry}",
   "ru {glitch}가만히 둘 수 없겠군요…….{/glitch}",
 
   "show character r flustered at left",

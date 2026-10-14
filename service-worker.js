@@ -4,7 +4,7 @@
 const name = "Monogatari";
 
 // The cache version.
-const version = "0.1.6";
+const version = "0.1.9";
 
 // Name of the Cache Storage bucket this worker owns.
 const cacheName = `${name}-v${version}`;
@@ -26,6 +26,8 @@ const files = [
 
   // Style Sheets
   "style/main.css",
+  "style/minigame.css",
+  "style/reaction-effects.css",
 
   // JavaScript Files
   "js/options.js",
@@ -34,6 +36,7 @@ const files = [
   "js/main.js",
   "js/mobile-display.js",
   "js/minigame_shell.js",
+  "js/reaction-effects.js",
 
   // App Images
   "favicon.ico",
@@ -96,11 +99,11 @@ function putInCache(request, response) {
 // markup updates reach players as soon as they are online.
 async function networkFirst(request) {
   try {
-    const response = await fetch(request);
+    const response = await fetch(request, { cache: "no-cache" });
     putInCache(request, response);
     return response;
   } catch (error) {
-    const cached = await caches.match(request);
+    const cached = await (await caches.open(cacheName)).match(request);
 
     if (cached) {
       return cached;
@@ -209,16 +212,15 @@ self.addEventListener("fetch", (event) => {
   const sameOrigin = url.origin === self.location.origin;
 
   if (sameOrigin) {
-    // Game media: cache-first (large and effectively immutable per release).
+    // Revalidate game media on entry too, including replaced PNG/GIF files.
     if (url.pathname.startsWith("/assets/")) {
-      event.respondWith(cacheFirst(request));
+      event.respondWith(networkFirst(request));
       return;
     }
 
-    // Engine + game code (JS/CSS outside assets/): stale-while-revalidate so
-    // updates land on the next load without a version bump.
+    // Prefer current JS/CSS on this load, rather than serving an old copy first.
     if (/\.(?:js|css)$/.test(url.pathname)) {
-      event.respondWith(staleWhileRevalidate(request));
+      event.respondWith(networkFirst(request));
       return;
     }
   }

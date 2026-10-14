@@ -22,8 +22,22 @@
     <link rel="manifest" href="manifest.json" />
 
     <!-- Monogatari CSS Libraries -->
+    <script>
+      // Upgrade existing installations on entry; refresh once after activation.
+      if ("serviceWorker" in navigator) {
+        const hadController = !!navigator.serviceWorker.controller;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (hadController) location.reload();
+        }, { once: true });
+        navigator.serviceWorker.getRegistration().then((registration) => {
+          if (registration) return registration.update();
+        }).catch(() => {});
+      }
+    </script>
     <link rel="stylesheet" href="./engine/core/monogatari.css" />
     <link rel="stylesheet" href="./style/main.css" />
+    <link rel="stylesheet" href="./style/minigame.css" />
+    <link rel="stylesheet" href="./style/reaction-effects.css" />
 
     <!-- Debug Library -->
     <script src="./engine/debug/debug.js"></script>
@@ -51,6 +65,7 @@
     <script src="./js/scenarios/04_epilogue/epilogue.js"></script>
 
     <script src="./js/script.js"></script>
+    <script src="./js/reaction-effects.js"></script>
     <script src="./js/main.js"></script>
   </head>
 

@@ -1,0 +1,74 @@
+/* One emotion icon per reaction. */
+#monogatari .story-reactions {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  overflow: visible;
+}
+#monogatari .story-reactions .reaction-emoji {
+  position: absolute;
+  left: var(--reaction-x);
+  top: var(--reaction-y);
+  display: block;
+  width: 72px;
+  height: 72px;
+  font-size: 54px;
+  line-height: 72px;
+  text-align: center;
+  background: transparent;
+  filter: brightness(0) invert(1)
+    drop-shadow(1px 0 0 #39424c)
+    drop-shadow(-1px 0 0 #39424c)
+    drop-shadow(0 1px 0 #39424c)
+    drop-shadow(0 -1px 0 #39424c) !important;
+  animation: reaction-pop 2.2s ease-out both;
+}
+#monogatari:has([data-screen]:not([data-screen="game"]).active)
+  .story-reactions,
+#monogatari:has(.proposal-game) .story-reactions {
+  visibility: hidden;
+}
+@keyframes reaction-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -55%) scale(1.08);
+  }
+  30%,
+  75% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -65%) scale(0.95);
+  }
+}
+@keyframes reaction-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  25%,
+  65% {
+    opacity: 0.65;
+  }
+}
+@media (max-height: 450px), (max-width: 500px) {
+  #monogatari .story-reactions .reaction-emoji {
+    width: 60px;
+    height: 60px;
+    font-size: 44px;
+    line-height: 60px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #monogatari .story-reactions .reaction-emoji {
+    animation: reaction-fade 2.2s both;
+    transform: translate(-50%, -50%);
+  }
+}
