@@ -363,12 +363,9 @@
         const hud = document.createElement("div");
         hud.className = "merchant-hud";
         hud.innerHTML =
-          '<div><small>남은 시간</small><strong class="hud-time">35<small>초</small></strong></div><div><small>남은 충돌 기회</small><span class="hud-hearts"></span></div><div><small>연속 제거</small><strong class="hud-combo">0</strong></div><div><small>도전</small><strong class="hud-attempt">1 / 3</strong></div>';
+          '<span class="hud-hearts"></span>';
         panel.querySelector(".proposal-game-card").appendChild(hud);
-        const timeLabel = hud.querySelector(".hud-time");
         const hearts = hud.querySelector(".hud-hearts");
-        const comboLabel = hud.querySelector(".hud-combo");
-        const attemptLabel = hud.querySelector(".hud-attempt");
         const summary = document.createElement("div");
         summary.className = "merchant-summary";
         summary.hidden = true;
@@ -424,11 +421,8 @@
           let combo = 0,
             bestCombo = 0;
           const updateHud = () => {
-            timeLabel.innerHTML = `${Math.max(0, Math.ceil((35000 - elapsed) / 1000))}<small>초</small>`;
             hearts.textContent = "♥".repeat(5 - missed) + "♡".repeat(missed);
             hearts.setAttribute("aria-label", `남은 충돌 기회 ${5 - missed}회`);
-            comboLabel.textContent = String(combo);
-            attemptLabel.textContent = `${failures + 1} / 3`;
           };
           updateHud();
           const pauseButton = button(controls, "일시정지 · Esc", () =>
@@ -518,7 +512,7 @@
             pauseGame = null;
             controls.replaceChildren();
             summary.hidden = false;
-            summary.innerHTML = `<strong>${success ? "마음을 가다듬었어요" : "잠깐 숨을 고르고"}</strong><p>제거 ${cleared}개 · 최대 연속 ${bestCombo}개 · 충돌 ${missed}회</p>`;
+            summary.innerHTML = `<strong>${success ? "마음을 가다듬었어요" : "잠깐 숨을 고르고"}</strong>`;
             if (success) {
               status.textContent = "성공";
               button(controls, "고백 이어서 보기", () =>
@@ -530,9 +524,6 @@
                 failures === 3
                   ? "실패 · 도전 종료"
                   : "실패 · 남은 도전 " + (3 - failures) + "회";
-              const attempts = document.createElement("p");
-              attempts.textContent = status.textContent;
-              summary.appendChild(attempts);
               button(
                 controls,
                 failures === 3 ? "이야기로 돌아가기" : "다시 도전하기",

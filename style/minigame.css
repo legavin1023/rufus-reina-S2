@@ -166,9 +166,9 @@
   gap: clamp(12px, 3vw, 36px);
   padding: 10px 24px;
   margin: 8px 0;
-  border: 1px solid var(--line);
+  border: 0;
   border-radius: 12px;
-  background: #101923e8;
+  background: transparent;
   pointer-events: none;
 }
 .merchant-hud > div {
