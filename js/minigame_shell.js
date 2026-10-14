@@ -319,7 +319,7 @@
         status.remove();
         title.textContent = "크리스마스 미니게임";
         instructions.textContent =
-          "35초 동안 레이나에게 다가오는 장애물을 클릭해 막아주세요. 5번 부딪히면 실패하며 총 3번 도전할 수 있어요. 고백은 게임이 끝난 뒤 이어집니다.";
+          "35초 동안 레이나에게 다가오는 장애물을 클릭해 막아주세요.";
         items.className = "merchant-field";
         const stage = document.createElement("div");
         stage.className = "merchant-reina";
@@ -362,8 +362,7 @@
         let failures = 0;
         const hud = document.createElement("div");
         hud.className = "merchant-hud";
-        hud.innerHTML =
-          '<span class="hud-hearts"></span>';
+        hud.innerHTML = '<span class="hud-hearts"></span>';
         panel.querySelector(".proposal-game-card").appendChild(hud);
         const hearts = hud.querySelector(".hud-hearts");
         const summary = document.createElement("div");
@@ -534,8 +533,7 @@
               ).focus();
             }
           };
-          stage.querySelector("img").src =
-            "./assets/images/상점게임.gif";
+          stage.querySelector("img").src = "./assets/images/상점게임.gif";
           const frame = (now) => {
             if (paused || document.hidden) {
               last = null;

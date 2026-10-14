@@ -4,7 +4,7 @@
 const name = "Monogatari";
 
 // The cache version.
-const version = "0.1.9";
+const version = "0.1.10";
 
 // Name of the Cache Storage bucket this worker owns.
 const cacheName = `${name}-v${version}`;
@@ -99,7 +99,15 @@ function putInCache(request, response) {
 // markup updates reach players as soon as they are online.
 async function networkFirst(request) {
   try {
-    const response = await fetch(request, { cache: "no-cache" });
+    const url = new URL(request.url);
+    const isGameCode = url.origin === self.location.origin && /\.(?:js|css)$/.test(url.pathname);
+    let freshRequest = request;
+    if (isGameCode) {
+      // Scenario dialogue lives in JS. Bypass browser/CDN copies on each entry.
+      url.searchParams.set("_fresh", String(Date.now()));
+      freshRequest = new Request(url.href, request);
+    }
+    const response = await fetch(freshRequest, { cache: isGameCode ? "no-store" : "no-cache" });
     putInCache(request, response);
     return response;
   } catch (error) {
