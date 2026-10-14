@@ -394,6 +394,7 @@
         listen(document, "visibilitychange", () => {
           if (document.hidden) pauseGame?.(true);
         });
+        listen(window, "mobileorientationblocked", () => pauseGame?.(true));
         const round = () => {
           cleanup();
           items.replaceChildren();
