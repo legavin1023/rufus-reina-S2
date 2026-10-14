@@ -57,10 +57,10 @@ $_ready(() => {
         <div class="title-composition">
           <div class="title-copy">
             <p class="title-eyebrow">RUFUS &amp; REINA · 15TH ANNIVERSARY</p>
-            <h1>루퍼스 <span>&amp;</span> 레이나</h1>
-            <p class="title-subtitle">✦열다섯 번째 크리스마스✦</p>
+            <h1>루퍼이나</h1>
+            <p class="title-subtitle">✦두근두근 프로포즈 대작전✦</p>
             <div class="title-divider" aria-hidden="true"><span>✦</span></div>
-            <p class="title-description">지금까지의 15년처럼,<br>앞으로도 평생을 너와 함께.</p>
+            <p class="title-description"> ~15주년이니까 이제는 결혼이 하고 싶어~</p>
           </div>
           <div class="anniversary-art" aria-hidden="true">
             <span class="anniversary-number">15</span>
