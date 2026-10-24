@@ -217,7 +217,7 @@
           const renderBox = (el, ring, label, closed = false) => {
             el.dataset.ring = closed ? "closed" : ring;
             el.classList.toggle("box-open", !closed);
-            putImage(el, closed ? "2. 기울어진 선물상자-아이디X.png" : ringImages[ring]);
+            putImage(el, closed ? ringImages.empty : ringImages[ring]);
             if (!closed && ring === "diamond") {
               const sparkles = document.createElement("span");
               sparkles.className = "diamond-sparkles";
