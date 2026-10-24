@@ -1,4 +1,9 @@
 /* Dedicated minigame presentation; story layout remains in main.css. */
+@media (max-width: 1024px) and (max-height: 500px), (pointer: coarse) {
+  .merchant-game .reina-name {
+    bottom: 2px;
+  }
+}
 .globe-game,
 .merchant-game {
   -webkit-tap-highlight-color: transparent;
