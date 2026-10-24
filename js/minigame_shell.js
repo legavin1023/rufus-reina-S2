@@ -8,10 +8,28 @@
     ["🍋", "레모네이드"],
     ["🐈", "지나가는 고양이"],
     ["⛸️", "스케이트를 타는 어린이"],
-    ["🪙", "탑처럼 쌓은 금화"],
     ["🦌", "루돌프 인형"],
     ["📦", "짐을 나르는 상인들"],
   ];
+  const objectImages = [
+    "1. 눈사람-아이디X.png",
+    "2. 기울어진 선물상자-아이디X.png",
+    "3. 쏟아지는 코코아-아이디X.png",
+    "9. 스노우볼-아이디X.png",
+    "4. 쏟아지는 레모네이드-아이디X.png",
+    "5. 검은 고양이-아이디X.png",
+    "6-1. 스케이트 소녀-아이디X.png",
+    "7. 루돌프 인형-아이디X.png",
+    "8. 상인-아이디X.png",
+  ];
+  const putImage = (element, filename) => {
+    const image = document.createElement("img");
+    image.className = "minigame-art";
+    image.src = "./assets/images/" + filename;
+    image.alt = "";
+    image.draggable = false;
+    element.replaceChildren(image);
+  };
   function shuffle(items) {
     const result = [...items];
     for (let i = result.length - 1; i > 0; i--) {
@@ -168,7 +186,7 @@
           globe.className = "snow-globe";
           globe.setAttribute("aria-label", "스노 글로브 흔들기");
           globe.innerHTML =
-            '<span class="globe-glass" aria-hidden="true"><span class="globe-tree"></span><span class="globe-star">★</span><span class="globe-snow"></span><span class="globe-ground"></span></span><span class="globe-pedestal" aria-hidden="true"></span>';
+            '<img class="globe-image" src="./assets/images/9. 스노우볼-아이디X.png" alt="" draggable="false"><span class="globe-snow" aria-hidden="true"></span>';
           globe.focus();
           return;
         }
@@ -190,16 +208,29 @@
           };
           items.className = "shell-game-field";
           panel.classList.add("ring-game");
-          const ringEmoji = {
-            empty: "📦",
-            candy: "🍬",
-            gold: "💍",
-            diamond: "💎",
+          const ringImages = {
+            empty: "10. 빈 반지상자-아이디X.png",
+            candy: "11. 보석반지-아이디X.png",
+            gold: "12. 금반지-아이디X.png",
+            diamond: "13. 다이아 백금반지-아이디X.png",
           };
           const renderBox = (el, ring, label, closed = false) => {
             el.dataset.ring = closed ? "closed" : ring;
             el.classList.toggle("box-open", !closed);
-            el.textContent = closed ? "🎁" : ringEmoji[ring];
+            putImage(el, closed ? "2. 기울어진 선물상자-아이디X.png" : ringImages[ring]);
+            if (!closed && ring === "diamond") {
+              const sparkles = document.createElement("span");
+              sparkles.className = "diamond-sparkles";
+              sparkles.setAttribute("aria-hidden", "true");
+              [[45.8, 49.8], [43, 47.5], [48.5, 48.5], [44, 52], [48, 51.5]].forEach(([x, y], index) => {
+                const particle = document.createElement("i");
+                particle.style.left = x + "%";
+                particle.style.top = y + "%";
+                particle.style.setProperty("--sparkle-delay", `${index * .37}s`);
+                sparkles.appendChild(particle);
+              });
+              el.appendChild(sparkles);
+            }
             el.setAttribute("aria-label", label);
           };
           let phase = "ready";
@@ -340,12 +371,11 @@
           "lemon",
           "cat",
           "skater",
-          "coins",
           "deer",
           "merchant",
         ];
         const lives = [
-          6200, 4400, 5000, 5500, 4800, 5500, 3400, 5100, 4700, 3700,
+          6200, 4400, 5000, 5500, 4800, 5500, 3400, 4700, 3700,
         ];
         const repeatable = new Set([
           "snowman",
@@ -353,7 +383,6 @@
           "cocoa",
           "globe",
           "lemon",
-          "coins",
           "deer",
         ]);
         const reducedMotion = window.matchMedia?.(
@@ -624,10 +653,14 @@
                   combo++;
                   bestCombo = Math.max(bestCombo, combo);
                   updateHud();
+                  if (moves[index] === "skater") {
+                    putImage(el, "6-2. 스케이트 소녀-아이디X.png");
+                  }
                   knockAway(el);
                   burst(obstacle.x * 100, obstacle.y * 100);
                 });
                 el.className = "merchant-obstacle object-" + moves[index];
+                if (objectImages[index]) putImage(el, objectImages[index]);
                 el.style.left = origin[0] * items.clientWidth + "px";
                 el.style.top = origin[1] * items.clientHeight + "px";
                 el.style.transform = "translate(-50%, -50%) scale(.8)";

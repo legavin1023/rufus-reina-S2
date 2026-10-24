@@ -1,125 +1,76 @@
 /* Dedicated minigame presentation; story layout remains in main.css. */
+.proposal-game .minigame-art {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  max-width: none;
+  object-fit: contain;
+  vertical-align: middle;
+  pointer-events: none;
+  user-select: none;
+}
+.merchant-game .merchant-obstacle .minigame-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2.2em;
+  height: 2.2em;
+  max-height: none;
+  transform: translate(-50%, -50%);
+}
 .proposal-game {
-  --paper: #f5efe5;
-  --muted: #b3bdc3;
-  --gold: #d5b989;
-  --rose: #d5a3a5;
-  --line: rgba(213, 185, 137, 0.28);
+  --paper: #f5e5eb;
+  --muted: #cda9b6;
+  --gold: #d589a5;
+  --rose: #d5a3b5;
+  --line: rgba(213, 137, 165, 0.28);
 }
 .globe-game .globe-field {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: minmax(0, 1fr);
   place-items: center;
-  margin: 24px 0;
+  margin: 4px 0 0;
 }
+.globe-game .proposal-game-card {
+  padding-top: 20px;
+  padding-bottom: 24px;
+}
+.globe-game .game-status {
+  margin: 0;
+  min-height: 1.5em;
+  font-size: 20px;
+}
+.globe-game .game-controls { margin-top: 0; }
 .globe-game .snow-globe {
   position: relative;
   display: block;
-  width: 230px;
-  height: 265px;
+  width: min(460px, 80vw);
+  height: auto;
+  aspect-ratio: 1;
   padding: 0;
   border: 0;
   background: none;
   box-shadow: none;
 }
-.globe-glass {
-  position: absolute;
-  inset: 0 0 35px;
-  border: 2px solid #c5dfec88;
-  border-radius: 50%;
-  outline: 1px solid #c5dfec55;
-  overflow: hidden;
-  background: radial-gradient(
-    circle at 30% 20%,
-    #ffffff40,
-    #acd7ec14 40%,
-    #132b3d80
-  );
-  box-shadow:
-    inset -15px -10px 30px #d2edff18,
-    0 0 50px #b0e2ff15;
-}
-.globe-glass::after {
-  content: "";
-  position: absolute;
-  left: 17%;
-  top: 13%;
-  width: 22%;
-  height: 12%;
-  border-radius: 50%;
-  background: #ffffff38;
-  transform: rotate(-35deg);
-}
-.globe-ground {
-  position: absolute;
-  bottom: -10px;
-  left: 8%;
-  right: 8%;
-  height: 65px;
-  background: #e2edf3;
-  border-radius: 50%;
-}
-.globe-tree {
-  position: absolute;
-  bottom: 45px;
-  left: calc(50% - 47px);
-  width: 94px;
-  height: 120px;
-  padding-top: 2px;
-  background: linear-gradient(135deg, #709c8e, #224d46);
-  clip-path: polygon(
-    50% 0,
-    78% 35%,
-    65% 35%,
-    90% 65%,
-    75% 65%,
-    100% 90%,
-    56% 90%,
-    56% 100%,
-    44% 100%,
-    44% 90%,
-    0 90%,
-    25% 65%,
-    10% 65%,
-    35% 35%,
-    22% 35%
-  );
-  color: #ffe4a1;
-  font-size: 22px;
-}
-.globe-star {
-  position: absolute;
-  bottom: 154px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-  color: #ffe4a1;
-  font-size: 22px;
-  z-index: 2;
-}
-.globe-pedestal {
-  position: absolute;
-  bottom: 0;
-  left: 16%;
-  width: 68%;
-  height: 49px;
-  border-radius: 15px 15px 8px 8px;
-  border: 1px solid #c7a86c;
-  outline: 1px solid #c7a86c55;
-  background: linear-gradient(100deg, #483c32, #927b55, #483c32);
-  color: #f4d9a1;
-  font:
-    italic 28px/49px Georgia,
-    serif;
+.globe-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
 }
 .globe-snow {
   position: absolute;
-  inset: 0;
+  left: 19%;
+  top: 11%;
+  width: 62%;
+  height: 56%;
+  overflow: hidden;
+  border-radius: 50%;
   z-index: 3;
+  pointer-events: none;
 }
 .globe-snow i {
   position: absolute;
@@ -128,8 +79,8 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: #fff4c9;
-  box-shadow: 0 0 4px #fff;
+  background: #ffffff;
+  box-shadow: 0 0 4px #ffffff;
   animation: globe-fall var(--duration) var(--delay) linear 2 both;
 }
 .globe-shaking {
@@ -137,14 +88,16 @@
 }
 @keyframes globe-fall {
   from {
-    transform: translate(0, 0);
+    top: -4%;
+    transform: translateX(0);
     opacity: 0;
   }
   15% {
     opacity: 1;
   }
   to {
-    transform: translate(12px, 225px);
+    top: 104%;
+    transform: translateX(8px);
     opacity: 0;
   }
 }
@@ -224,7 +177,7 @@
   padding: 16px 26px;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: #101923ed;
+  background: #231017ed;
 }
 .merchant-summary strong {
   font-family: var(--serif);
@@ -245,7 +198,7 @@
   z-index: 100;
   display: grid;
   place-items: center;
-  background: #080f19ee;
+  background: #19080eee;
   backdrop-filter: blur(12px);
 }
 .merchant-pause > div {
@@ -254,7 +207,7 @@
   text-align: center;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: #1b2a37;
+  background: #371b25;
 }
 .merchant-pause h3 {
   font: 26px var(--serif);
@@ -277,12 +230,47 @@
 /* GIF and success PNG share .merchant-reina img sizing and scale(2). */
 /* Shell-game layout only; decorative cases and rings removed. */
 .ring-game .shell-game-field {
-  height: 250px;
+  height: 340px;
+}
+.ring-game .proposal-game-card {
+  width: min(1160px, 100%);
+}
+.ring-game .shell-game-box .minigame-art,
+.ring-game .shell-game-box .diamond-sparkles {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5em;
+  height: 5em;
+  max-height: none;
+  transform: translate(-50%, -50%);
+}
+.ring-game .diamond-sparkles {
+  pointer-events: none;
+  z-index: 1;
+}
+.ring-game .diamond-sparkles i {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  clip-path: polygon(50% 0, 62% 37%, 100% 50%, 62% 63%, 50% 100%, 38% 63%, 0 50%, 38% 37%);
+  animation: diamond-twinkle 2s var(--sparkle-delay) ease-in-out infinite both;
+}
+.ring-game .diamond-sparkles i:first-child { width: 17px; height: 17px; }
+.ring-game .shell-game-box[data-ring="closed"] .diamond-sparkles { display: none; }
+@keyframes diamond-twinkle {
+  0%, 65%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.2) rotate(0deg); }
+  28% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(35deg); }
+  45% { opacity: .6; transform: translate(-50%, -65%) scale(.55) rotate(65deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ring-game .diamond-sparkles i { animation: none; opacity: .7; transform: translate(-50%, -50%) scale(.6); }
 }
 .ring-game .shell-game-box {
-  top: 48px;
+  top: 0;
   font-size: 64px;
-  min-height: 160px;
+  min-height: 320px;
   display: grid;
   justify-items: center;
   gap: 12px;
@@ -303,14 +291,15 @@
     margin-bottom: 4px;
   }
   .globe-game .game-status {
-    margin: 6px 0;
+    margin: 0;
   }
   .globe-game .globe-field {
     margin: 0;
-    height: 160px;
+    height: auto;
   }
   .globe-game .snow-globe {
-    transform: scale(0.6);
+    width: min(276px, 70vw);
+    transform: none;
     animation: none;
   }
   .merchant-hud {
@@ -345,12 +334,17 @@
     margin-bottom: 4px;
   }
   .ring-game .shell-game-field {
-    height: 155px;
+    height: 220px;
     margin: 0;
   }
   .ring-game .shell-game-box {
-    top: 8px;
-    min-height: 135px;
+    top: 0;
+    min-height: 220px;
+  }
+  .ring-game .shell-game-box .minigame-art,
+  .ring-game .shell-game-box .diamond-sparkles {
+    width: min(5em, 32vw, 60vh);
+    height: min(5em, 32vw, 60vh);
   }
 }
 @media (max-width: 480px) {

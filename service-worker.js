@@ -28,6 +28,7 @@ const files = [
   "style/main.css",
   "style/minigame.css",
   "style/reaction-effects.css",
+  "style/dialogue.css",
 
   // JavaScript Files
   "js/options.js",
