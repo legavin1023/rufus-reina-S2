@@ -1,4 +1,20 @@
 /* Dedicated minigame presentation; story layout remains in main.css. */
+.globe-game,
+.merchant-game {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.globe-game button:focus:not(:focus-visible),
+.merchant-game button:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.globe-game img,
+.merchant-game img {
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
 .proposal-game .minigame-art {
   display: inline-block;
   width: 1em;
