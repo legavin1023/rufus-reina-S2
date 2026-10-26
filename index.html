@@ -23,11 +23,10 @@
 
     <!-- Monogatari CSS Libraries -->
     <script>
-      // Upgrade existing installations on entry; refresh once after activation.
+      // Reload once when a worker takes control, including the first visit.
       if ("serviceWorker" in navigator) {
-        const hadController = !!navigator.serviceWorker.controller;
         navigator.serviceWorker.addEventListener("controllerchange", () => {
-          if (hadController) location.reload();
+          location.reload();
         }, { once: true });
         if ("caches" in window) {
           caches.keys().then((keys) => Promise.all(
