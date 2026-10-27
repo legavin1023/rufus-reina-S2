@@ -2,6 +2,7 @@
 "use strict";
 (() => {
   const files = {
+    globe: "스노우볼 Jingle Bells (mp3cut.net).mp3",
     shuffle: "야바위 섞는 소리 효과음.mp3",
     diamond: "야뱌위 다이아반지 찾았을때 뾰로롱.mp3",
     save: "저장 page-flip-8.wav",

@@ -129,6 +129,7 @@
           if (finished) return;
           finished = true;
           window.gameSfx?.stop("shuffle");
+          window.gameSfx?.stop("globe");
           if (key) this.engine.storage()[key] = value;
           cleanup();
           disposers.forEach((dispose) => dispose());
@@ -160,6 +161,8 @@
           continueButton.style.visibility = "hidden";
           continueButton.setAttribute("aria-hidden", "true");
           const globe = button(items, "", () => {
+            window.gameSfx?.stop("globe");
+            window.gameSfx?.play("globe");
             globe.classList.remove("globe-shaking");
             void globe.offsetWidth;
             globe.classList.add("globe-shaking");
