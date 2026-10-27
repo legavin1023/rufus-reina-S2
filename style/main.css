@@ -666,6 +666,27 @@ save-slot [data-delete] {
   border: 1px solid var(--line);
   color: var(--gold);
 }
+save-slot [data-delete] > span {
+  display: none;
+}
+save-slot [data-delete]::before,
+save-slot [data-delete]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 42%;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  pointer-events: none;
+}
+save-slot [data-delete]::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+save-slot [data-delete]::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
 credits-screen [data-content="credits"],
 help-screen .help__sections {
   width: min(900px, 100%);

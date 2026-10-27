@@ -35,7 +35,7 @@ monogatari.assets("gallery", {});
 
 // Define the music used in the game.
 monogatari.assets("music", {
-  Title: "normalized/게임 시작 화면 Classic 1985 Movie Soundtrack - Freedom Trail Studio.mp3",
+  Title: "normalized/main-soft/게임 시작 화면 Classic 1985 Movie Soundtrack - Freedom Trail Studio.mp3",
   Daily: "normalized/일상 Blue Dream - Cheel.mp3",
   TreeGame: "normalized/트리게임 The Creepy Clown - Jeremy Korpas.mp3",
   RingGame: "normalized/반지야바위 Jumpin June - The Soundlings.mp3",
