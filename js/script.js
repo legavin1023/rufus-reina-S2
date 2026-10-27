@@ -34,7 +34,13 @@ monogatari.configuration("credits", {});
 monogatari.assets("gallery", {});
 
 // Define the music used in the game.
-monogatari.assets("music", {});
+monogatari.assets("music", {
+  Title: "normalized/게임 시작 화면 Classic 1985 Movie Soundtrack - Freedom Trail Studio.mp3",
+  Daily: "normalized/일상 Blue Dream - Cheel.mp3",
+  TreeGame: "normalized/트리게임 The Creepy Clown - Jeremy Korpas.mp3",
+  RingGame: "normalized/반지야바위 Jumpin June - The Soundlings.mp3",
+  Romance: "normalized/제가 먼저 하려고 했는데, 한 발 늦었군요 Starry Eyed Romance - Biz Baz Studio.mp3",
+});
 
 // Define the voice files used in the game.
 monogatari.assets("voices", {});

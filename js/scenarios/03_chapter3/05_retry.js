@@ -18,7 +18,11 @@ let scenario_Ch3_Retry = [
   's 사실은 하나 더 있었던 것 같습니다만……', 's 한 번 봐 주시지 않겠습니까?',
   'show character r surprised at left', 'r 어?! 저, 정말요?!',
   'show character r energetic at left', 'r 좋아요! 다시 골라볼게요!',
+  'stop music',
+  'play music RingGame loop',
   'proposal-game retry',
+  'stop music',
+  'play music Daily loop',
   { Conditional: {
     Condition: function () { return this.storage().retryRing; },
     empty: 'jump Ch3_Retry_Empty', candy: 'jump Ch3_Retry_Candy',

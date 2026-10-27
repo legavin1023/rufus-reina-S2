@@ -128,6 +128,7 @@
         const finish = (key, value) => {
           if (finished) return;
           finished = true;
+          window.gameSfx?.stop("shuffle");
           if (key) this.engine.storage()[key] = value;
           cleanup();
           disposers.forEach((dispose) => dispose());
@@ -239,6 +240,7 @@
             box.el = button(items, `💍 ${names[ring]}`, () => {
               if (phase !== "pick") return;
               phase = "result";
+              window.gameSfx?.play(ring === "diamond" ? "diamond" : "failure");
               boxes.forEach((other) => {
                 other.el.disabled = true;
                 renderBox(
@@ -299,6 +301,7 @@
                 elapsed = 0;
               }
               if (!activeSwap) {
+                window.gameSfx?.play("shuffle");
                 const { a, b, duration } = swaps[step];
                 activeSwap = {
                   first: boxes[a],
@@ -325,6 +328,7 @@
                 elapsed = 0;
                 step++;
                 if (step === swaps.length) {
+                  window.gameSfx?.stop("shuffle");
                   cleanup();
                   phase = "pick";
                   status.textContent =
@@ -526,6 +530,7 @@
             });
           };
           const endRound = (success) => {
+            window.gameSfx?.play(success ? "success" : "failure");
             cleanup();
             obstacles.clear();
             effects.clear();
@@ -649,6 +654,7 @@
                   if (paused || document.hidden || !obstacles.has(obstacle))
                     return;
                   obstacles.delete(obstacle);
+                  window.gameSfx?.play(Math.random() < .5 ? "popA" : "popB");
                   cleared++;
                   combo++;
                   bestCombo = Math.max(bestCombo, combo);
@@ -757,6 +763,7 @@
                 obstacles.delete(obstacle);
                 obstacle.el.remove();
                 missed++;
+                if (missed < 5) window.gameSfx?.play("miss");
                 combo = 0;
                 updateHud();
                 burst(50, 50, true);

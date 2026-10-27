@@ -23,6 +23,8 @@ let scenario_Ch3_DiamondRing_Success = [
 
   "hide character r",
   "show character ru wry_smile at center",
+  "stop music",
+  "play music Romance loop",
   "ru {dreamy}제가 먼저 하려고 했는데, 한 발 늦었군요.{/dreamy}",
 
   "루퍼스가 외투 안쪽 주머니에 손을 넣어 정사각형 상자를 꺼내고는, 달칵 뚜껑을 열어보인다.",

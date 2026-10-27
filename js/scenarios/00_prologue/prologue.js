@@ -1,6 +1,8 @@
 /* global monogatari */
 
 let scenario_Start = [
+  "stop music",
+  "play music Daily loop",
   function () { Object.assign(this.storage(), {ringChoice: null, proposalRetried: false, treeGameResult: null, retryRing: null}); return true; },
   "centered 정오, 분수가 있는 번화가의 광장.",
   "간밤에 내린 하얀 눈이 길가에 소복이 쌓여 있다.",

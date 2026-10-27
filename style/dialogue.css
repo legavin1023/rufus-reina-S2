@@ -50,6 +50,13 @@
   letter-spacing: .08em;
   color: #ffffff !important;
 }
+#monogatari game-screen[data-screen="game"] text-box [data-content="name"]:has([data-ui="who"]:empty) {
+  display: none;
+}
+#monogatari game-screen[data-screen="game"] text-box:has([data-ui="who"]:empty) [data-content="text"] {
+  padding-top: 16px;
+  max-height: 100%;
+}
 #monogatari game-screen[data-screen="game"] text-box [data-content="text"] {
   font-size: clamp(18px, 2vw, 27px);
   line-height: 1.65;
