@@ -289,6 +289,8 @@ function createGameSnow() {
   document.body.appendChild(snowContainer);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", createGameSnow, { once: true });
+} else {
   createGameSnow();
-});
+}

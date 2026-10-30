@@ -51,7 +51,8 @@ monogatari.settings({
   AutoSave: 0,
 
   // Enable service workers; Default: true *
-  ServiceWorkers: true,
+  // index.html owns the network-only worker; do not enable engine asset caching.
+  ServiceWorkers: false,
 
   // The Aspect Ratio your background images are on. This only has effect on
   // web deployed novels if forceAspectRatio flag is on.

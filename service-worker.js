@@ -19,9 +19,12 @@ self.addEventListener("fetch", event => {
     if (request.mode === "navigate") await clearGameCaches();
     const url = new URL(request.url);
     let freshRequest = request;
-    // Navigation requests cannot be cloned with a changed URL (mode: navigate).
-    if (request.mode !== "navigate" && url.origin === self.location.origin) {
+    // Fresh URLs also bypass intermediary/CDN caches, including the entry HTML.
+    if (url.origin === self.location.origin) {
       url.searchParams.set("_fresh", String(Date.now()));
+      if (request.mode === "navigate") {
+        return fetch(url.href, { cache: "no-store", credentials: request.credentials });
+      }
       freshRequest = new Request(url.href, request);
     }
     return fetch(freshRequest, { cache: "no-store" });

@@ -21,24 +21,50 @@
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="manifest" href="manifest.json" />
 
-    <!-- Monogatari CSS Libraries -->
+    <!-- Prepare network-only loading before requesting any game CSS or scripts. -->
     <script>
-      // Reload once when a worker takes control, including the first visit.
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-          location.reload();
-        }, { once: true });
+      window.gameNetworkReady = (async () => {
         if ("caches" in window) {
-          caches.keys().then((keys) => Promise.all(
+          await caches.keys().then((keys) => Promise.all(
             keys.filter((key) => key.startsWith("Monogatari-v"))
               .map((key) => caches.delete(key))
           )).catch(() => {});
         }
-        navigator.serviceWorker.register("./service-worker.js", {
-          updateViaCache: "none"
-        }).then((registration) => registration.update()).catch(() => {});
-      }
+        if (!("serviceWorker" in navigator)) return;
+        try {
+          const registration = await navigator.serviceWorker.register(
+            "./service-worker.js", { updateViaCache: "none" }
+          );
+          await registration.update();
+          const worker = registration.installing || registration.waiting;
+          if (worker && worker.state !== "activated") {
+            await new Promise((resolve, reject) => {
+              const changed = () => {
+                if (worker.state === "activated") { cleanup(); resolve(); }
+                if (worker.state === "redundant") { cleanup(); reject(new Error("Worker update failed")); }
+              };
+              const cleanup = () => worker.removeEventListener("statechange", changed);
+              worker.addEventListener("statechange", changed);
+              changed();
+            });
+          }
+          if (!navigator.serviceWorker.controller) {
+            await new Promise(resolve => {
+              navigator.serviceWorker.addEventListener("controllerchange", resolve, { once: true });
+              if (navigator.serviceWorker.controller) resolve();
+            });
+          }
+        } catch (error) {
+          console.warn("Network-only worker unavailable; using fresh resource URLs", error);
+        }
+      })();
+      // Returning from the browser's back/forward cache must also start a fresh load.
+      window.addEventListener("pageshow", event => {
+        if (event.persisted) location.reload();
+      });
     </script>
+    <template id="game-resources">
+    <!-- Monogatari CSS Libraries -->
     <link rel="stylesheet" href="./engine/core/monogatari.css" />
     <link rel="stylesheet" href="./style/main.css" />
     <link rel="stylesheet" href="./style/minigame.css" />
@@ -73,6 +99,47 @@
     <script src="./js/script.js"></script>
     <script src="./js/reaction-effects.js"></script>
     <script src="./js/main.js"></script>
+    </template>
+    <script>
+      (async () => {
+        await window.gameNetworkReady;
+        const entry = Date.now().toString(36) + Math.random().toString(36).slice(2);
+        const resources = document.getElementById("game-resources");
+        const styles = [];
+        for (const original of resources.content.querySelectorAll("link, script[src]")) {
+          const element = document.createElement(original.tagName);
+          for (const attribute of original.attributes) element.setAttribute(attribute.name, attribute.value);
+          const attribute = element.tagName === "SCRIPT" ? "src" : "href";
+          const url = new URL(element.getAttribute(attribute), document.baseURI);
+          url.searchParams.set("_entry", entry);
+          element.setAttribute(attribute, url.href);
+          const loaded = new Promise((resolve, reject) => {
+            element.onload = resolve;
+            element.onerror = () => reject(new Error("Failed to load " + url.pathname));
+          });
+          if (element.tagName === "SCRIPT") {
+            // Styles must be ready before the engine measures or displays the UI.
+            await Promise.all(styles);
+            element.async = false;
+            document.head.appendChild(element);
+            await loaded;
+          } else {
+            styles.push(loaded);
+            document.head.appendChild(element);
+          }
+        }
+        resources.remove();
+      })().catch(error => {
+        console.error(error);
+        const showError = () => {
+          const notice = document.createElement("p");
+          notice.textContent = "게임 파일을 불러오지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.";
+          document.body.appendChild(notice);
+        };
+        if (document.body) showError();
+        else document.addEventListener("DOMContentLoaded", showError, { once: true });
+      });
+    </script>
   </head>
 
   <body>

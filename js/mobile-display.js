@@ -1,7 +1,7 @@
 "use strict";
 
 // Fullscreen requires a tap; orientation lock is requested after entering it.
-document.addEventListener("DOMContentLoaded", () => {
+function initMobileDisplay() {
   const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
     (navigator.maxTouchPoints > 1 && matchMedia("(pointer: coarse)").matches);
   if (!mobile) return;
@@ -91,4 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("webkitfullscreenchange", update);
   window.screen?.orientation?.addEventListener?.("change", update);
   update();
-});
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initMobileDisplay, { once: true });
+} else {
+  initMobileDisplay();
+}
