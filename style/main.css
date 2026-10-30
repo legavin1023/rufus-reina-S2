@@ -115,6 +115,12 @@ a {
   margin: 20px 0 32px;
   letter-spacing: 0.12em;
 }
+[data-screen="load"] > h2,
+[data-screen="settings"] > h2,
+[data-screen="credits"] > h2 {
+  font-size: clamp(21px, 2.3vw, 32px);
+  letter-spacing: 0.08em;
+}
 [data-screen]:not([data-screen="game"]) [data-action="back"],
 [data-screen] button.top {
   position: absolute;
