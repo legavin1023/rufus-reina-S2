@@ -1,0 +1,127 @@
+/* Reference composition: 1920 × 1080, scaled together without cropping. */
+#monogatari [data-screen="main"] {
+  background: #211b25 !important;
+  overflow: hidden;
+}
+#monogatari [data-screen="main"]::before,
+#monogatari [data-screen="main"]::after {
+  display: none;
+}
+#monogatari .title-scene {
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: min(100vw, 177.777778vh);
+  height: min(100vh, 56.25vw);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+#monogatari .title-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+#monogatari .title-logo {
+  position: absolute;
+  left: 5.46875%;
+  top: 4.62963%;
+  width: 28.645833%;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  filter: drop-shadow(0 0 18px #fff) drop-shadow(0 0 12px #fff9);
+}
+#monogatari [data-screen="main"] .title-scene main-menu {
+  position: absolute;
+  inset: 50.37037% auto auto 11.5625%;
+  width: 16.666667%;
+  height: 48.981481%;
+  display: block;
+  padding: 0;
+  margin: 0;
+  transform: none;
+  pointer-events: none;
+  z-index: 5;
+}
+#monogatari [data-screen="main"] .title-scene main-menu button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2;
+  min-width: 0;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent !important;
+  background-image: var(--title-button) !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-shadow: none;
+  filter: drop-shadow(0 0 14px #fffd);
+  cursor: pointer;
+  pointer-events: auto;
+  transform-origin: center;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+#monogatari .title-scene main-menu button[string="Start"] {
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (시작)외곽선.png");
+}
+#monogatari .title-scene main-menu button[string="Load"] {
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (불러오기) 외곽선.png");
+  top: 23.251417%;
+}
+#monogatari .title-scene main-menu button[string="Settings"] {
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (설정)외곽선.png");
+  top: 46.502835%;
+}
+#monogatari .title-scene main-menu button[string="Credits"] {
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (크레딧) 외곽선.png");
+  top: 69.754253%;
+}
+/* Preserve translated text as the accessible name without painting it twice. */
+#monogatari .title-scene main-menu button > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#monogatari .title-scene main-menu button::before {
+  content: none;
+}
+@media (hover: hover) {
+  #monogatari [data-screen="main"] .title-scene main-menu button:hover {
+    transform: translateX(3%) scale(1.045);
+    filter: brightness(1.12) drop-shadow(0 0 18px #ffd3e5);
+  }
+}
+#monogatari [data-screen="main"] .title-scene main-menu button:focus-visible {
+  outline: 2px solid #ffe5f0;
+  outline-offset: -12px;
+  transform: scale(1.045);
+  filter: brightness(1.12) drop-shadow(0 0 18px #ffd3e5);
+}
+#monogatari [data-screen="main"] .title-scene main-menu button:active {
+  transform: scale(.98);
+}
+body:has(main-screen.active) #game-snow {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  #monogatari [data-screen="main"] .title-scene main-menu button {
+    transition: none;
+  }
+}

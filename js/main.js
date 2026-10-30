@@ -55,19 +55,9 @@ $_ready(() => {
       titleScreen.insertAdjacentHTML(
         "afterbegin",
         `
-        <div class="title-composition">
-          <div class="title-copy">
-            <p class="title-eyebrow">RUFUS &amp; REINA · 15TH ANNIVERSARY</p>
-            <h1>루퍼이나</h1>
-            <p class="title-subtitle">✦두근두근 프로포즈 대작전✦</p>
-            <div class="title-divider" aria-hidden="true"><span>✦</span></div>
-            <p class="title-description"> ~15주년이니까 이제는 결혼이 하고 싶어~</p>
-          </div>
-          <div class="anniversary-art" aria-hidden="true">
-            <span class="anniversary-number">15</span>
-            <div class="anniversary-orbit"></div>
-            <span class="art-star star-one">✦</span><span class="art-star star-two">✧</span>
-          </div>
+        <div class="title-composition title-scene">
+          <img class="title-background" src="./assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 합본.png" alt="" draggable="false" />
+          <img class="title-logo" src="./assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 로고 외곽선.png" alt="루퍼이나 두근두근 프로포즈 대작전 — 15주년이니까 이제는 결혼이 하고 싶어" draggable="false" />
         </div>
       `,
       );
@@ -175,6 +165,12 @@ $_ready(() => {
       icon: "",
       data: { action: "open-screen", open: "credits" },
     });
+
+    // Keep the engine's real buttons, actions, labels and click sound listener.
+    // Background, logo and menu share one 1920 × 1080 composition.
+    titleScreen?.querySelector(".title-scene")?.appendChild(
+      titleScreen.querySelector("main-menu"),
+    );
 
     const settingsScreen = monogatari.component("settings-screen");
 
