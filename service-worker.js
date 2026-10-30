@@ -10,7 +10,17 @@ self.addEventListener("install", event => {
   event.waitUntil(self.skipWaiting());
 });
 self.addEventListener("activate", event => {
-  event.waitUntil(clearGameCaches().then(() => self.clients.claim()));
+  event.waitUntil((async () => {
+    await clearGameCaches();
+    await self.clients.claim();
+    // Old cached HTML cannot run the new entry loader. Replace open game
+    // documents after this worker takes over, including already-installed apps.
+    const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    await Promise.all(windows.map(client => {
+      if (!client.url.startsWith(self.registration.scope)) return;
+      return client.navigate(client.url).catch(() => {});
+    }));
+  })());
 });
 self.addEventListener("fetch", event => {
   const request = event.request;

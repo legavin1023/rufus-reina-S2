@@ -1,5 +1,6 @@
 /* Reference composition: 1920 × 1080, scaled together without cropping. */
 #monogatari [data-screen="main"] {
+  position: relative;
   background: #211b25 !important;
   overflow: hidden;
 }
@@ -8,6 +9,7 @@
   display: none;
 }
 #monogatari .title-scene {
+  position: absolute;
   inset: auto;
   top: 50%;
   left: 50%;
