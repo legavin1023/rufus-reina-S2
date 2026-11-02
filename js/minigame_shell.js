@@ -355,7 +355,7 @@
         }
         // The HUD and result summary already display this game's status.
         status.remove();
-        title.textContent = "크리스마스 미니게임";
+        title.remove();
         instructions.textContent =
           "35초 동안 레이나에게 다가오는 장애물을 클릭해 막아주세요.";
         items.className = "merchant-field";

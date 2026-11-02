@@ -32,14 +32,14 @@ function startConfetti() {
 
   window.addEventListener("resize", resizeHandler);
 
-  const NUM_CONFETTI = 350;
+  const NUM_CONFETTI = 20;
 
   const COLORS = [
-    [85, 71, 106],
-    [174, 61, 99],
-    [219, 56, 83],
-    [244, 92, 68],
-    [248, 182, 70],
+    [255, 255, 255],
+    [255, 253, 235],
+    [255, 247, 204],
+    [255, 237, 166],
+    [255, 225, 130],
   ];
 
   const PI_2 = 2 * Math.PI;
@@ -154,6 +154,8 @@ function stopConfetti() {
 // 3. 에필로그
 window.scenario_Epilogue = [
 
+  "show scene Wedding with fadeIn",
+
   () => {
     startConfetti();
     return true;
@@ -162,6 +164,13 @@ window.scenario_Epilogue = [
   "centered [ HAPPY END ]",
 
   () => {
+    document.getElementById("monogatari").classList.add("wedding-art-view");
+    return true;
+  },
+  "centered &nbsp;",
+
+  () => {
+    document.getElementById("monogatari").classList.remove("wedding-art-view");
     stopConfetti();
     return true;
   },

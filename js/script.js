@@ -55,7 +55,9 @@ monogatari.assets("videos", {});
 monogatari.assets("images", {});
 
 // Define the backgrounds for each scene.
-monogatari.assets("scenes", {});
+monogatari.assets("scenes", {
+  Wedding: "../gallery/결혼씬.png",
+});
 
 // Define the Characters
 monogatari.characters({
@@ -65,16 +67,16 @@ monogatari.characters({
     directory: "reina",
 
     sprites: {
-      normal: "stand_normal.png", // 평범한 표정
-      closed: "stand_closed.png", // 눈 감은 표정
-      smile: "stand_smile.png", // 활짝 웃는 표정
-      energetic: "stand_energetic.png", // 의욕 넘치는 표정
-      happy_cry: "stand_happy_cry.png", // 행복한 눈물을 흘리는 표정
-      shy: "stand_shy.png", // 부끄러워하는 표정
-      surprised: "stand_surprised.png", // 깜짝 놀란 표정
-      flustered: "stand_flustered.png", // 허둥지둥거리는 표정
-      crying: "stand_crying.png", // 엉엉 우는 표정
-      depressed: "stand_depressed.png", // 우울한 표정
+      normal: "레이나_01.png", // 평범한 표정
+      closed: "레이나_02_감은눈.png", // 눈 감은 표정
+      smile: "레이나_03_활짝웃는.png", // 활짝 웃는 표정
+      energetic: "레이나_04_의욕.png", // 의욕 넘치는 표정
+      happy_cry: "레이나_05_행복한눈물.png", // 행복한 눈물을 흘리는 표정
+      shy: "레이나_06_부끄러운얼굴.png", // 부끄러워하는 표정
+      surprised: "레이나_07_놀란얼굴.png", // 깜짝 놀란 표정
+      flustered: "레이나_08_허둥지둥.png", // 허둥지둥거리는 표정
+      crying: "레이나_09_우는얼굴.png", // 엉엉 우는 표정
+      depressed: "레이나_10_우울한.png", // 우울한 표정
     },
   },
 
@@ -84,17 +86,17 @@ monogatari.characters({
     directory: "rufus",
 
     sprites: {
-      normal: "stand_normal.png",
-      soft_smile: "stand_soft_smile.png",
-      shadowed: "stand_shadowed.png",
-      eyebrow: "stand_eyebrow.png",
-      slight_surprised: "stand_slight_surprised.png",
-      smirk: "stand_smirk.png",
-      wry_smile: "stand_wry_smile.png",
-      closed: "stand_closed.png",
-      worried: "stand_worried.png",
-      angry: "stand_angry.png",
-      terrifying: "stand_terrifying.png",
+      normal: "루퍼스_01.png",
+      soft_smile: "루퍼스_03_살짝미소.png",
+      shadowed: "루퍼스_06_그늘진.png",
+      eyebrow: "루퍼스_02_한쪽눈.png",
+      slight_surprised: "루퍼스_05_놀란.png",
+      smirk: "루퍼스_08_피식웃는.png",
+      wry_smile: "루퍼스_09_쓴웃음.png",
+      closed: "루퍼스_04_눈감은.png",
+      worried: "루퍼스_09_쓴웃음.png", // 별도 걱정 표정은 쓴웃음으로 연결
+      angry: "루퍼스_07_화난.png",
+      terrifying: "루퍼스_10_무시무시한표정.png",
     },
 
     // expressions: {
@@ -158,7 +160,6 @@ monogatari.script({
 
   // 제1장 분기 선택지
   Ch1_Main: [
-    "centered 제1장",
     {
       Choice: {
         WeaponShop: { Text: "1번. 무기점", Do: "jump Ch1_WeaponShop_Fail" },

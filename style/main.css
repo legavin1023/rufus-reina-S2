@@ -286,6 +286,7 @@ choice-container button:hover {
   border-color: var(--gold);
 }
 centered-dialog {
+  z-index: 20;
   width: min(820px, 86%);
   color: var(--paper);
   font-family: var(--serif);
@@ -293,13 +294,70 @@ centered-dialog {
   line-height: 1.9;
   text-shadow: 0 2px 20px #000000;
 }
+/* 중앙 안내가 표시되는 동안에만 장면 전체를 어둡게 한다. */
+centered-dialog::before {
+  content: "";
+  position: absolute;
+  inset: -100vmax;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+#monogatari.wedding-art-view centered-dialog,
+#monogatari.wedding-art-view text-box,
+#monogatari.wedding-art-view quick-menu {
+  visibility: hidden;
+}
+#monogatari.wedding-art-view centered-dialog::before {
+  display: none;
+}
+#monogatari.wedding-art-view [data-ui="background"] {
+  background-size: contain;
+}
 [data-screen="game"] [data-character] {
   filter: drop-shadow(0 8px 24px #00000033);
   scale: 1.58;
   translate: 0 36%;
   transform-origin: center bottom;
 }
+[data-screen="game"] [data-character="r"] {
+  translate: 0 calc(36% + 12px);
+  transition: left 650ms ease-in-out, translate 650ms ease-in-out;
+}
+/* auto 여백 대신 수치 좌표를 사용해 좌우 이동도 자연스럽게 보간한다. */
+[data-screen="game"] [data-character="r"].left {
+  left: 0;
+  right: auto;
+  margin: 0;
+}
+[data-screen="game"] [data-character="r"].center {
+  left: 50%;
+  right: auto;
+  margin: 0;
+  translate: -50% calc(36% + 12px);
+}
+/* 두 캐릭터가 함께 서면 양쪽 스탠딩을 화면 안쪽으로 모은다. */
+[data-screen="game"]:has([data-character].left:not([data-visibility="invisible"])):has([data-character].right:not([data-visibility="invisible"])) [data-character].left {
+  left: 12%;
+}
+[data-screen="game"] [data-character].right {
+  right: 12%;
+}
+/* 루퍼스는 고정하고 레이나가 가까이 다가오는 도착 위치. */
+[data-screen="game"]:has([data-character="ru"].right:not([data-visibility="invisible"])) [data-character="r"].center {
+  left: 47%;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-screen="game"] [data-character="r"] {
+    transition: none;
+  }
+}
 /* Settings, records, dialogs */
+#monogatari load-screen [data-ui="saveSlots"] > h3,
+#monogatari load-screen [data-ui="autoSaveSlots"] > h3 {
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.5;
+}
 settings-screen .settings {
   width: min(980px, 100%);
   margin: 0 auto;
@@ -425,6 +483,13 @@ save-slot figcaption {
   padding: 16px;
 }
 save-slot [data-delete] {
+  box-sizing: border-box;
+  aspect-ratio: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  flex-shrink: 0;
+  border-radius: 50%;
   background: var(--panel);
   border: 1px solid var(--line);
   color: var(--gold);
@@ -1115,4 +1180,274 @@ html.theme-off body {
   z-index: 2147483646;
   padding: 6px 10px;
   font-size: 13px;
+}
+
+#monogatari load-screen[data-screen="load"] {
+  padding: 18px max(24px, 5vw);
+  overflow-y: auto;
+}
+#monogatari load-screen > h2 { margin: 0 0 14px 48px; font-size: 25px; }
+#monogatari load-screen h3 { margin: 10px 0 8px; }
+#monogatari load-screen slot-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: stretch;
+  gap: 14px;
+  margin: 10px 0 16px;
+}
+#monogatari load-screen save-slot {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  justify-content: flex-start;
+  border-radius: 12px;
+}
+.save-part { padding: 12px 14px 6px; font-size: 18px; font-weight: 700; color: #ffe1ed; }
+#monogatari load-screen save-slot .badge {
+  position: static;
+  padding: 0 14px 8px;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: normal;
+  color: #c8a6b3;
+  overflow-wrap: anywhere;
+}
+#monogatari load-screen save-slot [data-content="background"] { height: clamp(55px, 12vh, 110px); border: 0; }
+#monogatari load-screen save-slot figcaption { padding: 7px 12px; font-size: 11px; line-height: 1.4; }
+#monogatari load-screen save-slot [data-delete] { width: 26px; height: 26px; min-height: 26px; top: -7px; right: -7px; }
+@media (max-height: 500px) and (orientation: landscape) {
+  #monogatari load-screen[data-screen="load"] { padding: 10px 6vw; }
+  #monogatari load-screen > h2 { font-size: 21px; margin-bottom: 6px; }
+  #monogatari load-screen slot-container { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 7px 0 10px; }
+  #monogatari load-screen .save-part { font-size: 15px; padding: 8px 10px 4px; }
+  #monogatari load-screen save-slot [data-content="background"] { height: 40px; }
+  #monogatari load-screen save-slot .badge { padding: 0 10px 5px; font-size: 10px; }
+  #monogatari load-screen save-slot figcaption { padding: 5px 10px; font-size: 10px; }
+}
+
+/* Settings: rose panels and generous, clearly grouped controls. */
+#monogatari settings-screen[data-screen="settings"] {
+  padding: clamp(28px, 7vh, 76px) max(24px, 7vw);
+  overflow-y: auto;
+  background: radial-gradient(ellipse at 15% 0%, #67384880, transparent 65%), #28141e;
+  color: #fff1f5;
+}
+#monogatari settings-screen > h2 {
+  width: min(920px, 100%);
+  margin: 0 auto 12px;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: .15em;
+  text-align: left;
+}
+#monogatari settings-screen .settings-intro {
+  width: min(920px, 100%);
+  margin: 0 auto 30px;
+  color: #d2aab9;
+  font-size: 15px;
+  line-height: 1.6;
+}
+#monogatari settings-screen .settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(920px, 100%);
+  padding: 0;
+  gap: 24px;
+  background: transparent;
+  border: 0;
+}
+#monogatari settings-screen .settings-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 26px;
+  min-width: 0;
+  padding: 30px;
+  border: 1px solid #c685a443;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #55303e, #38202c);
+  box-shadow: 0 16px 40px #12070d38, inset 0 1px #fff1f510;
+}
+#monogatari settings-screen [data-settings] {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+#monogatari settings-screen h3 {
+  margin: 0 0 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #d7a1b52e;
+  color: #ffdae7;
+  font-size: 20px;
+  letter-spacing: .04em;
+}
+#monogatari settings-screen [data-settings="audio"] > span {
+  display: block;
+  color: #f3d7e1;
+  font-size: 17px;
+}
+#monogatari settings-screen input[type="range"] {
+  width: 100%;
+  max-width: none;
+  height: 26px;
+  margin: 14px 0 22px;
+  background: transparent;
+  border-radius: 12px;
+}
+#monogatari settings-screen input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 8px;
+  background: #a669805e;
+}
+#monogatari settings-screen input[type="range"]::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  margin-top: -8px;
+  border: 3px solid #fff2f7;
+  background: #e5a4be;
+  box-shadow: 0 2px 8px #1b0b1766;
+}
+#monogatari settings-screen input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 8px;
+  background: #a669805e;
+}
+#monogatari settings-screen input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 3px solid #fff2f7;
+  background: #e5a4be;
+}
+#monogatari settings-screen input[type="range"]:focus-visible {
+  outline: 2px solid #ffd1e2;
+  outline-offset: 6px;
+}
+#monogatari settings-screen [data-action="back"] {
+  border-color: #d7a1b560;
+  background: #512c3d;
+  color: #ffe7f0;
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  #monogatari settings-screen[data-screen="settings"] { padding: 18px 8vw; }
+  #monogatari settings-screen > h2 { font-size: 25px; margin-bottom: 6px; }
+  #monogatari settings-screen .settings-intro { margin-bottom: 14px; font-size: 13px; }
+  #monogatari settings-screen .settings { gap: 16px; }
+  #monogatari settings-screen .settings-group { padding: 18px 22px; gap: 8px; border-radius: 16px; }
+  #monogatari settings-screen h3 { font-size: 17px; margin-bottom: 10px; padding-bottom: 8px; }
+  #monogatari settings-screen input[type="range"] { margin: 8px 0 12px; }
+}
+@media (max-width: 550px) and (orientation: portrait) {
+  #monogatari settings-screen .settings { grid-template-columns: 1fr; }
+  #monogatari settings-screen > h2 { padding-left: 42px; }
+}
+/* Shared menu styling: settings, load and credits. */
+#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] {
+  --menu-border: #c685a443;
+  --menu-panel: linear-gradient(145deg, #55303e, #38202c);
+  padding: clamp(28px, 7vh, 76px) max(24px, 7vw);
+  overflow-y: auto;
+  background: radial-gradient(ellipse at 15% 0%, #67384880, transparent 65%), #28141e;
+  color: #fff1f5;
+  scrollbar-width: thin;
+  scrollbar-color: #b77991 #28141e;
+}
+#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 {
+  width: min(920px, 100%);
+  margin: 0 auto 24px;
+  padding-left: 0;
+  color: #fff1f5;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: .15em;
+  text-align: center;
+}
+#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > [data-action] {
+  border-color: #d7a1b560;
+  background: #512c3d;
+  color: #ffe7f0;
+}
+#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > [data-action]:hover {
+  background: #754257;
+  border-color: #efb8cf;
+}
+#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > [data-action]:focus-visible {
+  outline: 2px solid #ffd1e2;
+  outline-offset: 4px;
+}
+#monogatari load-screen > :is([data-ui="saveSlots"], [data-ui="autoSaveSlots"]),
+#monogatari credits-screen [data-content="credits"] {
+  width: min(920px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+#monogatari load-screen save-slot,
+#monogatari credits-screen [data-content="credits"] {
+  border: 1px solid var(--menu-border);
+  border-radius: 22px;
+  background: var(--menu-panel);
+  box-shadow: 0 16px 40px #12070d38, inset 0 1px #fff1f510;
+}
+#monogatari load-screen h3 {
+  color: #ffdae7;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+#monogatari credits-screen [data-content="credits"] {
+  padding: clamp(20px, 3vw, 32px);
+  color: #f3d7e1;
+  font-size: 17px;
+  line-height: 1.8;
+}
+#monogatari credits-screen [data-content="credits"]:empty { display: none; }
+#monogatari credits-screen [data-content="credits"] h3 {
+  margin: 24px 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d7a1b52e;
+  color: #ffdae7;
+  font-size: 20px;
+  letter-spacing: .04em;
+}
+#monogatari credits-screen [data-content="credits"] h3:first-child { margin-top: 0; }
+#monogatari credits-screen [data-content="credits"] p { margin: 8px 0; }
+#monogatari credits-screen [data-content="credits"] b { color: #fff1f5; }
+@media (max-height: 500px) and (orientation: landscape) {
+  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] { padding: 14px 8vw; }
+  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 { font-size: 25px; margin-bottom: 12px; }
+  #monogatari credits-screen [data-content="credits"] { padding: 18px 22px; font-size: 15px; border-radius: 16px; }
+  #monogatari load-screen save-slot { border-radius: 16px; }
+}
+@media (max-width: 550px) and (orientation: portrait) {
+  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 { padding-left: 0; }
+}
+/* Save previews keep three equal columns and fixed text/image rows. */
+#monogatari load-screen slot-container {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+#monogatari load-screen save-slot {
+  display: grid;
+  grid-template-rows: 42px 24px clamp(55px, 12vh, 110px) 30px;
+  align-content: start;
+  box-sizing: border-box;
+}
+#monogatari load-screen save-slot :is(.save-part, .badge, figcaption) {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#monogatari load-screen save-slot [data-content="background"] {
+  height: 100%;
+  min-height: 0;
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  #monogatari load-screen save-slot { grid-template-rows: 32px 20px 40px 26px; }
+}
+/* Compact menu titles on mobile, including landscape phones. */
+@media (pointer: coarse) and (max-width: 1100px), (max-width: 700px) {
+  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 {
+    font-size: 20px;
+    letter-spacing: .08em;
+    margin-bottom: 10px;
+  }
 }

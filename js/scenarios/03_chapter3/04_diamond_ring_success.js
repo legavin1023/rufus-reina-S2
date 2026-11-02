@@ -41,7 +41,6 @@ let scenario_Ch3_DiamondRing_Success = [
   "r {happy}……응!{/happy}",
   "r {bold}{happy}예스야, 무조건 예스야!{/happy}{/bold}",
 
-  "centered [성공 엔딩]",
 
   "r {dreamy}‘처음에 계획했던 완벽한 프로포즈와는 많이 달랐지만…….’{/dreamy}",
   "r {glow}‘완벽하지 않아도 괜찮아!’{/glow}",

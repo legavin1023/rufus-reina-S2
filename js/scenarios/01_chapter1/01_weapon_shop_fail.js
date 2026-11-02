@@ -108,7 +108,6 @@ let scenario_Ch1_WeaponShop_Choice_Done = [
   "r {shake-hard}{scared}으아아아……!{/scared}{/shake-hard}",
   "r {sad}아, 알겠어……!{/sad}",
 
-  "centered {redacted}실패 엔딩{/redacted}",
   "hide character j",
   "show character r crying at center",
   "r {sad}으으, 실패해 버렸어!{/sad}",

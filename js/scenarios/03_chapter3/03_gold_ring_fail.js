@@ -52,7 +52,6 @@ let scenario_Ch3_GoldRing_Fail = [
   "hide character ru",
   "그렇게 분노한 루퍼스는 자리를 떠났다…….",
 
-  "centered [실패 엔딩]",
   "show character r crying at center",
 
   "r {sad}히잉……. 정말로 진짜로 실패해 버렸어!{/sad}",

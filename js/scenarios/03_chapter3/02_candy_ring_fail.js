@@ -22,7 +22,6 @@ let scenario_Ch3_CandyRing_Fail = [
   "ru {mysterious}레이나…….{/mysterious}",
   "ru {sad}……너무 애쓰지 않아도 됩니다.{/sad}",
 
-  "centered [실패 엔딩]",
   "hide character ru",
 
   "show character r crying at center",
