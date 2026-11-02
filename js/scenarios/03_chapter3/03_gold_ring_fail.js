@@ -44,7 +44,7 @@ let scenario_Ch3_GoldRing_Fail = [
   "show character r flustered at left",
   "r {scared}미, 미안……!{/scared}",
 
-  "show character ru normal at right",
+  "show character ru terrifying at right",
   "ru 보석상 위치가 어디죠?",
   "ru 지금 당장 가 보겠습니다.",
   "ru 금방 다녀올 테니, 여기서 잠시 기다리십시오.",

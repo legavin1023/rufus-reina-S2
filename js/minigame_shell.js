@@ -211,6 +211,7 @@
             diamond: "다이아백금반지",
           };
           items.className = "shell-game-field";
+          items.tabIndex = -1;
           panel.classList.add("ring-game");
           const ringImages = {
             empty: "10. 빈 반지상자-아이디X.webp",
@@ -343,7 +344,8 @@
                   [...boxes]
                     .sort((a, b) => a.slot - b.slot)
                     .forEach((box) => items.appendChild(box.el));
-                  boxes.find((box) => box.slot === 0).el.focus();
+                  // Keep automatic focus off the first box; Tab selects a box.
+                  items.focus({ preventScroll: true });
                   return;
                 }
               }

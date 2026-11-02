@@ -253,6 +253,9 @@
 .ring-game .shell-game-field {
   height: 340px;
 }
+.ring-game .shell-game-field:focus {
+  outline: none;
+}
 .ring-game .proposal-game-card {
   width: min(1160px, 100%);
 }
