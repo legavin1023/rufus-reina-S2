@@ -1451,3 +1451,16 @@ html.theme-off body {
     margin-bottom: 10px;
   }
 }
+/* Center the contents within each load preview card. */
+#monogatari load-screen save-slot {
+  text-align: center;
+  justify-items: center;
+}
+#monogatari load-screen save-slot :is(.save-part, .badge, figcaption) {
+  text-align: center;
+}
+/* Align all load-screen headings, messages and card contents centrally. */
+#monogatari load-screen[data-screen="load"],
+#monogatari load-screen :is(h2, h3, p, .save-part, .badge, figcaption) {
+  text-align: center;
+}
