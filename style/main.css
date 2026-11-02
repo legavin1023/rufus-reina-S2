@@ -1485,3 +1485,18 @@ html.theme-off body {
 @media (max-height: 500px) and (orientation: landscape) {
   #monogatari load-screen slot-container { --slot-gap: 10px; }
 }
+/* Keep every preview element in the same full-width grid column. */
+#monogatari load-screen save-slot {
+  grid-template-columns: minmax(0, 1fr);
+}
+#monogatari load-screen save-slot > :is(.save-part, .badge, [data-content="background"], figcaption) {
+  grid-column: 1;
+  width: 100%;
+  max-width: 100%;
+  justify-self: stretch;
+  text-align: center;
+}
+#monogatari load-screen save-slot > .save-part { grid-row: 1; }
+#monogatari load-screen save-slot > .badge { grid-row: 2; }
+#monogatari load-screen save-slot > [data-content="background"] { grid-row: 3; }
+#monogatari load-screen save-slot > figcaption { grid-row: 4; }
