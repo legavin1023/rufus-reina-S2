@@ -56,14 +56,15 @@ monogatari.assets("images", {});
 
 // Define the backgrounds for each scene.
 monogatari.assets("scenes", {
-  Plaza: "프롤로그 광장.webp",
+  // The engine uses unquoted CSS url(...); encode spaces in scene filenames.
+  Plaza: encodeURI("프롤로그 광장.webp"),
   WeaponShop: "무기점.webp",
   JewelryShop: "보석상.webp",
-  ChristmasMarket: "크리스마스 마켓.webp",
+  ChristmasMarket: encodeURI("크리스마스 마켓.webp"),
   SouvenirShop: "기념품점.webp",
-  BeverageStall: "음료 가판대.webp",
+  BeverageStall: encodeURI("음료 가판대.webp"),
   IceRink: "아이스링크장.webp",
-  ChristmasTree: "크리스마스 트리.webp",
+  ChristmasTree: encodeURI("크리스마스 트리.webp"),
   Wedding: "../gallery/결혼씬.webp",
 });
 
