@@ -353,8 +353,8 @@ centered-dialog::before {
   }
 }
 /* Settings, records, dialogs */
-#monogatari load-screen [data-ui="saveSlots"] > h3,
-#monogatari load-screen [data-ui="autoSaveSlots"] > h3 {
+#monogatari :is(load-screen, save-screen) [data-ui="saveSlots"] > h3,
+#monogatari :is(load-screen, save-screen) [data-ui="autoSaveSlots"] > h3 {
   font-size: clamp(16px, 1.5vw, 20px);
   line-height: 1.5;
 }
@@ -1182,20 +1182,20 @@ html.theme-off body {
   font-size: 13px;
 }
 
-#monogatari load-screen[data-screen="load"] {
+#monogatari :is(load-screen, save-screen)[data-screen] {
   padding: 18px max(24px, 5vw);
   overflow-y: auto;
 }
-#monogatari load-screen > h2 { margin: 0 0 14px 48px; font-size: 25px; }
-#monogatari load-screen h3 { margin: 10px 0 8px; }
-#monogatari load-screen slot-container {
+#monogatari :is(load-screen, save-screen) > h2 { margin: 0 0 14px 48px; font-size: 25px; }
+#monogatari :is(load-screen, save-screen) h3 { margin: 10px 0 8px; }
+#monogatari :is(load-screen, save-screen) slot-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   align-items: stretch;
   gap: 14px;
   margin: 10px 0 16px;
 }
-#monogatari load-screen save-slot {
+#monogatari :is(load-screen, save-screen) save-slot {
   width: 100%;
   min-width: 0;
   min-height: 0;
@@ -1203,7 +1203,7 @@ html.theme-off body {
   border-radius: 12px;
 }
 .save-part { padding: 12px 14px 6px; font-size: 18px; font-weight: 700; color: #ffe1ed; }
-#monogatari load-screen save-slot .badge {
+#monogatari :is(load-screen, save-screen) save-slot .badge {
   position: static;
   padding: 0 14px 8px;
   font-size: 11px;
@@ -1212,17 +1212,17 @@ html.theme-off body {
   color: #c8a6b3;
   overflow-wrap: anywhere;
 }
-#monogatari load-screen save-slot [data-content="background"] { height: clamp(55px, 12vh, 110px); border: 0; }
-#monogatari load-screen save-slot figcaption { padding: 7px 12px; font-size: 11px; line-height: 1.4; }
-#monogatari load-screen save-slot [data-delete] { width: 26px; height: 26px; min-height: 26px; top: -7px; right: -7px; }
+#monogatari :is(load-screen, save-screen) save-slot [data-content="background"] { height: clamp(55px, 12vh, 110px); border: 0; }
+#monogatari :is(load-screen, save-screen) save-slot figcaption { padding: 7px 12px; font-size: 11px; line-height: 1.4; }
+#monogatari :is(load-screen, save-screen) save-slot [data-delete] { width: 26px; height: 26px; min-height: 26px; top: -7px; right: -7px; }
 @media (max-height: 500px) and (orientation: landscape) {
-  #monogatari load-screen[data-screen="load"] { padding: 10px 6vw; }
-  #monogatari load-screen > h2 { font-size: 21px; margin-bottom: 6px; }
-  #monogatari load-screen slot-container { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 7px 0 10px; }
-  #monogatari load-screen .save-part { font-size: 15px; padding: 8px 10px 4px; }
-  #monogatari load-screen save-slot [data-content="background"] { height: 40px; }
-  #monogatari load-screen save-slot .badge { padding: 0 10px 5px; font-size: 10px; }
-  #monogatari load-screen save-slot figcaption { padding: 5px 10px; font-size: 10px; }
+  #monogatari :is(load-screen, save-screen)[data-screen] { padding: 10px 6vw; }
+  #monogatari :is(load-screen, save-screen) > h2 { font-size: 21px; margin-bottom: 6px; }
+  #monogatari :is(load-screen, save-screen) slot-container { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 7px 0 10px; }
+  #monogatari :is(load-screen, save-screen) .save-part { font-size: 15px; padding: 8px 10px 4px; }
+  #monogatari :is(load-screen, save-screen) save-slot [data-content="background"] { height: 40px; }
+  #monogatari :is(load-screen, save-screen) save-slot .badge { padding: 0 10px 5px; font-size: 10px; }
+  #monogatari :is(load-screen, save-screen) save-slot figcaption { padding: 5px 10px; font-size: 10px; }
 }
 
 /* Settings: rose panels and generous, clearly grouped controls. */
@@ -1340,7 +1340,7 @@ html.theme-off body {
   #monogatari settings-screen > h2 { padding-left: 42px; }
 }
 /* Shared menu styling: settings, load and credits. */
-#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] {
+#monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] {
   --menu-border: #c685a443;
   --menu-panel: linear-gradient(145deg, #55303e, #38202c);
   padding: clamp(28px, 7vh, 76px) max(24px, 7vw);
@@ -1350,7 +1350,7 @@ html.theme-off body {
   scrollbar-width: thin;
   scrollbar-color: #b77991 #28141e;
 }
-#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 {
+#monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > h2 {
   width: min(920px, 100%);
   margin: 0 auto 24px;
   padding-left: 0;
@@ -1359,33 +1359,33 @@ html.theme-off body {
   letter-spacing: .15em;
   text-align: center;
 }
-#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > [data-action] {
+#monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action] {
   border-color: #d7a1b560;
   background: #512c3d;
   color: #ffe7f0;
 }
-#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > [data-action]:hover {
+#monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action]:hover {
   background: #754257;
   border-color: #efb8cf;
 }
-#monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > [data-action]:focus-visible {
+#monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action]:focus-visible {
   outline: 2px solid #ffd1e2;
   outline-offset: 4px;
 }
-#monogatari load-screen > :is([data-ui="saveSlots"], [data-ui="autoSaveSlots"]),
+#monogatari :is(load-screen, save-screen) > :is([data-ui="saveSlots"], [data-ui="autoSaveSlots"]),
 #monogatari credits-screen [data-content="credits"] {
   width: min(920px, 100%);
   margin-left: auto;
   margin-right: auto;
 }
-#monogatari load-screen save-slot,
+#monogatari :is(load-screen, save-screen) save-slot,
 #monogatari credits-screen [data-content="credits"] {
   border: 1px solid var(--menu-border);
   border-radius: 22px;
   background: var(--menu-panel);
   box-shadow: 0 16px 40px #12070d38, inset 0 1px #fff1f510;
 }
-#monogatari load-screen h3 {
+#monogatari :is(load-screen, save-screen) h3 {
   color: #ffdae7;
   font-weight: 500;
   letter-spacing: .04em;
@@ -1409,25 +1409,25 @@ html.theme-off body {
 #monogatari credits-screen [data-content="credits"] p { margin: 8px 0; }
 #monogatari credits-screen [data-content="credits"] b { color: #fff1f5; }
 @media (max-height: 500px) and (orientation: landscape) {
-  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] { padding: 14px 8vw; }
-  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 { font-size: 25px; margin-bottom: 12px; }
+  #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] { padding: 14px 8vw; }
+  #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > h2 { font-size: 25px; margin-bottom: 12px; }
   #monogatari credits-screen [data-content="credits"] { padding: 18px 22px; font-size: 15px; border-radius: 16px; }
-  #monogatari load-screen save-slot { border-radius: 16px; }
+  #monogatari :is(load-screen, save-screen) save-slot { border-radius: 16px; }
 }
 @media (max-width: 550px) and (orientation: portrait) {
-  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 { padding-left: 0; }
+  #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > h2 { padding-left: 0; }
 }
 /* Save previews keep three equal columns and fixed text/image rows. */
-#monogatari load-screen slot-container {
+#monogatari :is(load-screen, save-screen) slot-container {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-#monogatari load-screen save-slot {
+#monogatari :is(load-screen, save-screen) save-slot {
   display: grid;
   grid-template-rows: 42px 24px clamp(55px, 12vh, 110px) 30px;
   align-content: start;
   box-sizing: border-box;
 }
-#monogatari load-screen save-slot :is(.save-part, .badge, figcaption) {
+#monogatari :is(load-screen, save-screen) save-slot :is(.save-part, .badge, figcaption) {
   box-sizing: border-box;
   min-width: 0;
   width: 100%;
@@ -1436,67 +1436,93 @@ html.theme-off body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#monogatari load-screen save-slot [data-content="background"] {
+#monogatari :is(load-screen, save-screen) save-slot [data-content="background"] {
   height: 100%;
   min-height: 0;
 }
 @media (max-height: 500px) and (orientation: landscape) {
-  #monogatari load-screen save-slot { grid-template-rows: 32px 20px 40px 26px; }
+  #monogatari :is(load-screen, save-screen) save-slot { grid-template-rows: 32px 20px 40px 26px; }
 }
 /* Compact menu titles on mobile, including landscape phones. */
 @media (pointer: coarse) and (max-width: 1100px), (max-width: 700px) {
-  #monogatari :is(settings-screen, load-screen, credits-screen)[data-screen] > h2 {
+  #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > h2 {
     font-size: 20px;
     letter-spacing: .08em;
     margin-bottom: 10px;
   }
 }
 /* Center the contents within each load preview card. */
-#monogatari load-screen save-slot {
+#monogatari :is(load-screen, save-screen) save-slot {
   text-align: center;
   justify-items: center;
 }
-#monogatari load-screen save-slot :is(.save-part, .badge, figcaption) {
+#monogatari :is(load-screen, save-screen) save-slot :is(.save-part, .badge, figcaption) {
   text-align: center;
 }
 /* Align all load-screen headings, messages and card contents centrally. */
-#monogatari load-screen[data-screen="load"],
-#monogatari load-screen :is(h2, h3, p, .save-part, .badge, figcaption) {
+#monogatari :is(load-screen, save-screen)[data-screen],
+#monogatari :is(load-screen, save-screen) :is(h2, h3, p, .save-part, .badge, figcaption) {
   text-align: center;
 }
 /* Center incomplete rows while retaining three fixed-size cards per row. */
-#monogatari load-screen slot-container {
+#monogatari :is(load-screen, save-screen) slot-container {
   --slot-gap: 14px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--slot-gap);
 }
-#monogatari load-screen slot-container > save-slot {
+#monogatari :is(load-screen, save-screen) slot-container > save-slot {
   flex: 0 0 calc((100% - 2 * var(--slot-gap)) / 3);
   width: calc((100% - 2 * var(--slot-gap)) / 3);
 }
-#monogatari load-screen slot-container > p {
+#monogatari :is(load-screen, save-screen) slot-container > p {
   flex: 0 0 100%;
   width: 100%;
   margin: 12px 0;
   text-align: center;
 }
 @media (max-height: 500px) and (orientation: landscape) {
-  #monogatari load-screen slot-container { --slot-gap: 10px; }
+  #monogatari :is(load-screen, save-screen) slot-container { --slot-gap: 10px; }
 }
 /* Keep every preview element in the same full-width grid column. */
-#monogatari load-screen save-slot {
+#monogatari save-screen > [data-ui="slots"],
+#monogatari save-screen > .horizontal {
+  width: min(920px, 100%);
+  margin: 0 auto 20px;
+}
+#monogatari save-screen > .horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+#monogatari save-screen [data-content="slot-name"] {
+  width: min(420px, 65%);
+  min-width: 0;
+  margin: 0;
+  border-radius: 12px;
+  font-size: 14px;
+}
+#monogatari save-screen [data-action="save"] {
+  margin: 0;
+  border-radius: 12px;
+  padding: 10px 24px;
+  min-height: 42px;
+}
+#monogatari :is(load-screen, save-screen) save-slot {
   grid-template-columns: minmax(0, 1fr);
 }
-#monogatari load-screen save-slot > :is(.save-part, .badge, [data-content="background"], figcaption) {
+#monogatari :is(load-screen, save-screen) save-slot > :is(.save-part, .badge, [data-content="background"], figcaption) {
   grid-column: 1;
   width: 100%;
   max-width: 100%;
   justify-self: stretch;
   text-align: center;
 }
-#monogatari load-screen save-slot > .save-part { grid-row: 1; }
-#monogatari load-screen save-slot > .badge { grid-row: 2; }
-#monogatari load-screen save-slot > [data-content="background"] { grid-row: 3; }
-#monogatari load-screen save-slot > figcaption { grid-row: 4; }
+#monogatari :is(load-screen, save-screen) save-slot > .save-part { grid-row: 1; }
+#monogatari :is(load-screen, save-screen) save-slot > .badge { grid-row: 2; }
+#monogatari :is(load-screen, save-screen) save-slot > [data-content="background"] { grid-row: 3; }
+#monogatari :is(load-screen, save-screen) save-slot > figcaption { grid-row: 4; }
