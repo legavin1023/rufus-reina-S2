@@ -1,7 +1,6 @@
 /* Reference composition: 1920 × 1080, scaled together without cropping. */
 #monogatari [data-screen="main"] {
   position: relative;
-  background: #211b25 !important;
   overflow: hidden;
 }
 #monogatari [data-screen="main"]::before,
@@ -66,7 +65,6 @@
   border-radius: 0;
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  background-color: transparent !important;
   background-image: var(--title-button) !important;
   background-repeat: no-repeat;
   background-position: center;

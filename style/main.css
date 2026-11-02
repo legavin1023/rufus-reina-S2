@@ -1,5 +1,18 @@
 /* Winter romance theme. Engine layout and visibility remain owned by Monogatari. */
 
+/* Keep engine and browser default fills transparent without hiding artwork. */
+html,
+body,
+#monogatari,
+#monogatari *,
+#monogatari *::before,
+#monogatari *::after {
+  background-color: transparent !important;
+}
+#monogatari text-box::after {
+  background-image: none;
+}
+
 @font-face {
   font-family: "Ridibatang";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff")
@@ -29,7 +42,6 @@
 html,
 body {
   margin: 0;
-  background: var(--ink);
   color: var(--paper);
   font-family: var(--sans);
   font-size: 17px;
@@ -46,7 +58,6 @@ body * {
   font-family: var(--serif) !important;
 }
 #monogatari {
-  background: var(--ink);
   isolation: isolate;
 }
 #monogatari *,
@@ -64,7 +75,6 @@ button {
   border: 1px solid var(--line);
   border-radius: 3px;
   padding: 10px 24px;
-  background: rgba(55, 27, 37, 0.92);
   color: var(--paper);
   box-shadow: none;
   cursor: pointer;
@@ -75,7 +85,6 @@ button {
 }
 button:hover,
 button:focus {
-  background: #4f2f3b;
   border-color: var(--gold);
   color: var(--paper);
 }
@@ -98,14 +107,10 @@ a {
 }
 ::selection {
   color: var(--ink);
-  background: var(--gold);
 }
 [data-screen] {
-  background-color: var(--ink);
 }
 [data-screen]:not([data-screen="game"]):not([data-screen="main"]) {
-  background:
-    radial-gradient(ellipse at 90% 0%, #4e2e3a 0%, transparent 50%), var(--ink);
   padding: 6vh 7vw;
 }
 [data-screen] > h2 {
@@ -134,12 +139,10 @@ a {
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 50%;
-  background: transparent;
   color: var(--gold);
 }
 /* Story UI */
 [data-screen="game"] {
-  background-color: var(--night);
   overflow: hidden;
 }
 text-box {
@@ -149,7 +152,6 @@ text-box {
   min-height: 170px;
   max-height: 30%;
   padding: 20px 34px 24px;
-  background: linear-gradient(110deg, #231017f5, #371b25ed);
   border: 1px solid var(--line);
   border-top-color: #bf7f9699;
   border-radius: 4px;
@@ -165,7 +167,6 @@ text-box::after {
   right: 20px;
   width: auto;
   height: auto;
-  background: none;
   color: var(--gold);
   font-size: 10px;
 }
@@ -213,7 +214,6 @@ quick-menu {
   max-height: none;
   gap: 4px;
   padding: 0;
-  background: transparent;
   z-index: 12;
 }
 quick-menu button {
@@ -229,7 +229,6 @@ quick-menu button {
   padding: 6px 11px;
   border: 1px solid transparent;
   border-radius: 2px;
-  background: #231017cc;
   color: var(--muted);
   font-size: 12px;
 }
@@ -237,7 +236,6 @@ quick-menu button:hover,
 quick-menu button:focus {
   color: var(--gold);
   border: 1px solid var(--line);
-  background: #42242f;
 }
 quick-menu button > [data-string] {
   display: inline;
@@ -269,7 +267,6 @@ choice-container button {
   font-size: clamp(17px, 1.2vw, 21px);
   line-height: 1.6;
   color: var(--paper);
-  background: #2f141eeb;
   border: 1px solid #ba738d66;
   border-radius: 2px;
   box-shadow: 0 8px 24px #00000033;
@@ -282,7 +279,6 @@ choice-container button::before {
   color: var(--gold);
 }
 choice-container button:hover {
-  background: #4f2f3b;
   border-color: var(--gold);
 }
 centered-dialog {
@@ -300,7 +296,6 @@ centered-dialog::before {
   position: absolute;
   inset: -100vmax;
   z-index: -1;
-  background: rgba(0, 0, 0, 0.55);
   pointer-events: none;
 }
 #monogatari.wedding-art-view centered-dialog,
@@ -365,7 +360,6 @@ settings-screen .settings {
   gap: 36px;
   border: 1px solid var(--line);
   border-radius: 4px;
-  background: #371b2580;
 }
 settings-screen .settings-group {
   padding: 0;
@@ -389,7 +383,6 @@ input[type="range"] {
   max-width: 420px;
   height: 4px;
   margin: 22px auto 28px;
-  background: #653b4a;
   border: 0;
   border-radius: 2px;
   accent-color: var(--gold);
@@ -399,14 +392,12 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 14px;
   height: 14px;
-  background: var(--gold);
   border: 2px solid var(--paper);
   border-radius: 50%;
   box-shadow: 0 0 0 4px #d589a515;
 }
 input[type="range"]::-webkit-slider-runnable-track {
   height: 4px;
-  background: #653b4a;
   border: 0;
   border-radius: 2px;
 }
@@ -416,29 +407,24 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 11px;
   height: 11px;
-  background: var(--gold);
   border: 2px solid var(--paper);
   border-radius: 50%;
 }
 input[type="range"]::-moz-range-track {
-  background: #653b4a;
   height: 4px;
 }
 input:not([type="range"]),
 select,
 textarea {
-  background: #231017;
   color: var(--paper);
   border: 1px solid var(--line);
   border-radius: 3px;
   padding: 10px 14px;
 }
 .modal {
-  background: #17060cbb;
   backdrop-filter: blur(8px);
 }
 .modal .modal__content {
-  background: var(--night);
   color: var(--paper);
   border: 1px solid var(--line);
   border-radius: 5px;
@@ -471,7 +457,6 @@ dialog-log .modal__content [data-content="log"] [data-spoke] > p {
   color: var(--paper);
 }
 save-slot {
-  background: var(--panel);
   color: var(--paper);
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -490,7 +475,6 @@ save-slot [data-delete] {
   padding: 0;
   flex-shrink: 0;
   border-radius: 50%;
-  background: var(--panel);
   border: 1px solid var(--line);
   color: var(--gold);
 }
@@ -506,7 +490,6 @@ save-slot [data-delete]::after {
   width: 42%;
   height: 2px;
   border-radius: 1px;
-  background: currentColor;
   pointer-events: none;
 }
 save-slot [data-delete]::before {
@@ -526,10 +509,8 @@ credits-screen h3 {
   font-weight: 400;
 }
 loading-screen [data-content="progress"]::-webkit-progress-value {
-  background: var(--gold);
 }
 loading-screen [data-content="progress"]::-moz-progress-bar {
-  background: var(--gold);
 }
 /* Minigames */
 .proposal-game {
@@ -539,7 +520,6 @@ loading-screen [data-content="progress"]::-moz-progress-bar {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: #19080edd;
   backdrop-filter: blur(8px);
 }
 .proposal-game-card {
@@ -548,7 +528,6 @@ loading-screen [data-content="progress"]::-moz-progress-bar {
   max-height: 92dvh;
   overflow-y: auto;
   padding: clamp(22px, 4vw, 44px);
-  background: linear-gradient(145deg, #40232e, #2d141d);
   color: var(--paper);
   text-align: center;
   border: 1px solid var(--line);
@@ -593,7 +572,6 @@ loading-screen [data-content="progress"]::-moz-progress-bar {
   height: 220px;
   margin: 26px 0 16px;
   border-bottom: 1px solid var(--line);
-  background: radial-gradient(ellipse at 50% 70%, #d589a510, transparent 70%);
 }
 .proposal-game .shell-game-box {
   position: absolute;
@@ -603,7 +581,6 @@ loading-screen [data-content="progress"]::-moz-progress-bar {
   padding: 12px 6px;
   will-change: left, transform;
   border: 1px solid #b87c92;
-  background: linear-gradient(135deg, #492b36, #3b222b);
   color: var(--paper);
   box-shadow: 0 12px 25px #00000044;
   font-size: clamp(13px, 1.5vw, 18px);
@@ -640,7 +617,6 @@ body:has(.proposal-game) #game-snow {
   position: absolute;
   top: -20px;
   border-radius: 50%;
-  background: #f4ecef;
   animation: game-snow-fall linear infinite;
 }
 @keyframes game-snow-fall {
@@ -746,12 +722,6 @@ body:has(.merchant-game) game-screen centered-dialog {
 .merchant-game {
   padding: 0;
   backdrop-filter: none;
-  background: radial-gradient(
-    ellipse at 50% 55%,
-    #56323f 0%,
-    #371b25 38%,
-    #200a12 85%
-  );
 }
 .merchant-game::before {
   content: "";
@@ -759,7 +729,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   inset: 0;
   pointer-events: none;
   opacity: 0.25;
-  background-image: radial-gradient(circle, #f4c8d8 1px, transparent 2px);
   background-size: 77px 89px;
 }
 .merchant-game .proposal-game-card {
@@ -767,7 +736,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   height: 100dvh;
   max-height: 100dvh;
   padding: 18px;
-  background: transparent;
   border: 0;
   border-radius: 0;
   overflow: hidden;
@@ -783,7 +751,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   z-index: 3;
   padding: 5px 16px;
   margin: 3px;
-  background: #231017d9;
   border: 1px solid var(--line);
   border-radius: 3px;
 }
@@ -864,7 +831,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   aspect-ratio: 1;
   border: 1px solid #d589a555;
   border-radius: 50%;
-  background: radial-gradient(ellipse, #ec9bb930, transparent 68%);
   box-shadow: 0 0 70px #d589a518;
 }
 .reina-aura::after {
@@ -892,7 +858,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   padding: 0;
   border: 1px solid #d589a566;
   border-radius: 50%;
-  background: radial-gradient(circle, #754456f2, #3a1824f2);
   color: var(--paper);
   font-size: 46px;
   line-height: 1;
@@ -903,7 +868,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   will-change: left, top, transform;
 }
 .merchant-game .merchant-obstacle:hover {
-  background: #93576d;
   border-color: #f1b4ca;
 }
 .merchant-game .merchant-obstacle {
@@ -915,7 +879,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   will-change: left, top, transform, opacity;
 }
 .merchant-game .object-cat {
-  background: #512f3cec;
   border-color: #d2adbb;
 }
 .merchant-game .object-merchant,
@@ -929,14 +892,12 @@ body:has(.merchant-game) game-screen centered-dialog {
   bottom: 0;
   width: 100%;
   height: 4px;
-  background: #d589a518;
 }
 .merchant-progress::after {
   content: "";
   display: block;
   height: 100%;
   width: calc(var(--progress, 0) * 100%);
-  background: var(--gold);
   box-shadow: 0 0 14px var(--gold);
 }
 .merchant-burst,
@@ -956,7 +917,6 @@ body:has(.merchant-game) game-screen centered-dialog {
   box-shadow: inset 0 0 100px #a9537340;
 }
 .merchant-danger .merchant-progress::after {
-  background: var(--rose);
 }
 .reina-hit {
   animation: reina-impact 0.4s ease-out;
@@ -1055,7 +1015,6 @@ html.theme-off {
 }
 html.theme-off,
 html.theme-off body {
-  background: #faf1f4 !important;
   color: #291b20 !important;
 }
 .theme-off #monogatari *:not(.proposal-game, .proposal-game *),
@@ -1063,8 +1022,6 @@ html.theme-off body {
 .theme-off #monogatari *:not(.proposal-game, .proposal-game *)::after {
   color: #291b20 !important;
   border-color: transparent !important;
-  background-image: none !important;
-  background-color: transparent !important;
   box-shadow: none !important;
   text-shadow: none !important;
   filter: none !important;
@@ -1074,7 +1031,6 @@ html.theme-off body {
 .theme-off #monogatari [data-screen],
 .theme-off .modal,
 .theme-off .modal__content {
-  background: #faf1f4 !important;
 }
 .theme-off #game-snow {
   opacity: 0;
@@ -1094,7 +1050,6 @@ html.theme-off body {
 .game-test-tools summary {
   cursor: pointer;
   padding: 5px 12px;
-  background: #f6e6ec;
   border: 1px solid #a07082;
   border-radius: 3px;
   list-style-position: inside;
@@ -1105,7 +1060,6 @@ html.theme-off body {
   gap: 6px;
   width: 190px;
   padding: 10px;
-  background: #faf1f4;
   border: 1px solid #a07082;
   border-radius: 3px;
 }
@@ -1113,12 +1067,10 @@ html.theme-off body {
   min-height: 36px;
   padding: 6px 10px;
   font-size: 13px;
-  background: #f1d9e2;
   color: #291b20;
   border: 1px solid #bb99a5;
 }
 .test-tool-buttons button:hover {
-  background: #e8c2d0;
   color: #291b20;
 }
 .test-tool-buttons button[hidden] {
@@ -1137,7 +1089,6 @@ html.theme-off body {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: #1e1116;
   color: #ffffff;
   text-align: center;
 }
@@ -1167,7 +1118,6 @@ html.theme-off body {
   border: 1px solid #db92ad;
   border-radius: 8px;
   padding: 12px 20px;
-  background: #361f28;
   color: #ffffff;
   font: inherit;
   line-height: 1.5;
@@ -1229,7 +1179,6 @@ html.theme-off body {
 #monogatari settings-screen[data-screen="settings"] {
   padding: clamp(28px, 7vh, 76px) max(24px, 7vw);
   overflow-y: auto;
-  background: radial-gradient(ellipse at 15% 0%, #67384880, transparent 65%), #28141e;
   color: #fff1f5;
 }
 #monogatari settings-screen > h2 {
@@ -1252,7 +1201,6 @@ html.theme-off body {
   width: min(920px, 100%);
   padding: 0;
   gap: 24px;
-  background: transparent;
   border: 0;
 }
 #monogatari settings-screen .settings-group {
@@ -1264,7 +1212,6 @@ html.theme-off body {
   padding: 30px;
   border: 1px solid #c685a443;
   border-radius: 22px;
-  background: linear-gradient(145deg, #55303e, #38202c);
   box-shadow: 0 16px 40px #12070d38, inset 0 1px #fff1f510;
 }
 #monogatari settings-screen [data-settings] {
@@ -1290,32 +1237,27 @@ html.theme-off body {
   max-width: none;
   height: 26px;
   margin: 14px 0 22px;
-  background: transparent;
   border-radius: 12px;
 }
 #monogatari settings-screen input[type="range"]::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 8px;
-  background: #a669805e;
 }
 #monogatari settings-screen input[type="range"]::-webkit-slider-thumb {
   width: 22px;
   height: 22px;
   margin-top: -8px;
   border: 3px solid #fff2f7;
-  background: #e5a4be;
   box-shadow: 0 2px 8px #1b0b1766;
 }
 #monogatari settings-screen input[type="range"]::-moz-range-track {
   height: 6px;
   border-radius: 8px;
-  background: #a669805e;
 }
 #monogatari settings-screen input[type="range"]::-moz-range-thumb {
   width: 16px;
   height: 16px;
   border: 3px solid #fff2f7;
-  background: #e5a4be;
 }
 #monogatari settings-screen input[type="range"]:focus-visible {
   outline: 2px solid #ffd1e2;
@@ -1323,7 +1265,6 @@ html.theme-off body {
 }
 #monogatari settings-screen [data-action="back"] {
   border-color: #d7a1b560;
-  background: #512c3d;
   color: #ffe7f0;
 }
 @media (max-height: 500px) and (orientation: landscape) {
@@ -1345,7 +1286,6 @@ html.theme-off body {
   --menu-panel: linear-gradient(145deg, #55303e, #38202c);
   padding: clamp(28px, 7vh, 76px) max(24px, 7vw);
   overflow-y: auto;
-  background: radial-gradient(ellipse at 15% 0%, #67384880, transparent 65%), #28141e;
   color: #fff1f5;
   scrollbar-width: thin;
   scrollbar-color: #b77991 #28141e;
@@ -1361,11 +1301,9 @@ html.theme-off body {
 }
 #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action] {
   border-color: #d7a1b560;
-  background: #512c3d;
   color: #ffe7f0;
 }
 #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action]:hover {
-  background: #754257;
   border-color: #efb8cf;
 }
 #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action]:focus-visible {
@@ -1382,7 +1320,6 @@ html.theme-off body {
 #monogatari credits-screen [data-content="credits"] {
   border: 1px solid var(--menu-border);
   border-radius: 22px;
-  background: var(--menu-panel);
   box-shadow: 0 16px 40px #12070d38, inset 0 1px #fff1f510;
 }
 #monogatari :is(load-screen, save-screen) h3 {
