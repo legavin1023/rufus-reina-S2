@@ -50,6 +50,15 @@ $_ready(() => {
   monogatari.init("#monogatari").then(() => {
     window.initGameSfx();
     window.initStoryReactions();
+    // '시작'은 항상 새 게임. 저장 불러오기는 별도의 onLoad 경로를 사용한다.
+    const originalOnStart = monogatari.onStart;
+    monogatari.onStart = async function (...args) {
+      this.stopAmbient();
+      window.gameSfx?.stopAll();
+      stopConfetti();
+      await this.resetGame();
+      return originalOnStart.apply(this, args);
+    };
     // 엔진의 재생 허락 버튼은 게임 중에도 메인 BGM을 재시작하므로 직접 처리한다.
     document.addEventListener("click", (event) => {
       const prompt = event.target.closest?.('[data-ui="broadcast"][data-content="allow-playback"]');
