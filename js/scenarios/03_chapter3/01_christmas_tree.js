@@ -1,6 +1,7 @@
 /* global monogatari */
 
 let scenario_Ch3_ChristmasTree = [
+  "show scene ChristmasTree with fadeIn",
   "centered 밤, 크리스마스 트리 근처.",
   "show character r normal at center",
   "r 혹시 모르니까 수첩에 잘 적어놔야겠다……!",

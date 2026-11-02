@@ -1,6 +1,7 @@
 /* global monogatari */
 
 window.scenario_Ch1_JewelryShop_Branch = [
+  "show scene JewelryShop with fadeIn",
   "centered 정오, 번화가의 가게 앞.",
 
   "show character r normal at center",
@@ -22,6 +23,8 @@ window.scenario_Ch1_JewelryShop_Branch = [
 
   "r 실례합니다.",
 
+  "show character r normal at left",
+  "show character s normal at right",
   "s 어서 오세요. 찾으시는 물건이 있으신가요?",
 
   "r 네! 예약한 물건이 있어서 찾으러 왔어요.",
@@ -33,6 +36,8 @@ window.scenario_Ch1_JewelryShop_Branch = [
   "s 잠시 가게를 둘러보고 계시면 금방 물건을 가져다 드리지요.",
 
   "r 네. 감사합니다.",
+  "hide character s",
+  "show character r normal at center",
 
   "투명한 유리 전시장 안에 화려한 귀금속 장신구들이 보기 좋게 진열되어 있다.",
   "레이나 말고도 두 명씩 짝지어 방문한 손님들이 여럿 있다.",
@@ -53,6 +58,8 @@ window.scenario_Ch1_JewelryShop_Branch = [
   "r 루퍼스도 감동하지 않고는 못 배길걸?",
 
   "그때, 점원이 등장했다.",
+  "show character r energetic at left",
+  "show character s normal at right",
 
   "s 죄송합니다, 레이나 님.",
   "s 물건을 빼놓은 도중에 예약자 성함을 적은 꼬리표가 섞여 있었지 뭡니까.",
@@ -95,7 +102,7 @@ window.scenario_Ch1_JewelryShop_Branch = [
 ];
 
 window.scenario_Ch1_JewelryShop_Choice_Done = [
-  "show character r normal at center",
+  "show character r normal at left",
   "r 음…… 이거! 이게 {bold}제 거{/bold}예요.",
   "r 저희 이니셜을 새겨달라고 요청했거든요.",
 
@@ -103,11 +110,14 @@ window.scenario_Ch1_JewelryShop_Choice_Done = [
   "s 확인되었습니다! 상품은 쇼핑백에 넣어드릴까요?",
 
   "r 아뇨, 아뇨. 제가 따로 챙겨갈게요.",
-  "show character r smile at center",
+  "show character r smile at left",
   "r {happy}감사해요! 메리 크리스마스!{/happy}",
 
   "s 손님께서도 즐거운 크리스마스 되시길.",
+  "hide character s",
 
+  "show scene Plaza with fadeIn",
+  "show character r smile at center",
   "레이나는 보석상을 나섰다.",
 
   "show character r smile at center",

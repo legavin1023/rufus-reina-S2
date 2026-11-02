@@ -1,6 +1,7 @@
 /* global monogatari */
 
 let scenario_Ch2_BeverageStall = [
+  "show scene BeverageStall with fadeIn",
   "centered 오후, 음료 가판대.",
 
   "음료를 파는 가판대에는 다행히 사람이 많이 없었다.",
@@ -17,6 +18,7 @@ let scenario_Ch2_BeverageStall = [
   "show character ru normal at right",
   "ru 없지는 않나 봅니다.",
 
+  "show character s stall at center",
   "s 다음 손님, 무엇을 드릴까요?",
 
   "r {happy}저는 코코아 한 잔 주세요.{/happy}",
@@ -53,6 +55,7 @@ let scenario_Ch2_BeverageStall = [
   "s {scared}진작 말하려고 했습니다……!{/scared}",
 
   "두 사람은 점원에게서 묵직한 빨간색 양말 모양 머그컵을 받았다.",
+  "hide character s",
   "레이나의 코코아에는 커다란 마시멜로우를 하나 동동 띄워져 먹음직스러웠다.",
   "루퍼스의 뱅쇼에는 말린 과일 조각과 시나몬 스틱이 담겨져 화사한 향을 냈다.",
 
@@ -106,7 +109,9 @@ let scenario_Ch2_BeverageStall = [
   "r {happy}그, 그래! 바로 가자!{/happy}",
 
   "레이나도 벌떡 일어나서 반쯤 식은 코코아를 단번에 마셔 버린다.",
+  "show character s stall at center",
   "곧장 벌벌 떠는 점원에게 돌아가 머그컵을 반납하고 돈을 챙겼다.",
+  "hide character s",
   "두 사람은 함께 아이스링크장으로 향한다.",
 
   "hide character r",

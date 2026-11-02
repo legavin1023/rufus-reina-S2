@@ -1,6 +1,7 @@
 /* global monogatari */
 
 let scenario_Start = [
+  "show scene Plaza with fadeIn",
   "stop music",
   "play music Daily loop",
   function () { Object.assign(this.storage(), {ringChoice: null, proposalRetried: false, treeGameResult: null, retryRing: null}); return true; },

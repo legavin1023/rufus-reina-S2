@@ -56,6 +56,14 @@ monogatari.assets("images", {});
 
 // Define the backgrounds for each scene.
 monogatari.assets("scenes", {
+  Plaza: "프롤로그 광장.webp",
+  WeaponShop: "무기점.webp",
+  JewelryShop: "보석상.webp",
+  ChristmasMarket: "크리스마스 마켓.webp",
+  SouvenirShop: "기념품점.webp",
+  BeverageStall: "음료 가판대.webp",
+  IceRink: "아이스링크장.webp",
+  ChristmasTree: "크리스마스 트리.webp",
   Wedding: "../gallery/결혼씬.webp",
 });
 
@@ -122,7 +130,8 @@ monogatari.characters({
     directory: "shopkeeper",
 
     sprites: {
-      normal: "stand_normal.webp",
+      normal: "무기 보석상 상인.webp",
+      stall: "가판대 상인.webp",
     },
 
     // expressions: {

@@ -1,6 +1,7 @@
 /* global monogatari */
 
 let scenario_Ch1_WeaponShop_Fail = [
+  "show scene WeaponShop with fadeIn",
   "centered 정오, 번화가의 가게 앞.",
 
   "show character r normal at center",
@@ -12,6 +13,8 @@ let scenario_Ch1_WeaponShop_Fail = [
 
   "r 실례합니다.",
 
+  "show character r normal at left",
+  "show character s normal at right",
   "s 어서 오세요. 찾으시는 물건이 있으신가요?",
 
   "r 네! 예약한 물건이 있어서 찾으러 왔어요.",
@@ -23,6 +26,8 @@ let scenario_Ch1_WeaponShop_Fail = [
   "s 잠시 가게를 둘러보고 계시면 금방 물건을 가져다 드리지요.",
 
   "r 네. 감사합니다.",
+  "hide character s",
+  "show character r normal at center",
 
   "검, 창, 방패 같은 냉병기부터 시작해서 최첨단 기술을 적용한 강력한 화기까지.",
   "없는 게 없는 무기점이다.",
@@ -44,6 +49,8 @@ let scenario_Ch1_WeaponShop_Fail = [
   "r 말을, 루퍼스가 직접 하지는 않았지만은……. 그래도 필요하지 않을까?",
 
   "그때, 점원이 등장했다.",
+  "show character r shy at left",
+  "show character s normal at right",
 
   "s 죄송합니다, 레이나 님.",
   "s 물건을 빼놓은 도중에 예약자 성함을 적은 꼬리표가 섞여 있었지 뭡니까.",
@@ -67,7 +74,7 @@ let scenario_Ch1_WeaponShop_Fail = [
 
 // 선택지 이후 공통으로 이어지는 흐름 라벨
 let scenario_Ch1_WeaponShop_Choice_Done = [
-  "show character r normal at center",
+  "show character r normal at left",
   "r 음…… 이거! 이게 {bold}제 거{/bold}예요.",
   "r 끝에 빨간색 장식을 달아달라고 요청했거든요.",
 
@@ -75,11 +82,13 @@ let scenario_Ch1_WeaponShop_Choice_Done = [
   "s 확인되었습니다! 상품은 쇼핑백에 넣어드릴까요?",
 
   "r 아뇨, 아뇨. 제가 따로 챙겨갈게요.",
-  "show character r smile at center",
+  "show character r smile at left",
   "r {happy}감사해요! 메리 크리스마스!{/happy}",
 
   "s 손님께서도 즐거운 크리스마스 되시길.",
+  "hide character s",
 
+  "show scene Plaza with fadeIn",
   "show character r normal at center",
   "레이나는 무기점을 나섰다.",
   "그때 익숙한 실루엣이 눈앞을 스쳐 지나갔다.",
