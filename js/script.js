@@ -122,7 +122,7 @@ monogatari.characters({
     directory: "shopkeeper",
 
     sprites: {
-      normal: "stand_normal.png",
+      normal: "stand_normal.webp",
     },
 
     // expressions: {
@@ -138,8 +138,8 @@ monogatari.characters({
     directory: "jin",
 
     sprites: {
-      surprised: "stand_surprised.png",
-      urgent: "stand_urgent.png",
+      surprised: "stand_surprised.webp",
+      urgent: "stand_urgent.webp",
     },
 
     // expressions: {

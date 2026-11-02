@@ -79,18 +79,18 @@
   transition: transform 180ms ease, filter 180ms ease;
 }
 #monogatari .title-scene main-menu button[string="Start"] {
-  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (시작)외곽선.png");
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (시작)외곽선.webp");
 }
 #monogatari .title-scene main-menu button[string="Load"] {
-  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (불러오기) 외곽선.png");
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (불러오기) 외곽선.webp");
   top: 23.251417%;
 }
 #monogatari .title-scene main-menu button[string="Settings"] {
-  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (설정)외곽선.png");
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (설정)외곽선.webp");
   top: 46.502835%;
 }
 #monogatari .title-scene main-menu button[string="Credits"] {
-  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (크레딧) 외곽선.png");
+  --title-button: url("../assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 버튼 (크레딧) 외곽선.webp");
   top: 69.754253%;
 }
 /* Preserve translated text as the accessible name without painting it twice. */

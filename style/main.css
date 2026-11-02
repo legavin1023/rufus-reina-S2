@@ -1486,6 +1486,11 @@ html.theme-off body {
   #monogatari :is(load-screen, save-screen) slot-container { --slot-gap: 10px; }
 }
 /* Keep every preview element in the same full-width grid column. */
+@media (hover: hover) and (pointer: fine) {
+  html, body, body * {
+    cursor: url("../assets/cursor/snowflake.cur"), auto !important;
+  }
+}
 #monogatari save-screen > [data-ui="slots"],
 #monogatari save-screen > .horizontal {
   width: min(920px, 100%);

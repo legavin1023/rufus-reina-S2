@@ -97,8 +97,8 @@ $_ready(() => {
         "afterbegin",
         `
         <div class="title-composition title-scene">
-          <img class="title-background" src="./assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 합본.png" alt="" draggable="false" />
-          <img class="title-logo" src="./assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 로고 외곽선.png" alt="루퍼이나 두근두근 프로포즈 대작전 — 15주년이니까 이제는 결혼이 하고 싶어" draggable="false" />
+          <img class="title-background" src="./assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 합본.webp" alt="" draggable="false" />
+          <img class="title-logo" src="./assets/ui/261025 루퍼이나 두근두근 프로포즈 대작전 로고 외곽선.webp" alt="루퍼이나 두근두근 프로포즈 대작전 — 15주년이니까 이제는 결혼이 하고 싶어" draggable="false" />
         </div>
       `,
       );
