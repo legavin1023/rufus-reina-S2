@@ -1,12 +1,7 @@
 /* Winter romance theme. Engine layout and visibility remain owned by Monogatari. */
 
-/* Keep engine and browser default fills transparent without hiding artwork. */
-html,
-body,
-#monogatari,
-#monogatari *,
-#monogatari *::before,
-#monogatari *::after {
+/* Scene artwork stays clear; UI panels keep their own rose backgrounds. */
+#monogatari game-screen[data-screen="game"] {
   background-color: transparent !important;
 }
 #monogatari text-box::after {
@@ -22,9 +17,9 @@ body,
 }
 :root {
   color-scheme: only light;
-  --ink: #231017;
-  --night: #2f161f;
-  --panel: #371b25;
+  --ink: #38212d;
+  --night: #452737;
+  --panel: #603c4e;
   --paper: #f5e5eb;
   --muted: #cda9b6;
   --gold: #d589a5;
@@ -41,6 +36,7 @@ body,
 }
 html,
 body {
+  background: var(--ink);
   margin: 0;
   color: var(--paper);
   font-family: var(--sans);
@@ -58,6 +54,7 @@ body * {
   font-family: var(--serif) !important;
 }
 #monogatari {
+  background: var(--ink);
   isolation: isolate;
 }
 #monogatari *,
@@ -71,6 +68,7 @@ textarea {
   font: inherit;
 }
 button {
+  background: rgba(119, 76, 96, 0.96);
   min-height: 44px;
   border: 1px solid var(--line);
   border-radius: 3px;
@@ -85,6 +83,7 @@ button {
 }
 button:hover,
 button:focus {
+  background: #94627a;
   border-color: var(--gold);
   color: var(--paper);
 }
@@ -106,11 +105,15 @@ a {
   color: var(--gold);
 }
 ::selection {
+  background: var(--gold);
   color: var(--ink);
 }
 [data-screen] {
+  background-color: var(--ink);
 }
 [data-screen]:not([data-screen="game"]):not([data-screen="main"]) {
+  background:
+    radial-gradient(ellipse at 90% 0%, #4e2e3a 0%, transparent 50%), var(--ink);
   padding: 6vh 7vw;
 }
 [data-screen] > h2 {
@@ -129,6 +132,7 @@ a {
 }
 [data-screen]:not([data-screen="game"]) [data-action="back"],
 [data-screen] button.top {
+  background: transparent;
   position: absolute;
   top: 16px;
   left: 18px;
@@ -146,6 +150,7 @@ a {
   overflow: hidden;
 }
 text-box {
+  background: linear-gradient(110deg, #231017f5, #371b25ed);
   left: 6%;
   width: 88%;
   bottom: 64px;
@@ -161,6 +166,7 @@ text-box {
   overflow: visible;
 }
 text-box::after {
+  background: none;
   content: "◆";
   position: absolute;
   bottom: 14px;
@@ -206,6 +212,7 @@ text-box[mode="nvl"] type-writer {
   padding: 12px 0;
 }
 quick-menu {
+  background: transparent;
   top: auto;
   bottom: 12px;
   right: 6%;
@@ -217,6 +224,7 @@ quick-menu {
   z-index: 12;
 }
 quick-menu button {
+  background: #231017cc;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -234,6 +242,7 @@ quick-menu button {
 }
 quick-menu button:hover,
 quick-menu button:focus {
+  background: #42242f;
   color: var(--gold);
   border: 1px solid var(--line);
 }
@@ -259,6 +268,7 @@ choice-container [data-content="wrapper"] {
   gap: 12px;
 }
 choice-container button {
+  background: #2f141eeb;
   position: relative;
   width: 100%;
   margin: 0;
@@ -279,6 +289,7 @@ choice-container button::before {
   color: var(--gold);
 }
 choice-container button:hover {
+  background: #4f2f3b;
   border-color: var(--gold);
 }
 centered-dialog {
@@ -354,6 +365,7 @@ centered-dialog::before {
   line-height: 1.5;
 }
 settings-screen .settings {
+  background: #371b2580;
   width: min(980px, 100%);
   margin: 0 auto;
   padding: clamp(16px, 3vw, 36px);
@@ -377,6 +389,7 @@ settings-screen span {
   font-size: 14px;
 }
 input[type="range"] {
+  background: #653b4a;
   appearance: none;
   display: block;
   width: 100%;
@@ -389,6 +402,7 @@ input[type="range"] {
   cursor: pointer;
 }
 input[type="range"]::-webkit-slider-thumb {
+  background: var(--gold);
   appearance: none;
   width: 14px;
   height: 14px;
@@ -397,34 +411,41 @@ input[type="range"]::-webkit-slider-thumb {
   box-shadow: 0 0 0 4px #d589a515;
 }
 input[type="range"]::-webkit-slider-runnable-track {
+  background: #653b4a;
   height: 4px;
   border: 0;
   border-radius: 2px;
 }
 input[type="range"]::-webkit-slider-thumb {
+  background: var(--gold);
   margin-top: -5px;
 }
 input[type="range"]::-moz-range-thumb {
+  background: var(--gold);
   width: 11px;
   height: 11px;
   border: 2px solid var(--paper);
   border-radius: 50%;
 }
 input[type="range"]::-moz-range-track {
+  background: #653b4a;
   height: 4px;
 }
 input:not([type="range"]),
 select,
 textarea {
+  background: #231017;
   color: var(--paper);
   border: 1px solid var(--line);
   border-radius: 3px;
   padding: 10px 14px;
 }
 .modal {
+  background: #17060cbb;
   backdrop-filter: blur(8px);
 }
 .modal .modal__content {
+  background: var(--night);
   color: var(--paper);
   border: 1px solid var(--line);
   border-radius: 5px;
@@ -457,6 +478,7 @@ dialog-log .modal__content [data-content="log"] [data-spoke] > p {
   color: var(--paper);
 }
 save-slot {
+  background: var(--panel);
   color: var(--paper);
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -468,6 +490,7 @@ save-slot figcaption {
   padding: 16px;
 }
 save-slot [data-delete] {
+  background: var(--panel);
   box-sizing: border-box;
   aspect-ratio: 1;
   min-width: 0;
@@ -509,11 +532,14 @@ credits-screen h3 {
   font-weight: 400;
 }
 loading-screen [data-content="progress"]::-webkit-progress-value {
+  background: var(--gold);
 }
 loading-screen [data-content="progress"]::-moz-progress-bar {
+  background: var(--gold);
 }
 /* Minigames */
 .proposal-game {
+  background: #19080edd;
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -523,6 +549,7 @@ loading-screen [data-content="progress"]::-moz-progress-bar {
   backdrop-filter: blur(8px);
 }
 .proposal-game-card {
+  background: linear-gradient(145deg, #40232e, #2d141d);
   position: relative;
   width: min(760px, 100%);
   max-height: 92dvh;
@@ -567,6 +594,7 @@ loading-screen [data-content="progress"]::-moz-progress-bar {
   margin: 20px 0;
 }
 .proposal-game .shell-game-field {
+  background: radial-gradient(ellipse at 50% 70%, #d589a510, transparent 70%);
   position: relative;
   width: 100%;
   height: 220px;
@@ -574,6 +602,7 @@ loading-screen [data-content="progress"]::-moz-progress-bar {
   border-bottom: 1px solid var(--line);
 }
 .proposal-game .shell-game-box {
+  background: linear-gradient(135deg, #492b36, #3b222b);
   position: absolute;
   top: 65px;
   width: 32%;
@@ -614,6 +643,7 @@ body:has(.proposal-game) #game-snow {
   display: none;
 }
 .game-snowflake {
+  background: #f4ecef;
   position: absolute;
   top: -20px;
   border-radius: 50%;
@@ -720,10 +750,17 @@ body:has(.merchant-game) game-screen centered-dialog {
   visibility: hidden !important;
 }
 .merchant-game {
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    #56323f 0%,
+    #371b25 38%,
+    #200a12 85%
+  );
   padding: 0;
   backdrop-filter: none;
 }
 .merchant-game::before {
+  background-image: radial-gradient(circle, #f4c8d8 1px, transparent 2px);
   content: "";
   position: absolute;
   inset: 0;
@@ -732,6 +769,7 @@ body:has(.merchant-game) game-screen centered-dialog {
   background-size: 77px 89px;
 }
 .merchant-game .proposal-game-card {
+  background: transparent;
   width: 100%;
   height: 100dvh;
   max-height: 100dvh;
@@ -747,6 +785,7 @@ body:has(.merchant-game) game-screen centered-dialog {
 .merchant-game h2,
 .merchant-game .game-status,
 .merchant-game .game-instructions {
+  background: #231017d9;
   position: relative;
   z-index: 3;
   padding: 5px 16px;
@@ -774,9 +813,11 @@ body:has(.merchant-game) game-screen centered-dialog {
   width: min(380px, 86%);
 }
 .merchant-game .proposal-game-card {
+  background: transparent;
   overflow: visible;
 }
 .merchant-game .proposal-game-card {
+  background: transparent;
   height: 100vh;
   max-height: 100vh;
   height: 100dvh;
@@ -784,6 +825,12 @@ body:has(.merchant-game) game-screen centered-dialog {
   padding-top: max(18px, env(safe-area-inset-top));
 }
 .merchant-game {
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    #56323f 0%,
+    #371b25 38%,
+    #200a12 85%
+  );
   z-index: 2000;
 }
 .merchant-field {
@@ -798,6 +845,7 @@ body:has(.merchant-game) game-screen centered-dialog {
 .merchant-game h2,
 .merchant-game .game-status,
 .merchant-game .game-instructions {
+  background: #231017d9;
   z-index: 30;
 }
 .merchant-game .game-controls {
@@ -826,6 +874,7 @@ body:has(.merchant-game) game-screen centered-dialog {
   filter: drop-shadow(0 0 20px #f2b8cd40);
 }
 .reina-aura {
+  background: radial-gradient(ellipse, #ec9bb930, transparent 68%);
   position: absolute;
   width: 170%;
   aspect-ratio: 1;
@@ -850,6 +899,7 @@ body:has(.merchant-game) game-screen centered-dialog {
   letter-spacing: 0.35em;
 }
 .merchant-game .merchant-obstacle {
+  background: radial-gradient(circle, #754456f2, #3a1824f2);
   position: absolute;
   z-index: 2;
   width: 96px;
@@ -868,9 +918,11 @@ body:has(.merchant-game) game-screen centered-dialog {
   will-change: left, top, transform;
 }
 .merchant-game .merchant-obstacle:hover {
+  background: #93576d;
   border-color: #f1b4ca;
 }
 .merchant-game .merchant-obstacle {
+  background: radial-gradient(circle, #754456f2, #3a1824f2);
   z-index: 20;
   pointer-events: auto;
 }
@@ -879,6 +931,7 @@ body:has(.merchant-game) game-screen centered-dialog {
   will-change: left, top, transform, opacity;
 }
 .merchant-game .object-cat {
+  background: #512f3cec;
   border-color: #d2adbb;
 }
 .merchant-game .object-merchant,
@@ -887,6 +940,7 @@ body:has(.merchant-game) game-screen centered-dialog {
   box-shadow: 0 0 20px #d791ab28;
 }
 .merchant-progress {
+  background: #d589a518;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -894,6 +948,7 @@ body:has(.merchant-game) game-screen centered-dialog {
   height: 4px;
 }
 .merchant-progress::after {
+  background: var(--gold);
   content: "";
   display: block;
   height: 100%;
@@ -917,6 +972,7 @@ body:has(.merchant-game) game-screen centered-dialog {
   box-shadow: inset 0 0 100px #a9537340;
 }
 .merchant-danger .merchant-progress::after {
+  background: var(--rose);
 }
 .reina-hit {
   animation: reina-impact 0.4s ease-out;
@@ -1048,6 +1104,7 @@ html.theme-off body {
   text-align: left;
 }
 .game-test-tools summary {
+  background: #f6e6ec;
   cursor: pointer;
   padding: 5px 12px;
   border: 1px solid #a07082;
@@ -1055,6 +1112,7 @@ html.theme-off body {
   list-style-position: inside;
 }
 .test-tool-buttons {
+  background: #faf1f4;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1064,6 +1122,7 @@ html.theme-off body {
   border-radius: 3px;
 }
 .test-tool-buttons button {
+  background: #f1d9e2;
   min-height: 36px;
   padding: 6px 10px;
   font-size: 13px;
@@ -1071,6 +1130,7 @@ html.theme-off body {
   border: 1px solid #bb99a5;
 }
 .test-tool-buttons button:hover {
+  background: #e8c2d0;
   color: #291b20;
 }
 .test-tool-buttons button[hidden] {
@@ -1083,6 +1143,7 @@ html.theme-off body {
 }
 /* Keep the fullscreen entry available above the engine's rotation notice. */
 .mobile-display-prompt {
+  background: #1e1116;
   position: fixed;
   inset: 0;
   z-index: 2147483647;
@@ -1101,12 +1162,14 @@ html.theme-off body {
   max-width: 100%;
 }
 .mobile-display-prompt {
+  background: #1e1116;
   padding: max(24px, env(safe-area-inset-top))
     max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom))
     max(24px, env(safe-area-inset-left));
 }
 .mobile-display-prompt button,
 .mobile-fullscreen-button {
+  background: #361f28;
   box-sizing: border-box;
   width: auto;
   max-width: 100%;
@@ -1177,6 +1240,7 @@ html.theme-off body {
 
 /* Settings: rose panels and generous, clearly grouped controls. */
 #monogatari settings-screen[data-screen="settings"] {
+  background: radial-gradient(ellipse at 15% 0%, #ad789080, transparent 65%), #472839;
   padding: clamp(28px, 7vh, 76px) max(24px, 7vw);
   overflow-y: auto;
   color: #fff1f5;
@@ -1196,6 +1260,7 @@ html.theme-off body {
   line-height: 1.6;
 }
 #monogatari settings-screen .settings {
+  background: transparent;
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: min(920px, 100%);
@@ -1204,6 +1269,7 @@ html.theme-off body {
   border: 0;
 }
 #monogatari settings-screen .settings-group {
+  background: linear-gradient(145deg, #70475b, #513143);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1233,6 +1299,7 @@ html.theme-off body {
   font-size: 17px;
 }
 #monogatari settings-screen input[type="range"] {
+  background: transparent;
   width: 100%;
   max-width: none;
   height: 26px;
@@ -1240,10 +1307,12 @@ html.theme-off body {
   border-radius: 12px;
 }
 #monogatari settings-screen input[type="range"]::-webkit-slider-runnable-track {
+  background: #c48aa560;
   height: 6px;
   border-radius: 8px;
 }
 #monogatari settings-screen input[type="range"]::-webkit-slider-thumb {
+  background: #efb0ca;
   width: 22px;
   height: 22px;
   margin-top: -8px;
@@ -1251,10 +1320,12 @@ html.theme-off body {
   box-shadow: 0 2px 8px #1b0b1766;
 }
 #monogatari settings-screen input[type="range"]::-moz-range-track {
+  background: #c48aa560;
   height: 6px;
   border-radius: 8px;
 }
 #monogatari settings-screen input[type="range"]::-moz-range-thumb {
+  background: #efb0ca;
   width: 16px;
   height: 16px;
   border: 3px solid #fff2f7;
@@ -1264,6 +1335,7 @@ html.theme-off body {
   outline-offset: 6px;
 }
 #monogatari settings-screen [data-action="back"] {
+  background: #774c60;
   border-color: #d7a1b560;
   color: #ffe7f0;
 }
@@ -1283,7 +1355,8 @@ html.theme-off body {
 /* Shared menu styling: settings, load and credits. */
 #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] {
   --menu-border: #c685a443;
-  --menu-panel: linear-gradient(145deg, #55303e, #38202c);
+  --menu-panel: linear-gradient(145deg, #70475b, #513143);
+  background: radial-gradient(ellipse at 15% 0%, #ad789080, transparent 65%), #472839;
   padding: clamp(28px, 7vh, 76px) max(24px, 7vw);
   overflow-y: auto;
   color: #fff1f5;
@@ -1300,10 +1373,12 @@ html.theme-off body {
   text-align: center;
 }
 #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action] {
+  background: #774c60;
   border-color: #d7a1b560;
   color: #ffe7f0;
 }
 #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action]:hover {
+  background: #94627a;
   border-color: #efb8cf;
 }
 #monogatari :is(settings-screen, load-screen, save-screen, credits-screen)[data-screen] > [data-action]:focus-visible {
@@ -1318,6 +1393,7 @@ html.theme-off body {
 }
 #monogatari :is(load-screen, save-screen) save-slot,
 #monogatari credits-screen [data-content="credits"] {
+  background: var(--menu-panel);
   border: 1px solid var(--menu-border);
   border-radius: 22px;
   box-shadow: 0 16px 40px #12070d38, inset 0 1px #fff1f510;

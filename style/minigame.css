@@ -64,6 +64,7 @@
 }
 .globe-game .game-controls { margin-top: 0; }
 .globe-game .snow-globe {
+  background: none;
   position: relative;
   display: block;
   width: min(460px, 80vw);
@@ -93,6 +94,7 @@
   pointer-events: none;
 }
 .globe-snow i {
+  background: #ffffff;
   position: absolute;
   left: var(--x);
   top: -5px;
@@ -131,6 +133,7 @@
   }
 }
 .merchant-hud {
+  background: transparent;
   position: relative;
   z-index: 35;
   display: flex;
@@ -189,6 +192,7 @@
   font-size: 13px;
 }
 .merchant-summary {
+  background: #231017ed;
   position: absolute;
   z-index: 35;
   bottom: max(95px, 17vh);
@@ -210,6 +214,7 @@
   display: none;
 }
 .merchant-pause {
+  background: #19080eee;
   position: absolute;
   inset: 0;
   z-index: 100;
@@ -218,6 +223,7 @@
   backdrop-filter: blur(12px);
 }
 .merchant-pause > div {
+  background: #371b25;
   width: min(360px, 86vw);
   padding: 28px;
   text-align: center;
@@ -268,6 +274,7 @@
   z-index: 1;
 }
 .ring-game .diamond-sparkles i {
+  background: #fff;
   position: absolute;
   width: 12px;
   height: 12px;
@@ -285,6 +292,7 @@
   .ring-game .diamond-sparkles i { animation: none; opacity: .7; transform: translate(-50%, -50%) scale(.6); }
 }
 .ring-game .shell-game-box {
+  background: transparent;
   top: 0;
   font-size: 64px;
   min-height: 320px;
