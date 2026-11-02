@@ -1,6 +1,7 @@
 "use strict";
 
-// Always load from the network. Save data in localStorage/IndexedDB is untouched.
+// Scripts stay fresh; assets are downloaded once per page session.
+// Save data in localStorage/IndexedDB is untouched.
 const gameCachePrefix = "Monogatari-v";
 async function clearGameCaches() {
   const keys = await caches.keys();
@@ -26,6 +27,17 @@ self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
   event.respondWith((async () => {
+    const assetUrl = new URL(request.url);
+    if (assetUrl.origin === self.location.origin && assetUrl.pathname.includes('/assets/') && event.clientId) {
+      const cache = await caches.open('RufusSession-' + event.clientId);
+      const key = new Request(assetUrl.origin + assetUrl.pathname);
+      const cached = await cache.match(key);
+      if (cached) return cached;
+      assetUrl.searchParams.set('_fresh', String(Date.now()));
+      const response = await fetch(assetUrl.href, { cache: 'no-store' });
+      if (response.ok && response.status === 200) await cache.put(key, response.clone());
+      return response;
+    }
     if (request.mode === "navigate") await clearGameCaches();
     const url = new URL(request.url);
     let freshRequest = request;
@@ -45,6 +57,16 @@ self.addEventListener("message", event => {
   const { type, data } = event.data || {};
   const respond = response => event.ports?.[0]?.postMessage(response);
   switch (type) {
+    case "RESET_SESSION_ASSETS":
+      event.waitUntil((async () => {
+        await caches.delete('RufusSession-' + event.source.id);
+        const clients = await self.clients.matchAll({ includeUncontrolled: true });
+        const active = new Set(clients.map(client => 'RufusSession-' + client.id));
+        const keys = await caches.keys();
+        await Promise.all(keys.filter(key => key.startsWith('RufusSession-') && !active.has(key)).map(key => caches.delete(key)));
+        respond({ success: true });
+      })());
+      break;
     case "CACHE_ASSETS":
       respond({ success: true, cached: 0, total: Array.isArray(data?.urls) ? data.urls.length : 0, disabled: true });
       break;

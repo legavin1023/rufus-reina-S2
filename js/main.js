@@ -47,9 +47,21 @@ monogatari.translation("한국어", {
 });
 
 $_ready(() => {
-  monogatari.init("#monogatari").then(() => {
+  window.preloadGameAssets().then(() => monogatari.init("#monogatari")).then(() => {
     window.initGameSfx();
     window.initStoryReactions();
+    // 첫 등장과 퇴장에만 페이드 적용. 표정 변경에는 반복하지 않는다.
+    monogatari.on("willRunAction", (event) => {
+      const action = event.detail.action;
+      const id = action?.constructor.id;
+      if (id !== "Show::Character" && id !== "Hide::Character") return;
+      const visible = [...document.querySelectorAll('#monogatari [data-character]')]
+        .some(node => node.dataset.character === action.asset && node.dataset.visibility !== "invisible");
+      if (id === "Show::Character" && visible) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if ((action.classes || []).some(name => /^(fade|slide|zoom|bounce)/.test(name))) return;
+      action.classes = [...(action.classes || []), id === "Show::Character" ? "fadeIn" : "fadeOut", "duration", "0.4s"];
+    });
     // '시작'은 항상 새 게임. 저장 불러오기는 별도의 onLoad 경로를 사용한다.
     const originalOnStart = monogatari.onStart;
     monogatari.onStart = async function (...args) {
