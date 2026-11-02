@@ -1464,3 +1464,24 @@ html.theme-off body {
 #monogatari load-screen :is(h2, h3, p, .save-part, .badge, figcaption) {
   text-align: center;
 }
+/* Center incomplete rows while retaining three fixed-size cards per row. */
+#monogatari load-screen slot-container {
+  --slot-gap: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--slot-gap);
+}
+#monogatari load-screen slot-container > save-slot {
+  flex: 0 0 calc((100% - 2 * var(--slot-gap)) / 3);
+  width: calc((100% - 2 * var(--slot-gap)) / 3);
+}
+#monogatari load-screen slot-container > p {
+  flex: 0 0 100%;
+  width: 100%;
+  margin: 12px 0;
+  text-align: center;
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  #monogatari load-screen slot-container { --slot-gap: 10px; }
+}
