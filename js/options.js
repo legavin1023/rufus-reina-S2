@@ -45,7 +45,8 @@ monogatari.settings({
   ShowMainScreen: true,
 
   // Turn image preloading on/off, Default: true
-  Preload: true,
+  // asset-preloader.js에서 모두 준비하므로 엔진의 두 번째 로딩은 생략한다.
+  Preload: false,
 
   // Time interval between autosaves (In Minutes). Default: 0 (Off)
   AutoSave: 0,
