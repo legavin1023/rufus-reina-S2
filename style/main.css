@@ -330,6 +330,11 @@ centered-dialog::before {
   translate: 0 calc(36% + 12px);
   transition: left 650ms ease-in-out, translate 650ms ease-in-out;
 }
+/* Full-body shopkeeper silhouettes need a closer crop than the main sprites. */
+[data-screen="game"] [data-character="s"] {
+  scale: 2.45;
+  translate: 0 123%;
+}
 /* auto 여백 대신 수치 좌표를 사용해 좌우 이동도 자연스럽게 보간한다. */
 [data-screen="game"] [data-character="r"].left {
   left: 0;
