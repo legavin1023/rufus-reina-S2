@@ -124,6 +124,7 @@ let scenario_Ch1_WeaponShop_Choice_Done = [
   "r {sad}으으, 실패해 버렸어!{/sad}",
   "r 어쩔 수 없지……!",
   "r {dreamy}프로포즈는 내년을 기약할 수밖에……!{/dreamy}",
+  "centered GAME OVER",
   "end",
 ];
 
