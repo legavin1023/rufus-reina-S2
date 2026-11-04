@@ -40,6 +40,7 @@ monogatari.assets("music", {
   TreeGame: "normalized/트리게임 The Creepy Clown - Jeremy Korpas.mp3",
   RingGame: "normalized/반지야바위 Jumpin June - The Soundlings.mp3",
   Romance: "normalized/제가 먼저 하려고 했는데, 한 발 늦었군요 Starry Eyed Romance - Biz Baz Studio.mp3",
+  Failure: "실패 Tango Mango - Quincas Moreira.mp3",
 });
 
 // Define the voice files used in the game.
@@ -66,6 +67,7 @@ monogatari.assets("scenes", {
   IceRink: "아이스링크장.webp",
   ChristmasTree: encodeURI("크리스마스 트리.webp"),
   Wedding: "../gallery/결혼씬.webp",
+  GameFailure: encodeURI("../gallery/게임 실패.webp"),
 });
 
 // Define the Characters
@@ -148,8 +150,8 @@ monogatari.characters({
     directory: "jin",
 
     sprites: {
-      surprised: "stand_surprised.webp",
-      urgent: "stand_urgent.webp",
+      surprised: "진.webp",
+      urgent: "진.webp",
     },
 
     // expressions: {
@@ -162,6 +164,21 @@ monogatari.characters({
 });
 
 monogatari.script({
+  FailureEnding: [
+    "stop music",
+    "play music Failure loop",
+    "show scene GameFailure with fadeIn",
+    () => {
+      document.getElementById("monogatari").classList.add("wedding-art-view");
+      return true;
+    },
+    "centered &nbsp;",
+    () => {
+      document.getElementById("monogatari").classList.remove("wedding-art-view");
+      return true;
+    },
+    "end",
+  ],
   // 프롤로그 시작
   Start:
     typeof scenario_Start !== "undefined"
