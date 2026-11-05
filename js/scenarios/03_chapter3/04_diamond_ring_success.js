@@ -23,6 +23,8 @@ let scenario_Ch3_DiamondRing_Success = [
 
   "hide character r",
   "show character ru wry_smile at center",
+  "stop music",
+  "play music Romance loop",
   "ru {dreamy}제가 먼저 하려고 했는데, 한 발 늦었군요.{/dreamy}",
 
   "루퍼스가 외투 안쪽 주머니에 손을 넣어 정사각형 상자를 꺼내고는, 달칵 뚜껑을 열어보인다.",
@@ -39,7 +41,6 @@ let scenario_Ch3_DiamondRing_Success = [
   "r {happy}……응!{/happy}",
   "r {bold}{happy}예스야, 무조건 예스야!{/happy}{/bold}",
 
-  "centered [성공 엔딩]",
 
   "r {dreamy}‘처음에 계획했던 완벽한 프로포즈와는 많이 달랐지만…….’{/dreamy}",
   "r {glow}‘완벽하지 않아도 괜찮아!’{/glow}",

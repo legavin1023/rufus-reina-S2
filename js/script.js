@@ -34,7 +34,14 @@ monogatari.configuration("credits", {});
 monogatari.assets("gallery", {});
 
 // Define the music used in the game.
-monogatari.assets("music", {});
+monogatari.assets("music", {
+  Title: "normalized/main-softer/게임 시작 화면 Classic 1985 Movie Soundtrack - Freedom Trail Studio.mp3",
+  Daily: "normalized/일상 Blue Dream - Cheel.mp3",
+  TreeGame: "normalized/트리게임 The Creepy Clown - Jeremy Korpas.mp3",
+  RingGame: "normalized/반지야바위 Jumpin June - The Soundlings.mp3",
+  Romance: "normalized/제가 먼저 하려고 했는데, 한 발 늦었군요 Starry Eyed Romance - Biz Baz Studio.mp3",
+  Failure: "실패 Tango Mango - Quincas Moreira.mp3",
+});
 
 // Define the voice files used in the game.
 monogatari.assets("voices", {});
@@ -49,7 +56,19 @@ monogatari.assets("videos", {});
 monogatari.assets("images", {});
 
 // Define the backgrounds for each scene.
-monogatari.assets("scenes", {});
+monogatari.assets("scenes", {
+  // The engine uses unquoted CSS url(...); encode spaces in scene filenames.
+  Plaza: encodeURI("프롤로그 광장.webp"),
+  WeaponShop: "무기점.webp",
+  JewelryShop: "보석상.webp",
+  ChristmasMarket: encodeURI("크리스마스 마켓.webp"),
+  SouvenirShop: "기념품점.webp",
+  BeverageStall: encodeURI("음료 가판대.webp"),
+  IceRink: "아이스링크장.webp",
+  ChristmasTree: encodeURI("크리스마스 트리.webp"),
+  Wedding: "../gallery/결혼씬.webp",
+  GameFailure: encodeURI("../gallery/게임 실패.webp"),
+});
 
 // Define the Characters
 monogatari.characters({
@@ -59,16 +78,16 @@ monogatari.characters({
     directory: "reina",
 
     sprites: {
-      normal: "stand_normal.png", // 평범한 표정
-      closed: "stand_closed.png", // 눈 감은 표정
-      smile: "stand_smile.png", // 활짝 웃는 표정
-      energetic: "stand_energetic.png", // 의욕 넘치는 표정
-      happy_cry: "stand_happy_cry.png", // 행복한 눈물을 흘리는 표정
-      shy: "stand_shy.png", // 부끄러워하는 표정
-      surprised: "stand_surprised.png", // 깜짝 놀란 표정
-      flustered: "stand_flustered.png", // 허둥지둥거리는 표정
-      crying: "stand_crying.png", // 엉엉 우는 표정
-      depressed: "stand_depressed.png", // 우울한 표정
+      normal: "레이나_01.webp", // 평범한 표정
+      closed: "레이나_02_감은눈.webp", // 눈 감은 표정
+      smile: "레이나_03_활짝웃는.webp", // 활짝 웃는 표정
+      energetic: "레이나_04_의욕.webp", // 의욕 넘치는 표정
+      happy_cry: "레이나_05_행복한눈물.webp", // 행복한 눈물을 흘리는 표정
+      shy: "레이나_06_부끄러운얼굴.webp", // 부끄러워하는 표정
+      surprised: "레이나_07_놀란얼굴.webp", // 깜짝 놀란 표정
+      flustered: "레이나_08_허둥지둥.webp", // 허둥지둥거리는 표정
+      crying: "레이나_09_우는얼굴.webp", // 엉엉 우는 표정
+      depressed: "레이나_10_우울한.webp", // 우울한 표정
     },
   },
 
@@ -78,17 +97,17 @@ monogatari.characters({
     directory: "rufus",
 
     sprites: {
-      normal: "stand_normal.png",
-      soft_smile: "stand_soft_smile.png",
-      shadowed: "stand_shadowed.png",
-      eyebrow: "stand_eyebrow.png",
-      slight_surprised: "stand_slight_surprised.png",
-      smirk: "stand_smirk.png",
-      wry_smile: "stand_wry_smile.png",
-      closed: "stand_closed.png",
-      worried: "stand_worried.png",
-      angry: "stand_angry.png",
-      terrifying: "stand_terrifying.png",
+      normal: "루퍼스_01.webp",
+      soft_smile: "루퍼스_03_살짝미소.webp",
+      shadowed: "루퍼스_06_그늘진.webp",
+      eyebrow: "루퍼스_02_한쪽눈.webp",
+      slight_surprised: "루퍼스_05_놀란.webp",
+      smirk: "루퍼스_08_피식웃는.webp",
+      wry_smile: "루퍼스_09_쓴웃음.webp",
+      closed: "루퍼스_04_눈감은.webp",
+      worried: "루퍼스_09_쓴웃음.webp", // 별도 걱정 표정은 쓴웃음으로 연결
+      angry: "루퍼스_07_화난.webp",
+      terrifying: "루퍼스_10_무시무시한표정.webp",
     },
 
     // expressions: {
@@ -114,7 +133,8 @@ monogatari.characters({
     directory: "shopkeeper",
 
     sprites: {
-      normal: "stand_normal.png",
+      normal: "무기 보석상 상인.webp",
+      stall: "가판대 상인.webp",
     },
 
     // expressions: {
@@ -130,8 +150,8 @@ monogatari.characters({
     directory: "jin",
 
     sprites: {
-      surprised: "stand_surprised.png",
-      urgent: "stand_urgent.png",
+      surprised: "진.webp",
+      urgent: "진.webp",
     },
 
     // expressions: {
@@ -144,6 +164,21 @@ monogatari.characters({
 });
 
 monogatari.script({
+  FailureEnding: [
+    "stop music",
+    "play music Failure loop",
+    "show scene GameFailure with fadeIn",
+    () => {
+      document.getElementById("monogatari").classList.add("wedding-art-view");
+      return true;
+    },
+    "centered &nbsp;",
+    () => {
+      document.getElementById("monogatari").classList.remove("wedding-art-view");
+      return true;
+    },
+    "end",
+  ],
   // 프롤로그 시작
   Start:
     typeof scenario_Start !== "undefined"
@@ -152,7 +187,6 @@ monogatari.script({
 
   // 제1장 분기 선택지
   Ch1_Main: [
-    "centered 제1장",
     {
       Choice: {
         WeaponShop: { Text: "1번. 무기점", Do: "jump Ch1_WeaponShop_Fail" },

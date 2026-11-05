@@ -4,6 +4,10 @@ Monogatari 기반 비주얼 노벨 게임입니다.
 
 ## GitHub Pages
 
+이미지·오디오는 파일 내용 기준 버전으로 캐시하며, 변경된 파일만 다시 다운로드합니다. 시작에 필요한 파일을 먼저 로딩하고 나머지는 백그라운드에서 준비합니다. `npm run build:web` 및 `npm run deploy` 시 버전 목록이 자동 갱신됩니다.
+
+로컬 서버에서 이미지·오디오 파일을 수정했다면 `node tools/generate-asset-versions.cjs`를 실행한 뒤 페이지를 새로고침하세요.
+
 배포 주소: https://legavin1023.github.io/rufus-reina-S2/
 
 Node.js 24 이상과 Git을 설치하고, GitHub 저장소에 푸시할 수 있는 계정으로 인증합니다.

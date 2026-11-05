@@ -8,10 +8,28 @@
     ["🍋", "레모네이드"],
     ["🐈", "지나가는 고양이"],
     ["⛸️", "스케이트를 타는 어린이"],
-    ["🪙", "탑처럼 쌓은 금화"],
     ["🦌", "루돌프 인형"],
     ["📦", "짐을 나르는 상인들"],
   ];
+  const objectImages = [
+    "1. 눈사람-아이디X.webp",
+    "2. 기울어진 선물상자-아이디X.webp",
+    "3. 쏟아지는 코코아-아이디X.webp",
+    "9. 스노우볼-아이디X.webp",
+    "4. 쏟아지는 레모네이드-아이디X.webp",
+    "5. 검은 고양이-아이디X.webp",
+    "6-1. 스케이트 소녀-아이디X.webp",
+    "7. 루돌프 인형-아이디X.webp",
+    "8. 상인-아이디X.webp",
+  ];
+  const putImage = (element, filename) => {
+    const image = document.createElement("img");
+    image.className = "minigame-art";
+    image.src = "./assets/images/" + filename;
+    image.alt = "";
+    image.draggable = false;
+    element.replaceChildren(image);
+  };
   function shuffle(items) {
     const result = [...items];
     for (let i = result.length - 1; i > 0; i--) {
@@ -110,6 +128,8 @@
         const finish = (key, value) => {
           if (finished) return;
           finished = true;
+          window.gameSfx?.stop("shuffle");
+          window.gameSfx?.stop("globe");
           if (key) this.engine.storage()[key] = value;
           cleanup();
           disposers.forEach((dispose) => dispose());
@@ -141,6 +161,8 @@
           continueButton.style.visibility = "hidden";
           continueButton.setAttribute("aria-hidden", "true");
           const globe = button(items, "", () => {
+            window.gameSfx?.stop("globe");
+            window.gameSfx?.play("globe");
             globe.classList.remove("globe-shaking");
             void globe.offsetWidth;
             globe.classList.add("globe-shaking");
@@ -168,7 +190,7 @@
           globe.className = "snow-globe";
           globe.setAttribute("aria-label", "스노 글로브 흔들기");
           globe.innerHTML =
-            '<span class="globe-glass" aria-hidden="true"><span class="globe-tree"></span><span class="globe-star">★</span><span class="globe-snow"></span><span class="globe-ground"></span></span><span class="globe-pedestal" aria-hidden="true"></span>';
+            '<img class="globe-image" src="./assets/images/9. 스노우볼-아이디X.webp" alt="" draggable="false"><span class="globe-snow" aria-hidden="true"></span>';
           globe.focus();
           return;
         }
@@ -189,17 +211,31 @@
             diamond: "다이아백금반지",
           };
           items.className = "shell-game-field";
+          items.tabIndex = -1;
           panel.classList.add("ring-game");
-          const ringEmoji = {
-            empty: "📦",
-            candy: "🍬",
-            gold: "💍",
-            diamond: "💎",
+          const ringImages = {
+            empty: "10. 빈 반지상자-아이디X.webp",
+            candy: "11. 보석반지-아이디X.webp",
+            gold: "12. 금반지-아이디X.webp",
+            diamond: "13. 다이아 백금반지-아이디X.webp",
           };
           const renderBox = (el, ring, label, closed = false) => {
             el.dataset.ring = closed ? "closed" : ring;
             el.classList.toggle("box-open", !closed);
-            el.textContent = closed ? "🎁" : ringEmoji[ring];
+            putImage(el, closed ? "14. 닫힌 반지 상자X.webp" : ringImages[ring]);
+            if (!closed && ring === "diamond") {
+              const sparkles = document.createElement("span");
+              sparkles.className = "diamond-sparkles";
+              sparkles.setAttribute("aria-hidden", "true");
+              [[45.8, 49.8], [43, 47.5], [48.5, 48.5], [44, 52], [48, 51.5]].forEach(([x, y], index) => {
+                const particle = document.createElement("i");
+                particle.style.left = x + "%";
+                particle.style.top = y + "%";
+                particle.style.setProperty("--sparkle-delay", `${index * .37}s`);
+                sparkles.appendChild(particle);
+              });
+              el.appendChild(sparkles);
+            }
             el.setAttribute("aria-label", label);
           };
           let phase = "ready";
@@ -208,6 +244,7 @@
             box.el = button(items, `💍 ${names[ring]}`, () => {
               if (phase !== "pick") return;
               phase = "result";
+              window.gameSfx?.play(ring === "diamond" ? "diamond" : "failure");
               boxes.forEach((other) => {
                 other.el.disabled = true;
                 renderBox(
@@ -268,6 +305,7 @@
                 elapsed = 0;
               }
               if (!activeSwap) {
+                window.gameSfx?.play("shuffle");
                 const { a, b, duration } = swaps[step];
                 activeSwap = {
                   first: boxes[a],
@@ -294,6 +332,7 @@
                 elapsed = 0;
                 step++;
                 if (step === swaps.length) {
+                  window.gameSfx?.stop("shuffle");
                   cleanup();
                   phase = "pick";
                   status.textContent =
@@ -305,7 +344,8 @@
                   [...boxes]
                     .sort((a, b) => a.slot - b.slot)
                     .forEach((box) => items.appendChild(box.el));
-                  boxes.find((box) => box.slot === 0).el.focus();
+                  // Keep automatic focus off the first box; Tab selects a box.
+                  items.focus({ preventScroll: true });
                   return;
                 }
               }
@@ -317,14 +357,14 @@
         }
         // The HUD and result summary already display this game's status.
         status.remove();
-        title.textContent = "크리스마스 미니게임";
+        title.remove();
         instructions.textContent =
           "35초 동안 레이나에게 다가오는 장애물을 클릭해 막아주세요.";
         items.className = "merchant-field";
         const stage = document.createElement("div");
         stage.className = "merchant-reina";
         stage.innerHTML =
-          '<div class="reina-aura"></div><img src="./assets/images/상점게임.gif" alt="레이나"><span class="reina-name">REINA</span>';
+          '<div class="reina-aura"></div><img src="./assets/images/상점게임-lossless.webp" alt="레이나"><span class="reina-name">REINA</span>';
         const progressBar = document.createElement("div");
         progressBar.className = "merchant-progress";
         progressBar.setAttribute("role", "progressbar");
@@ -340,12 +380,11 @@
           "lemon",
           "cat",
           "skater",
-          "coins",
           "deer",
           "merchant",
         ];
         const lives = [
-          6200, 4400, 5000, 5500, 4800, 5500, 3400, 5100, 4700, 3700,
+          6200, 4400, 5000, 5500, 4800, 5500, 3400, 4700, 3700,
         ];
         const repeatable = new Set([
           "snowman",
@@ -353,7 +392,6 @@
           "cocoa",
           "globe",
           "lemon",
-          "coins",
           "deer",
         ]);
         const reducedMotion = window.matchMedia?.(
@@ -497,6 +535,7 @@
             });
           };
           const endRound = (success) => {
+            window.gameSfx?.play(success ? "success" : "failure");
             cleanup();
             obstacles.clear();
             effects.clear();
@@ -507,8 +546,8 @@
             status.setAttribute("aria-live", "polite");
             stage.classList.remove("reina-hit");
             stage.querySelector("img").src = success
-              ? "./assets/images/상점게임성공.png"
-              : "./assets/images/상점게임.gif";
+              ? "./assets/images/상점게임성공.webp"
+              : "./assets/images/상점게임-lossless.webp";
             pauseGame = null;
             controls.replaceChildren();
             summary.hidden = false;
@@ -533,7 +572,7 @@
               ).focus();
             }
           };
-          stage.querySelector("img").src = "./assets/images/상점게임.gif";
+          stage.querySelector("img").src = "./assets/images/상점게임-lossless.webp";
           const frame = (now) => {
             if (paused || document.hidden) {
               last = null;
@@ -620,14 +659,19 @@
                   if (paused || document.hidden || !obstacles.has(obstacle))
                     return;
                   obstacles.delete(obstacle);
+                  window.gameSfx?.play(Math.random() < .5 ? "popA" : "popB");
                   cleared++;
                   combo++;
                   bestCombo = Math.max(bestCombo, combo);
                   updateHud();
+                  if (moves[index] === "skater") {
+                    putImage(el, "6-2. 스케이트 소녀-아이디X.webp");
+                  }
                   knockAway(el);
                   burst(obstacle.x * 100, obstacle.y * 100);
                 });
                 el.className = "merchant-obstacle object-" + moves[index];
+                if (objectImages[index]) putImage(el, objectImages[index]);
                 el.style.left = origin[0] * items.clientWidth + "px";
                 el.style.top = origin[1] * items.clientHeight + "px";
                 el.style.transform = "translate(-50%, -50%) scale(.8)";
@@ -724,6 +768,7 @@
                 obstacles.delete(obstacle);
                 obstacle.el.remove();
                 missed++;
+                if (missed < 5) window.gameSfx?.play("miss");
                 combo = 0;
                 updateHud();
                 burst(50, 50, true);

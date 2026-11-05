@@ -1,5 +1,8 @@
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { join } from "path";
+import { execFileSync } from "child_process";
+
+execFileSync(process.execPath, ["tools/generate-asset-versions.cjs"], { stdio: "inherit" });
 
 const OUT_DIR = "./build/web";
 

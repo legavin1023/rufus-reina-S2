@@ -1,6 +1,7 @@
 /* global monogatari */
 
 let scenario_Ch2_SouvenirShop = [
+  "show scene SouvenirShop with fadeIn",
   "centered 오후, 기념품점.",
 
   "기념품점들이 들어선 구역은 화려한 크리스마스 상품들로 가득 차 있다.",

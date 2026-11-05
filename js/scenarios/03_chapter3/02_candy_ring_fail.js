@@ -22,14 +22,13 @@ let scenario_Ch3_CandyRing_Fail = [
   "ru {mysterious}레이나…….{/mysterious}",
   "ru {sad}……너무 애쓰지 않아도 됩니다.{/sad}",
 
-  "centered [실패 엔딩]",
   "hide character ru",
 
   "show character r crying at center",
   "r {sad}히잉……. 정말로 진짜로 실패해 버렸어!{/sad}",
   "r {sad}어쩔 수 없지……!{/sad}",
   "r {sad}프로포즈는 내년을 기약할 수밖에……!{/sad}",
-  { Conditional: { Condition: function () { return this.storage().proposalRetried ? "done" : "retry"; }, done: "end", retry: "jump Ch3_Retry" } },
+  { Conditional: { Condition: function () { return this.storage().proposalRetried ? "done" : "retry"; }, done: "jump FailureEnding", retry: "jump Ch3_Retry" } },
 ];
 
 if (typeof window !== "undefined") {

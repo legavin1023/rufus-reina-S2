@@ -44,7 +44,7 @@ let scenario_Ch3_GoldRing_Fail = [
   "show character r flustered at left",
   "r {scared}미, 미안……!{/scared}",
 
-  "show character ru normal at right",
+  "show character ru terrifying at right",
   "ru 보석상 위치가 어디죠?",
   "ru 지금 당장 가 보겠습니다.",
   "ru 금방 다녀올 테니, 여기서 잠시 기다리십시오.",
@@ -52,13 +52,12 @@ let scenario_Ch3_GoldRing_Fail = [
   "hide character ru",
   "그렇게 분노한 루퍼스는 자리를 떠났다…….",
 
-  "centered [실패 엔딩]",
   "show character r crying at center",
 
   "r {sad}히잉……. 정말로 진짜로 실패해 버렸어!{/sad}",
   "r {sad}어쩔 수 없지……!{/sad}",
   "r {sad}프로포즈는 내년을 기약할 수밖에……!{/sad}",
-  { Conditional: { Condition: function () { return this.storage().proposalRetried ? "done" : "retry"; }, done: "end", retry: "jump Ch3_Retry" } },
+  { Conditional: { Condition: function () { return this.storage().proposalRetried ? "done" : "retry"; }, done: "jump FailureEnding", retry: "jump Ch3_Retry" } },
 ];
 
 if (typeof window !== "undefined") {

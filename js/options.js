@@ -35,7 +35,7 @@ monogatari.settings({
   LanguageSelectionScreen: true,
 
   // Music for the Main Menu.
-  MainScreenMusic: "",
+  MainScreenMusic: "Title",
 
   // Prefix for the Save Slots in Local Storage.
   SaveLabel: "Save",
@@ -45,13 +45,15 @@ monogatari.settings({
   ShowMainScreen: true,
 
   // Turn image preloading on/off, Default: true
-  Preload: true,
+  // asset-preloader.js에서 모두 준비하므로 엔진의 두 번째 로딩은 생략한다.
+  Preload: false,
 
   // Time interval between autosaves (In Minutes). Default: 0 (Off)
   AutoSave: 0,
 
   // Enable service workers; Default: true *
-  ServiceWorkers: true,
+  // index.html owns the network-only worker; do not enable engine asset caching.
+  ServiceWorkers: false,
 
   // The Aspect Ratio your background images are on. This only has effect on
   // web deployed novels if forceAspectRatio flag is on.
@@ -106,7 +108,7 @@ monogatari.settings({
     characters: "characters",
     icons: "icons",
     images: "images",
-    music: "music",
+    music: "sounds/배경음",
     scenes: "scenes",
     sounds: "sounds",
     ui: "ui",

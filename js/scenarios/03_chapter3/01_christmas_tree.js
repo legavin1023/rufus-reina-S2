@@ -1,6 +1,7 @@
 /* global monogatari */
 
 let scenario_Ch3_ChristmasTree = [
+  "show scene ChristmasTree with fadeIn",
   "centered 밤, 크리스마스 트리 근처.",
   "show character r normal at center",
   "r 혹시 모르니까 수첩에 잘 적어놔야겠다……!",
@@ -98,7 +99,11 @@ let scenario_Ch3_ChristmasTree = [
   "show character r flustered at center",
   "r ‘으으…… 이번엔 잘해야 해……!’",
   "r ‘으아아, 그렇지만……!! 혹시라도 망치면 어떡하지……!!’",
+  "stop music",
+  "play music TreeGame loop",
   "proposal-game tree",
+  "stop music",
+  "play music Daily loop",
   { Conditional: { Condition: function () { return this.storage().treeGameResult; }, success: "jump Ch3_Proposal", failure: "jump Ch3_TreeGame_Fail" } },
 ];
 
