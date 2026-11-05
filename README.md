@@ -55,6 +55,15 @@ git config --local http.sslBackend schannel
 
 공식 안내: [GitHub Pages 배포 소스 설정](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
 
+## Vercel
+
+Vercel에서 이 GitHub 저장소를 Import하면 `vercel.json` 설정에 따라 Node.js 24 이상으로 웹 빌드를 실행하고 `build/web`을 배포합니다. Vercel 계정으로 로그인한 뒤 CLI에서 직접 배포할 수도 있습니다. 새 로컬 복제본에서는 프로젝트를 한 번 연결합니다.
+
+```powershell
+npx vercel link --project rufus-reina-s2
+npx vercel --prod
+```
+
 ## 로컬 개발
 
 ### 상호작용 연출과 미니게임

@@ -1,6 +1,9 @@
 {
   "name": "my-game",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=24"
+  },
   "author": "Your Name",
   "main": "engine/electron/index.js",
   "devDependencies": {
