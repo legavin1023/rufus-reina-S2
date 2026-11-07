@@ -29,13 +29,13 @@ monogatari.action("canvas").objects({});
 
 // Credits of the people involved in the creation of this awesome game
 monogatari.configuration("credits", {
-  "제작진": {
-    "게임 제작": "Oxy님",
-    "시나리오": "biggy님",
-    "스탠딩 및 일러스트": "OB님",
-    "게임 시작화면 및 UI": "7H_design님",
-    "게임 오브젝트": "쪼랭님",
-    "게임 SD": "모링님",
+  제작진: {
+    "게임 제작": " - Oxy님",
+    시나리오: " - biggy님",
+    "스탠딩 및 일러스트": " - OB님",
+    "게임 시작화면 및 UI": " - 7H_design님",
+    "게임 오브젝트": " - 쪼랭님",
+    "게임 SD": " - 모링님",
   },
 });
 
@@ -44,11 +44,13 @@ monogatari.assets("gallery", {});
 
 // Define the music used in the game.
 monogatari.assets("music", {
-  Title: "normalized/main-softer/게임 시작 화면 Classic 1985 Movie Soundtrack - Freedom Trail Studio.mp3",
+  Title:
+    "normalized/main-softer/게임 시작 화면 Classic 1985 Movie Soundtrack - Freedom Trail Studio.mp3",
   Daily: "normalized/일상 Blue Dream - Cheel.mp3",
   TreeGame: "normalized/트리게임 The Creepy Clown - Jeremy Korpas.mp3",
   RingGame: "normalized/반지야바위 Jumpin June - The Soundlings.mp3",
-  Romance: "normalized/제가 먼저 하려고 했는데, 한 발 늦었군요 Starry Eyed Romance - Biz Baz Studio.mp3",
+  Romance:
+    "normalized/제가 먼저 하려고 했는데, 한 발 늦었군요 Starry Eyed Romance - Biz Baz Studio.mp3",
   Failure: "실패 Tango Mango - Quincas Moreira.mp3",
 });
 
@@ -183,7 +185,9 @@ monogatari.script({
     },
     "centered &nbsp;",
     () => {
-      document.getElementById("monogatari").classList.remove("wedding-art-view");
+      document
+        .getElementById("monogatari")
+        .classList.remove("wedding-art-view");
       return true;
     },
     "end",
