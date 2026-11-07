@@ -28,7 +28,16 @@ monogatari.action("particles").particles({});
 monogatari.action("canvas").objects({});
 
 // Credits of the people involved in the creation of this awesome game
-monogatari.configuration("credits", {});
+monogatari.configuration("credits", {
+  "제작진": {
+    "게임 제작": "Oxy님",
+    "시나리오": "biggy님",
+    "스탠딩 및 일러스트": "OB님",
+    "게임 시작화면 및 UI": "7H_design님",
+    "게임 오브젝트": "쪼랭님",
+    "게임 SD": "모링님",
+  },
+});
 
 // Define the images that will be available on your game's image gallery
 monogatari.assets("gallery", {});
