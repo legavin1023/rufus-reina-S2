@@ -192,6 +192,7 @@ monogatari.script({
     "play music Failure loop",
     "show scene GameFailure with fadeIn",
     "gallery unlock GameFailure",
+    "centered [Bad Ending] 과연 실패일까...?",
     "jump FailureArtwork",
   ],
   TreeFailureEnding: [
@@ -199,6 +200,7 @@ monogatari.script({
     "play music Failure loop",
     "show scene TreeFailure with fadeIn",
     "gallery unlock TreeFailure",
+    "centered [Hidden Ending] 실패를 이렇게 하다니...",
     "jump FailureArtwork",
   ],
   FailureArtwork: [

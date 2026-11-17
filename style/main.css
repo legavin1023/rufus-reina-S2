@@ -1579,7 +1579,7 @@ html.theme-off body {
 }
 /* Dim listening characters without changing the source artwork. */
 #monogatari [data-screen="game"] [data-character].character-listening {
-  filter: brightness(.4) drop-shadow(0 8px 24px #00000033);
+  filter: brightness(.2) drop-shadow(0 8px 24px #00000033);
 }
 @media (prefers-reduced-motion: reduce) {
   #monogatari [data-screen="game"] [data-character] { transition: none; }
@@ -1615,3 +1615,58 @@ html.theme-off body {
   .gallery-caption { font-size: 11px; }
 }
 @media (max-width:550px) and (orientation:portrait) { #monogatari gallery-screen [data-ui="gallery"] { grid-template-columns: 1fr; } }
+/* Gallery cards keep the illustration ratio before and after unlocking. */
+#monogatari gallery-screen .gallery-card {
+  position: relative;
+  display: block;
+  aspect-ratio: var(--gallery-ratio, 16 / 9);
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  align-self: start;
+}
+#monogatari gallery-screen .gallery-thumbnail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: inherit;
+}
+#monogatari gallery-screen .gallery-thumbnail img {
+  display: block;
+  opacity: .5;
+}
+#monogatari gallery-screen .gallery-card > strong {
+  position: absolute;
+  inset: auto 10px 34px;
+  z-index: 1;
+  font-size: clamp(13px, 1.4vw, 18px);
+  text-shadow: 0 2px 8px #000;
+}
+#monogatari gallery-screen .gallery-card > .gallery-caption {
+  position: absolute;
+  inset: auto 8px 12px;
+  z-index: 1;
+  font-size: clamp(11px, 1vw, 13px);
+  text-shadow: 0 2px 8px #000;
+}
+#monogatari gallery-screen [data-ui="image-viewer"] {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  padding: 0;
+  background: #17060c;
+  backdrop-filter: none;
+}
+#monogatari gallery-screen [data-ui="image-viewer"] figure {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  border-radius: 0;
+  opacity: 1;
+  filter: none;
+}
