@@ -432,7 +432,7 @@ function createGameSnow() {
   const snowContainer = document.createElement("div");
   snowContainer.id = "game-snow";
 
-  const snowCount = 44;
+  const snowCount = matchMedia('(pointer: coarse)').matches ? 10 : 44;
 
   for (let i = 0; i < snowCount; i++) {
     const snowflake = document.createElement("div");

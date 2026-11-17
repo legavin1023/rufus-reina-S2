@@ -1672,3 +1672,14 @@ html.theme-off body {
   opacity: 1;
   filter: none;
 }
+/* Mobile rendering: avoid large offscreen blur/shadow surfaces. */
+@media (pointer: coarse) {
+  #monogatari [data-screen="game"] [data-character] { filter: none; transition: opacity 200ms ease; }
+  #monogatari [data-screen="game"] [data-character="r"] { transition: left 650ms ease-in-out, translate 650ms ease-in-out; }
+  #monogatari [data-screen="game"] [data-character].character-listening { filter: brightness(.2); }
+  #monogatari .modal, .proposal-game, .game-paused-panel { backdrop-filter: none; }
+  .game-snowflake { animation-duration: 24s !important; }
+  body:has(game-screen.active) #game-snow { display: none; }
+  #monogatari .title-logo,
+  #monogatari [data-screen="main"] .title-scene main-menu button { filter: none; }
+}

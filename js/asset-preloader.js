@@ -22,6 +22,16 @@ window.preloadGameAssets = async function () {
     if (!response.ok) throw new Error('이미지 목록을 불러오지 못했습니다.');
     const urls = new Set(await response.json());
     const paths = monogatari.setting('AssetsPath');
+    const mobile = matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad/i.test(navigator.userAgent);
+    if (mobile) {
+      for (const character of Object.values(monogatari.characters())) {
+        for (const [expression, file] of Object.entries(character.sprites || {})) {
+          if (typeof file === 'string' && !file.startsWith('mobile/')) {
+            character.sprites[expression] = 'mobile/' + file;
+          }
+        }
+      }
+    }
     for (const kind of ['music', 'sounds', 'voices', 'videos', 'images', 'scenes']) {
       for (const file of Object.values(monogatari.assets(kind) || {})) {
         if (typeof file === 'string') urls.add(`${paths.root}/${paths[kind]}/${file}`);
@@ -52,7 +62,7 @@ window.preloadGameAssets = async function () {
       await file.arrayBuffer();
     };
     let next = 0, completed = 0;
-    await Promise.all(Array.from({ length: 4 }, async () => {
+    await Promise.all(Array.from({ length: mobile ? 2 : 4 }, async () => {
       while (next < initialQueue.length) {
         const url = initialQueue[next++];
         await download(url);
@@ -65,8 +75,17 @@ window.preloadGameAssets = async function () {
     // 메인 표시 후 나머지를 두 개씩 준비한다. 실패한 파일은 실제 사용 시 재요청한다.
     setTimeout(() => {
       let index = 0;
-      window.gameBackgroundPreload = Promise.all(Array.from({ length: 2 }, async () => {
+      window.gameBackgroundPreload = Promise.all(Array.from({ length: mobile ? 1 : 2 }, async () => {
         while (index < backgroundQueue.length) {
+          if (mobile) {
+            while (document.hidden || document.querySelector('.proposal-game')) {
+              await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            await new Promise(resolve => {
+              if ('requestIdleCallback' in window) requestIdleCallback(resolve, { timeout: 1500 });
+              else setTimeout(resolve, 120);
+            });
+          }
           const url = backgroundQueue[index++];
           try { await download(url); } catch (error) { console.warn(error); }
         }

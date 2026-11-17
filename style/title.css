@@ -184,3 +184,8 @@ body:has(main-screen.active) #game-snow {
   }
 }
 
+@media (pointer: coarse) {
+  #monogatari .title-logo,
+  #monogatari [data-screen="main"] .title-scene main-menu button,
+  #monogatari [data-screen="main"] .title-scene main-menu button[string="Gallery"] { filter: none; }
+}
