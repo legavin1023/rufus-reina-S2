@@ -138,6 +138,9 @@ html.theme-off #monogatari game-screen[data-screen="game"] quick-menu button * {
   position: absolute;
   top: 12%;
   left: 2.4%;
+  right: auto;
+  bottom: auto;
+  grid-area: auto;
   display: grid;
   place-items: center;
   width: 11.3%;
@@ -151,6 +154,10 @@ html.theme-off #monogatari game-screen[data-screen="game"] quick-menu button * {
 #monogatari game-screen[data-screen="game"] text-box [data-ui="who"] {
   font-size: clamp(12px, 1.4vw, 23px);
   line-height: 1.1;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
 }
 #monogatari game-screen[data-screen="game"] text-box [data-content="text"],
 #monogatari game-screen[data-screen="game"] text-box:has([data-ui="who"]:empty) [data-content="text"] {
