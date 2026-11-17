@@ -1,4 +1,8 @@
 /* Wide translucent visual-novel dialogue panel. */
+#monogatari.story-starting game-screen text-box,
+#monogatari.story-starting game-screen quick-menu {
+  visibility: hidden !important;
+}
 #monogatari game-screen[data-screen="game"] text-box:not([mode="nvl"]) {
   background: transparent !important;
   left: 0;

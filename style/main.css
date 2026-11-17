@@ -1683,3 +1683,32 @@ html.theme-off body {
   #monogatari .title-logo,
   #monogatari [data-screen="main"] .title-scene main-menu button { filter: none; }
 }
+/* Illustrated choice buttons, preserving the source artwork ratio. */
+#monogatari game-screen choice-container button {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 639 / 131;
+  min-height: 0;
+  margin: 0;
+  padding: 5% 8%;
+  box-sizing: border-box;
+  background: url("../assets/ui/선택지.webp") center / contain no-repeat;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  color: #fff1f5;
+  font-size: clamp(14px, 1.6vw, 21px);
+  line-height: 1.4;
+  text-align: center;
+  text-shadow: 0 1px 5px #28141e;
+}
+#monogatari game-screen choice-container button::before { content: none; }
+#monogatari game-screen choice-container button:hover,
+#monogatari game-screen choice-container button:focus-visible {
+  background: url("../assets/ui/선택지.webp") center / contain no-repeat;
+  filter: brightness(1.15);
+}
+#monogatari game-screen choice-container button:focus-visible { outline: 2px solid #ffd1e2; outline-offset: 3px; }
