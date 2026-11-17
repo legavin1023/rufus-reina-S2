@@ -8,6 +8,7 @@ let scenario_Ch2_IceRink = [
   "show character r flustered at left",
   "r 저기, 아이스링크장을 이용하고 싶은데요…….",
 
+  "show character s rink at right",
   "s 죄송합니다. 영업 끝났어요.",
   "s 이브 날에는 저녁 시간 전에 마감하거든요.",
 
@@ -16,6 +17,7 @@ let scenario_Ch2_IceRink = [
   "r {sad}정말 문을 일찍 닫았네…….{/sad}",
   "r {sad}이럴 줄은 상상도 못했어…….{/sad}",
 
+  "hide character s",
   "show character ru worried at right",
   "ru 괜찮습니다, 레이나.",
   "ru 다음에 오면 되죠.",
@@ -27,9 +29,13 @@ let scenario_Ch2_IceRink = [
   "show character ru normal at right",
   "ru 내일은 오픈합니까?",
 
+  "hide character ru",
+  "show character s rink at right",
   "s 크리스마스 마켓은 오늘이 마지막 날이에요.",
   "s 아이스링크장 시설도 날이 밝으면 바로 철거할 거고요.",
 
+  "hide character s",
+  "show character ru normal at right",
   "고개를 떨구고 우울해 하는 레이나에게 루퍼스가 다가간다.",
   "루퍼스가 손가락 등으로 레이나의 뺨을 살살 쓸어주자 레이나가 슬며시 고개를 들어올린다.",
 

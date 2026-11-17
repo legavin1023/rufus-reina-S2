@@ -111,9 +111,14 @@ $_ready(() => {
         const name = document
           .querySelector('#monogatari text-box [data-ui="who"]')
           ?.textContent.trim();
-        const speaker = Object.entries(monogatari.characters()).find(
+        let speaker = Object.entries(monogatari.characters()).find(
           ([, character]) => character.name === name,
         )?.[0];
+        // 레이나의 반응을 이어 보여주는 이 나레이션에서는 루퍼스를 계속 어둡게.
+        if (monogatari.state("label") === "Ch2_Main" &&
+            statements[step] === "레이나가 어딘가 어색한 웃음소리를 흘린다.") {
+          speaker = "r";
+        }
         document
           .querySelectorAll('#monogatari [data-screen="game"] [data-character]')
           .forEach((node) => {

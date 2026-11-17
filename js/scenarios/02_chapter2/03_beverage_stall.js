@@ -73,20 +73,20 @@ let scenario_Ch2_BeverageStall = [
   "레이나는 머그컵을 감싸쥔 엄지손가락으로 잔의 입구를 초조하게 문지른다.",
   "그것을 놓칠 루퍼스가 아니었다.",
 
-  "show character ru worried at right",
+  "show character ru eyebrow at right",
   "ru ……레이나, 괜찮습니까?",
 
   "show character r normal at left",
   "r 응? 갑자기 그건 왜 물어?",
 
-  "show character ru worried at right",
+  "show character ru eyebrow at right",
   "ru 오늘따라 좀. 생각이 많아 보입니다.",
 
   "show character r flustered at left",
   "r {shake}‘드, 들켰나?!’{/shake}",
   "r {scared}‘내가 프로포즈를 준비하고 있다는 걸, 알아차린 건가?!’{/scared}",
 
-  "show character ru worried at right",
+  "show character ru eyebrow at right",
   "ru 무슨 고민이라도 있는 겁니까?",
 
   "show character r crying at left",

@@ -158,6 +158,7 @@ monogatari.characters({
     sprites: {
       normal: "무기 보석상 상인.webp",
       stall: "가판대 상인.webp",
+      rink: "스케이트장 직원.webp",
     },
 
     // expressions: {
