@@ -51,8 +51,8 @@ monogatari.translation("한국어", {
 monogatari.component("gallery-screen").prototype.render = function () {
   const entries = [
     ["Wedding", "함께할 평생", "트루 엔딩"],
-    ["GameFailure", "[베드 엔딩] 과연 실패일까...?", "베드 엔딩"],
-    ["TreeFailure", "[히든 엔딩] 실패를 이렇게 하다니...", "히든엔딩"],
+    ["GameFailure", "과연 실패일까...?", "베드 엔딩"],
+    ["TreeFailure", "실패를 이렇게 하다니...", "히든엔딩"],
   ];
   const count = entries.filter(([key]) =>
     this.state.unlocked.includes(key),
@@ -92,15 +92,22 @@ $_ready(() => {
       const updateSpeakerLighting = () => {
         // 상호작용 구간은 현재 진행 위치로 판단해 불러오기·뒤로가기에도 유지한다.
         const interactionRanges = {
-          Ch2_Main: ["레이나는 그것을 알아차리고 손을 뻗는다.", "show character r shy at left"],
-          Ch2_IceRink: ["루퍼스가 레이나에게 손을 내민다. 레이나가 반사적으로 맞잡는다.", "hide character r"],
+          Ch2_Main: [
+            "레이나는 그것을 알아차리고 손을 뻗는다.",
+            "show character r shy at left",
+          ],
+          Ch2_IceRink: [
+            "루퍼스가 레이나에게 손을 내민다. 레이나가 반사적으로 맞잡는다.",
+            "hide character r",
+          ],
         };
         const range = interactionRanges[monogatari.state("label")];
         const statements = monogatari.label() || [];
         const start = range ? statements.indexOf(range[0]) : -1;
         const end = start >= 0 ? statements.indexOf(range[1], start + 1) : -1;
         const step = monogatari.state("step");
-        const interacting = start >= 0 && end > start && step >= start && step < end;
+        const interacting =
+          start >= 0 && end > start && step >= start && step < end;
         const name = document
           .querySelector('#monogatari text-box [data-ui="who"]')
           ?.textContent.trim();
@@ -112,7 +119,8 @@ $_ready(() => {
           .forEach((node) => {
             node.classList.toggle(
               "character-listening",
-              !!speaker && node.dataset.character !== speaker &&
+              !!speaker &&
+                node.dataset.character !== speaker &&
                 !(interacting && ["r", "ru"].includes(node.dataset.character)),
             );
           });

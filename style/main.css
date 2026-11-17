@@ -1619,7 +1619,7 @@ html.theme-off body {
 #monogatari gallery-screen .gallery-card {
   position: relative;
   display: block;
-  aspect-ratio: var(--gallery-ratio, 16 / 9);
+  aspect-ratio: 16 / 9;
   height: auto;
   min-height: 0;
   padding: 0;
@@ -1636,6 +1636,8 @@ html.theme-off body {
 }
 #monogatari gallery-screen .gallery-thumbnail img {
   display: block;
+  object-fit: cover;
+  object-position: center;
   opacity: .5;
 }
 #monogatari gallery-screen .gallery-card > strong {
