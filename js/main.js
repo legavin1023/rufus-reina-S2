@@ -67,9 +67,9 @@ monogatari.component("gallery-screen").prototype.render = function () {
     <div data-ui="gallery">${entries.map(([key, title, ending]) => {
       const unlocked = this.state.unlocked.includes(key);
       const src = encodeURI(`${paths.root}/${paths.gallery}/${this.engine.asset('gallery', key)}`);
-      return `<button type="button" class="gallery-card" ${unlocked ? `data-image="${key}"` : 'disabled'}>
-        <span class="gallery-thumbnail">${unlocked ? `<img src="${src}" alt="${title}" draggable="false">` : '<span class="gallery-lock" aria-hidden="true">◇</span>'}</span>
-        <strong>${unlocked ? title : '아직 만나지 못한 순간'}</strong>
+      return `<button type="button" class="gallery-card" style="--gallery-ratio: ${key === 'Wedding' ? '3695 / 2352' : '16 / 9'}" ${unlocked ? `data-image="${key}"` : 'disabled'}>
+        <span class="gallery-thumbnail">${unlocked ? `<img src="${src}" alt="${title}" draggable="false">` : ''}</span>
+        ${unlocked ? `<strong>${title}</strong>` : ''}
         <span class="gallery-caption">${unlocked ? ending : ending + '을 보면 해금됩니다.'}</span>
       </button>`;
     }).join('')}</div>`;

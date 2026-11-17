@@ -1579,7 +1579,7 @@ html.theme-off body {
 }
 /* Dim listening characters without changing the source artwork. */
 #monogatari [data-screen="game"] [data-character].character-listening {
-  filter: brightness(.55) drop-shadow(0 8px 24px #00000033);
+  filter: brightness(.4) drop-shadow(0 8px 24px #00000033);
 }
 @media (prefers-reduced-motion: reduce) {
   #monogatari [data-screen="game"] [data-character] { transition: none; }
@@ -1595,7 +1595,7 @@ html.theme-off body {
 .gallery-intro > span { display: inline-block; margin-left: 12px; color: #ffe1ed; }
 #monogatari gallery-screen [data-ui="gallery"] { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; width: min(1000px,100%); margin: 28px auto; }
 #monogatari gallery-screen .gallery-card { display: flex; flex-direction: column; gap: 12px; width: 100%; min-width: 0; margin: 0; padding: 14px 14px 20px; border: 1px solid #c685a443; border-radius: 20px; background: linear-gradient(145deg,#55303e,#38202c); color: #fff1f5; white-space: normal; }
-.gallery-thumbnail { display: grid; place-items: center; width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 12px; background: #28141e; }
+.gallery-thumbnail { display: grid; place-items: center; width: 100%; aspect-ratio: var(--gallery-ratio, 16 / 9); overflow: hidden; border-radius: 12px; background: #28141e; }
 .gallery-thumbnail img { width: 100%; height: 100%; object-fit: contain; }
 #monogatari gallery-screen .gallery-card:disabled { opacity: 1; cursor: default; color: #bc99a8; }
 .gallery-lock { font-size: 44px; color: #b77991; }
@@ -1611,7 +1611,6 @@ html.theme-off body {
   #monogatari gallery-screen > h2 { font-size: 20px; margin-bottom: 8px; }
   #monogatari gallery-screen [data-ui="gallery"] { gap: 14px; margin-top: 14px; }
   #monogatari gallery-screen .gallery-card { padding: 8px 8px 12px; gap: 7px; }
-  .gallery-thumbnail { aspect-ratio: 2; }
   .gallery-card strong { font-size: 15px; }
   .gallery-caption { font-size: 11px; }
 }
