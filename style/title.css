@@ -142,3 +142,35 @@ body:has(main-screen.active) #game-snow {
   filter: drop-shadow(0 2px 8px #28141e55);
 }
 #monogatari .title-scene main-menu button[string="Gallery"]::after { content: '갤러리'; font-size: clamp(12px, 1.8vw, 24px); }
+/* Two-column main menu: Start/Credits, Load/Gallery, Settings. */
+#monogatari [data-screen="main"] .title-scene main-menu {
+  inset: 51% auto auto 4.5%;
+  width: 33%;
+  height: 44%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  column-gap: 2%;
+  align-items: center;
+}
+#monogatari [data-screen="main"] .title-scene main-menu button {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+#monogatari .title-scene main-menu button[string="Start"] { grid-area: 1 / 1; }
+#monogatari .title-scene main-menu button[string="Load"] { grid-area: 2 / 1; }
+#monogatari .title-scene main-menu button[string="Settings"] { grid-area: 3 / 1; }
+#monogatari .title-scene main-menu button[string="Credits"] { grid-area: 1 / 2; }
+#monogatari [data-screen="main"] .title-scene main-menu button[string="Gallery"] {
+  --title-button: url("../assets/ui/루퍼이나 두근두근 프로포즈 대작전 버튼 (갤러리) 외곽선.webp");
+  grid-area: 2 / 2;
+  background-image: var(--title-button) !important;
+  background-color: transparent !important;
+  border: 0;
+  border-radius: 0;
+  filter: drop-shadow(0 0 14px #fffd);
+}
+#monogatari .title-scene main-menu button[string="Gallery"]::after { content: none; }

@@ -120,3 +120,46 @@ html.theme-off #monogatari game-screen[data-screen="game"] quick-menu button * {
   #monogatari game-screen[data-screen="game"] quick-menu { right: 8px; bottom: 4px; }
   #monogatari game-screen[data-screen="game"] quick-menu button { padding: 3px 6px; }
 }
+/* Illustrated speech and narration panels. */
+#monogatari game-screen[data-screen="game"] text-box:not([mode="nvl"]) {
+  --dialogue-height: clamp(190px, 34vh, 280px);
+  height: var(--dialogue-height);
+  padding: calc(var(--dialogue-height) * .36) 4vw 44px;
+}
+#monogatari game-screen[data-screen="game"] text-box:not([mode="nvl"])::before {
+  background: url("../assets/ui/대화창 캐릭터.webp") center / 100% 100% no-repeat !important;
+  border: 0 !important;
+  clip-path: none;
+}
+#monogatari game-screen[data-screen="game"] text-box:not([mode="nvl"]):has([data-ui="who"]:empty)::before {
+  background-image: url("../assets/ui/대화창 나레이션.webp") !important;
+}
+#monogatari game-screen[data-screen="game"] text-box [data-content="name"] {
+  position: absolute;
+  top: 12%;
+  left: 2.4%;
+  display: grid;
+  place-items: center;
+  width: 11.3%;
+  height: 19%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: 0 !important;
+}
+#monogatari game-screen[data-screen="game"] text-box [data-ui="who"] {
+  font-size: clamp(12px, 1.4vw, 23px);
+  line-height: 1.1;
+}
+#monogatari game-screen[data-screen="game"] text-box [data-content="text"],
+#monogatari game-screen[data-screen="game"] text-box:has([data-ui="who"]:empty) [data-content="text"] {
+  padding-top: 0;
+  max-height: 100%;
+}
+@media (max-height: 450px), (max-width: 700px) {
+  #monogatari game-screen[data-screen="game"] text-box:not([mode="nvl"]) {
+    --dialogue-height: clamp(145px, 38vh, 180px);
+    padding-bottom: 36px;
+  }
+}
