@@ -155,6 +155,7 @@ function stopConfetti() {
 window.scenario_Epilogue = [
 
   "show scene Wedding with fadeIn",
+  "gallery unlock Wedding",
 
   () => {
     startConfetti();

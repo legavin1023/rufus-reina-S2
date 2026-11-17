@@ -37,10 +37,21 @@ monogatari.configuration("credits", {
     "게임 오브젝트": " - 쪼랭님",
     "게임 SD": " - 모링님",
   },
+  "배경 제작 안내": {
+    _notice: `<span class="credits-background-note">
+      <span class="credits-note-lead">게임 내 배경 소스의 경우, 부득이하게 AI를 활용하여 제작하게 되었습니다.</span>
+      <span>배경의 컨셉 및 구성이 사전에 정해져 있어 가능한 커미션을 통해 작업을 진행하고자 하였으나, 제작 일정상의 여건과 커미션 모집 과정에서 지원해 주시는 분을 찾기 어려웠어서 부득이하게 AI를 활용하게 되었습니다...</span>
+      <span class="credits-note-closing">이 점 너른 양해 부탁드립니다.</span>
+    </span>`,
+  },
 });
 
 // Define the images that will be available on your game's image gallery
-monogatari.assets("gallery", {});
+monogatari.assets("gallery", {
+  Wedding: "결혼씬.webp",
+  GameFailure: "게임 실패.webp",
+  TreeFailure: "트리 게임 실패.webp",
+});
 
 // Define the music used in the game.
 monogatari.assets("music", {
@@ -51,7 +62,7 @@ monogatari.assets("music", {
   RingGame: "normalized/반지야바위 Jumpin June - The Soundlings.mp3",
   Romance:
     "normalized/제가 먼저 하려고 했는데, 한 발 늦었군요 Starry Eyed Romance - Biz Baz Studio.mp3",
-  Failure: "실패 Tango Mango - Quincas Moreira.mp3",
+  Failure: "normalized/실패 Tango Mango - Quincas Moreira.mp3",
 });
 
 // Define the voice files used in the game.
@@ -79,6 +90,7 @@ monogatari.assets("scenes", {
   ChristmasTree: encodeURI("크리스마스 트리.webp"),
   Wedding: "../gallery/결혼씬.webp",
   GameFailure: encodeURI("../gallery/게임 실패.webp"),
+  TreeFailure: encodeURI("../gallery/트리 게임 실패.webp"),
 });
 
 // Define the Characters
@@ -179,6 +191,17 @@ monogatari.script({
     "stop music",
     "play music Failure loop",
     "show scene GameFailure with fadeIn",
+    "gallery unlock GameFailure",
+    "jump FailureArtwork",
+  ],
+  TreeFailureEnding: [
+    "stop music",
+    "play music Failure loop",
+    "show scene TreeFailure with fadeIn",
+    "gallery unlock TreeFailure",
+    "jump FailureArtwork",
+  ],
+  FailureArtwork: [
     () => {
       document.getElementById("monogatari").classList.add("wedding-art-view");
       return true;

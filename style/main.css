@@ -322,13 +322,14 @@ centered-dialog::before {
 }
 [data-screen="game"] [data-character] {
   filter: drop-shadow(0 8px 24px #00000033);
+  transition: filter 250ms ease;
   scale: 1.58;
   translate: 0 36%;
   transform-origin: center bottom;
 }
 [data-screen="game"] [data-character="r"] {
   translate: 0 calc(36% + 12px);
-  transition: left 650ms ease-in-out, translate 650ms ease-in-out;
+  transition: left 650ms ease-in-out, translate 650ms ease-in-out, filter 250ms ease;
 }
 /* Full-body shopkeeper silhouettes need a closer crop than the main sprites. */
 [data-screen="game"] [data-character="s"] {
@@ -1549,3 +1550,69 @@ html.theme-off body {
 #monogatari :is(load-screen, save-screen) save-slot > .badge { grid-row: 2; }
 #monogatari :is(load-screen, save-screen) save-slot > [data-content="background"] { grid-row: 3; }
 #monogatari :is(load-screen, save-screen) save-slot > figcaption { grid-row: 4; }
+/* Background production note in the credits. */
+#monogatari credits-screen .credits-background-note {
+  display: block;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid #d7a1b538;
+  border-left: 3px solid #e5a4be;
+  border-radius: 16px;
+  background: #28141e66;
+  color: #ddbfcb;
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.95;
+  text-align: left;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+#monogatari credits-screen .credits-background-note > span {
+  display: block;
+  margin-top: 14px;
+}
+#monogatari credits-screen .credits-background-note > .credits-note-lead {
+  margin-top: 0;
+  color: #ffe5ef;
+  font-weight: 700;
+}
+#monogatari credits-screen .credits-background-note > .credits-note-closing {
+  color: #f1ccdb;
+}
+/* Dim listening characters without changing the source artwork. */
+#monogatari [data-screen="game"] [data-character].character-listening {
+  filter: brightness(.55) drop-shadow(0 8px 24px #00000033);
+}
+@media (prefers-reduced-motion: reduce) {
+  #monogatari [data-screen="game"] [data-character] { transition: none; }
+}
+#monogatari gallery-screen[data-screen] {
+  padding: clamp(24px, 6vh, 60px) max(24px, 7vw);
+  background: radial-gradient(ellipse at 15% 0%, #67384880, transparent 65%), #28141e;
+  color: #fff1f5;
+  overflow-y: auto;
+}
+#monogatari gallery-screen > h2 { text-align: center; margin: 0 0 16px; }
+.gallery-intro { text-align: center; color: #d2aab9; font-size: 15px; }
+.gallery-intro > span { display: inline-block; margin-left: 12px; color: #ffe1ed; }
+#monogatari gallery-screen [data-ui="gallery"] { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; width: min(1000px,100%); margin: 28px auto; }
+#monogatari gallery-screen .gallery-card { display: flex; flex-direction: column; gap: 12px; width: 100%; min-width: 0; margin: 0; padding: 14px 14px 20px; border: 1px solid #c685a443; border-radius: 20px; background: linear-gradient(145deg,#55303e,#38202c); color: #fff1f5; white-space: normal; }
+.gallery-thumbnail { display: grid; place-items: center; width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 12px; background: #28141e; }
+.gallery-thumbnail img { width: 100%; height: 100%; object-fit: contain; }
+#monogatari gallery-screen .gallery-card:disabled { opacity: 1; cursor: default; color: #bc99a8; }
+.gallery-lock { font-size: 44px; color: #b77991; }
+.gallery-card strong { font-size: 18px; }
+.gallery-caption { font-size: 13px; line-height: 1.6; color: #d2aab9; }
+#monogatari gallery-screen .gallery-card:not(:disabled):hover { border-color: #efb8cf; box-shadow: 0 8px 28px #12070d55; }
+#monogatari gallery-screen .gallery-card:focus-visible { outline: 2px solid #ffd1e2; outline-offset: 4px; }
+#monogatari gallery-screen [data-ui="image-viewer"] { z-index: 2000; background: #17060cf2; padding: 20px; }
+#monogatari gallery-screen [data-ui="image-viewer"] figure { width: 94vw; height: 90dvh; max-width: none; margin: auto; padding: 0; border: 0; background-color: transparent; background-size: contain; background-position: center; background-repeat: no-repeat; box-shadow: none; }
+.gallery-viewer-close { position: absolute; top: 12px; right: 16px; width: 42px; height: 42px; padding: 0; border-radius: 50%; font-size: 28px; }
+@media (max-height:500px) and (orientation:landscape) {
+  #monogatari gallery-screen[data-screen] { padding: 14px 7vw; }
+  #monogatari gallery-screen > h2 { font-size: 20px; margin-bottom: 8px; }
+  #monogatari gallery-screen [data-ui="gallery"] { gap: 14px; margin-top: 14px; }
+  #monogatari gallery-screen .gallery-card { padding: 8px 8px 12px; gap: 7px; }
+  .gallery-thumbnail { aspect-ratio: 2; }
+  .gallery-card strong { font-size: 15px; }
+  .gallery-caption { font-size: 11px; }
+}
+@media (max-width:550px) and (orientation:portrait) { #monogatari gallery-screen [data-ui="gallery"] { grid-template-columns: 1fr; } }

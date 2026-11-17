@@ -44,12 +44,55 @@ monogatari.translation("한국어", {
   AutoPlaySpeed: "자동 진행 속도",
   Back: "뒤로",
   Credits: "크레딧",
+  Gallery: "갤러리",
 });
+
+// 해금 정보는 엔진의 영구 갤러리 저장소를 사용한다.
+monogatari.component("gallery-screen").prototype.render = function () {
+  const entries = [
+    ['Wedding', '함께할 평생', '성공 엔딩'],
+    ['GameFailure', '내년을 기약하며', '일반 실패 엔딩'],
+    ['TreeFailure', '다잡지 못한 마음', '트리 게임 실패 엔딩'],
+  ];
+  const count = entries.filter(([key]) => this.state.unlocked.includes(key)).length;
+  const paths = this.engine.setting('AssetsPath');
+  return `
+    <div class="modal" data-ui="image-viewer" role="dialog" aria-label="일러스트 크게 보기">
+      <figure class="modal__content"></figure>
+      <button type="button" class="gallery-viewer-close" aria-label="일러스트 닫기">×</button>
+    </div>
+    <button class="top left" data-action="back" aria-label="메인으로 돌아가기">←</button>
+    <h2 data-string="Gallery">갤러리</h2>
+    <p class="gallery-intro">이야기 끝에서 만난 순간들 <span>${count} / ${entries.length}</span></p>
+    <div data-ui="gallery">${entries.map(([key, title, ending]) => {
+      const unlocked = this.state.unlocked.includes(key);
+      const src = encodeURI(`${paths.root}/${paths.gallery}/${this.engine.asset('gallery', key)}`);
+      return `<button type="button" class="gallery-card" ${unlocked ? `data-image="${key}"` : 'disabled'}>
+        <span class="gallery-thumbnail">${unlocked ? `<img src="${src}" alt="${title}" draggable="false">` : '<span class="gallery-lock" aria-hidden="true">◇</span>'}</span>
+        <strong>${unlocked ? title : '아직 만나지 못한 순간'}</strong>
+        <span class="gallery-caption">${unlocked ? ending : ending + '을 보면 해금됩니다.'}</span>
+      </button>`;
+    }).join('')}</div>`;
+};
 
 $_ready(() => {
   window.preloadGameAssets().then(() => monogatari.init("#monogatari")).then(() => {
     window.initGameSfx();
     window.initStoryReactions();
+    // 이름 표시를 기준으로 현재 화자를 강조한다. 나레이션은 모두 원래 밝기.
+    const updateSpeakerLighting = () => {
+      const name = document.querySelector('#monogatari text-box [data-ui="who"]')?.textContent.trim();
+      const speaker = Object.entries(monogatari.characters()).find(([, character]) => character.name === name)?.[0];
+      document.querySelectorAll('#monogatari [data-screen="game"] [data-character]').forEach(node => {
+        node.classList.toggle('character-listening', !!speaker && node.dataset.character !== speaker);
+      });
+    };
+    const speakerObserver = new MutationObserver(updateSpeakerLighting);
+    const speakerName = document.querySelector('#monogatari text-box [data-ui="who"]');
+    if (speakerName) speakerObserver.observe(speakerName, { childList: true, subtree: true, characterData: true });
+    monogatari.on('didRunAction', updateSpeakerLighting);
+    monogatari.on('didLoadGame', updateSpeakerLighting);
+    monogatari.on('didRevertAction', updateSpeakerLighting);
     // 첫 등장과 퇴장에만 페이드 적용. 표정 변경에는 반복하지 않는다.
     monogatari.on("willRunAction", (event) => {
       const action = event.detail.action;

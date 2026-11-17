@@ -8,7 +8,7 @@ let scenario_Ch3_TreeGame_Fail = [
   'r 으응…….', 'r 선물…… 고마워…….', 'r 잘, 간직할게…….',
   'hide character ru', 'show character r crying at center',
   'r 히잉…….', 'r 정말로 진짜로 실패해 버렸어!',
-  'r 어쩔 수 없지……!', 'r 프로포즈는 내년을 기약할 수밖에……!', 'jump FailureEnding',
+  'r 어쩔 수 없지……!', 'r 프로포즈는 내년을 기약할 수밖에……!', 'jump TreeFailureEnding',
 ];
 let scenario_Ch3_Retry = [
   function () { this.storage().proposalRetried = true; this.storage().retryRing = null; return true; },

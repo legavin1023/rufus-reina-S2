@@ -128,3 +128,17 @@ body:has(main-screen.active) #game-snow {
     transition: none;
   }
 }
+/* Gallery sits beside the credits button without covering existing artwork. */
+#monogatari .title-scene main-menu button[string="Gallery"] {
+  left: 115%;
+  top: 72%;
+  width: 80%;
+  aspect-ratio: 3;
+  background-image: none !important;
+  background-color: #512c3de8 !important;
+  border: 1px solid #e5a4be;
+  border-radius: 999px;
+  color: #fff1f5;
+  filter: drop-shadow(0 2px 8px #28141e55);
+}
+#monogatari .title-scene main-menu button[string="Gallery"]::after { content: '갤러리'; font-size: clamp(12px, 1.8vw, 24px); }
