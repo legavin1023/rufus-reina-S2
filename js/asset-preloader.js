@@ -8,9 +8,12 @@ window.preloadGameAssets = async function () {
   const bar = overlay.querySelector('progress');
   try {
     await window.gameNetworkReady;
-    const versionResponse = await fetch('./js/asset-versions.json', { cache: 'no-store' });
-    if (!versionResponse.ok) throw new Error('파일 버전을 확인하지 못했습니다.');
-    const versions = await versionResponse.json();
+    let versions = window.gameFileVersions;
+    if (!versions) {
+      const versionResponse = await fetch('./js/asset-versions.json', { cache: 'no-store' });
+      if (!versionResponse.ok) throw new Error('파일 버전을 확인하지 못했습니다.');
+      versions = await versionResponse.json();
+    }
     const worker = navigator.serviceWorker?.controller;
     if (worker) await new Promise((resolve, reject) => {
       const channel = new MessageChannel();

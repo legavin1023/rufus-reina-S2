@@ -24,15 +24,9 @@
     <link rel="shortcut icon" href="favicon.ico?v=heart" />
     <link rel="manifest" href="manifest.json" />
 
-    <!-- Prepare network-only loading before requesting any game CSS or scripts. -->
+    <!-- Compare content versions before loading cached game resources. -->
     <script>
       window.gameNetworkReady = (async () => {
-        if ("caches" in window) {
-          await caches.keys().then((keys) => Promise.all(
-            keys.filter((key) => key.startsWith("Monogatari-v"))
-              .map((key) => caches.delete(key))
-          )).catch(() => {});
-        }
         if (!("serviceWorker" in navigator)) return;
         try {
           const registration = await navigator.serviceWorker.register(
@@ -58,7 +52,7 @@
             });
           }
         } catch (error) {
-          console.warn("Network-only worker unavailable; using fresh resource URLs", error);
+          console.warn("Version cache worker unavailable; using versioned resource URLs", error);
         }
       })();
       // Returning from the browser's back/forward cache must also start a fresh load.
@@ -109,7 +103,17 @@
     <script>
       (async () => {
         await window.gameNetworkReady;
-        const entry = Date.now().toString(36) + Math.random().toString(36).slice(2);
+        const versionsResponse = await fetch('./js/asset-versions.json?_check=' + Date.now(), { cache: 'no-store' });
+        if (!versionsResponse.ok) throw new Error('Unable to check game file versions');
+        const versions = await versionsResponse.json();
+        window.gameFileVersions = versions;
+        const cacheWorker = navigator.serviceWorker?.controller;
+        if (cacheWorker) await new Promise((resolve, reject) => {
+          const channel = new MessageChannel();
+          const timer = setTimeout(() => reject(new Error('Version cache initialization timed out')), 15000);
+          channel.port1.onmessage = () => { clearTimeout(timer); channel.port1.close(); resolve(); };
+          cacheWorker.postMessage({ type: 'SET_ASSET_VERSIONS', data: { versions } }, [channel.port2]);
+        });
         const resources = document.getElementById("game-resources");
         const styles = [];
         for (const original of resources.content.querySelectorAll("link, script[src]")) {
@@ -117,7 +121,8 @@
           for (const attribute of original.attributes) element.setAttribute(attribute.name, attribute.value);
           const attribute = element.tagName === "SCRIPT" ? "src" : "href";
           const url = new URL(element.getAttribute(attribute), document.baseURI);
-          url.searchParams.set("_entry", entry);
+          const relative = decodeURIComponent(new URL(element.getAttribute(attribute), document.baseURI).pathname.slice(new URL('./', document.baseURI).pathname.length));
+          if (versions[relative]) url.searchParams.set('v', versions[relative]);
           element.setAttribute(attribute, url.href);
           const loaded = new Promise((resolve, reject) => {
             element.onload = resolve;

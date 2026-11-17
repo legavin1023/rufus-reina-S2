@@ -1,6 +1,6 @@
 "use strict";
 
-// Scripts stay fresh; unchanged assets are reused across visits by content hash.
+// Game resources are reused across visits by content hash, including CSS/scripts.
 // Save data in localStorage/IndexedDB is untouched.
 const gameCachePrefix = "Monogatari-v";
 let assetVersions;
@@ -36,10 +36,12 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET") return;
   event.respondWith((async () => {
     const assetUrl = new URL(request.url);
-    if (assetUrl.origin === self.location.origin && assetUrl.pathname.includes('/assets/') && event.clientId) {
+    if (assetUrl.origin === self.location.origin && request.mode !== 'navigate' &&
+        !assetUrl.pathname.endsWith('/asset-versions.json') &&
+        !assetUrl.pathname.endsWith('/service-worker.js') && event.clientId) {
       const versions = await getAssetVersions();
       const relative = decodeURIComponent(assetUrl.pathname.slice(new URL(self.registration.scope).pathname.length));
-      const version = versions[relative];
+      const version = assetUrl.searchParams.get('v') || versions[relative];
       if (version) {
         const cache = await caches.open('RufusAssets-v1');
         const key = assetUrl.origin + assetUrl.pathname + '?v=' + version;
@@ -57,7 +59,6 @@ self.addEventListener("fetch", event => {
       assetUrl.searchParams.set('_fresh', String(Date.now()));
       return fetch(assetUrl.href, { cache: 'no-store' });
     }
-    if (request.mode === "navigate") await clearGameCaches();
     const url = new URL(request.url);
     let freshRequest = request;
     // Fresh URLs also bypass intermediary/CDN caches, including the entry HTML.

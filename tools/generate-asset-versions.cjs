@@ -9,10 +9,13 @@ function visit(dir) {
     if (item.isDirectory()) visit(file);
     else if (!item.name.startsWith('.')) {
       const relative = path.relative(root, file).split(path.sep).join('/');
+      if (relative === 'js/asset-versions.json') continue;
       versions[relative] = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').slice(0, 20);
     }
   }
 }
-visit(path.join(root, 'assets'));
+for (const folder of ['assets', 'js', 'style', 'engine/core', 'engine/debug']) {
+  if (fs.existsSync(path.join(root, folder))) visit(path.join(root, folder));
+}
 fs.writeFileSync(path.join(root, 'js/asset-versions.json'), JSON.stringify(versions, null, 2));
 console.log('Asset versions updated: ' + Object.keys(versions).length);
