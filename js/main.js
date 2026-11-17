@@ -218,58 +218,6 @@ $_ready(() => {
         );
       }
 
-      // Temporary visual and minigame testing controls; never advance the story.
-      const testTools = document.createElement("details");
-      testTools.className = "game-test-tools";
-      testTools.innerHTML =
-        '<summary>테스트</summary><div class="test-tool-buttons"><button type="button" data-test-game="globe">스노 글로브 테스트</button><button type="button" data-test-game="tree">트리 게임 테스트</button><button type="button" data-test-game="retry">야바위 게임 테스트</button><button type="button" class="test-game-exit" hidden>테스트 종료</button><p class="test-tool-status" role="status"></p></div>';
-      document.body.appendChild(testTools);
-      const testButtons = [...testTools.querySelectorAll("[data-test-game]")];
-      const testExit = testTools.querySelector(".test-game-exit");
-      const testStatus = testTools.querySelector(".test-tool-status");
-      let previewGame = null;
-      testExit.addEventListener("click", () => previewGame?.cancel());
-      for (const testButton of testButtons) {
-        testButton.addEventListener("click", async () => {
-          const Game = monogatari.action("ProposalGame");
-          if (Game.blocking) {
-            testStatus.textContent = "현재 미니게임을 마친 뒤 테스트해 주세요.";
-            return;
-          }
-          const snapshot = structuredClone(monogatari.storage());
-          testButtons.forEach((button) => {
-            button.disabled = true;
-          });
-          testExit.hidden = false;
-          testStatus.textContent = "";
-          // Provide a valid original ring only for this isolated shell-game preview.
-          if (testButton.dataset.testGame === "retry")
-            monogatari.storage().ringChoice = "candy";
-          previewGame = new Game([
-            "proposal-game",
-            testButton.dataset.testGame,
-          ]);
-          try {
-            await previewGame.apply();
-            testStatus.textContent = previewGame.cancelled
-              ? "테스트 종료"
-              : "테스트 완료";
-          } finally {
-            const storage = monogatari.storage();
-            Object.keys(storage).forEach((key) => {
-              delete storage[key];
-            });
-            Object.assign(storage, snapshot);
-            previewGame = null;
-            testExit.hidden = true;
-            testButtons.forEach((button) => {
-              button.disabled = false;
-            });
-          }
-        });
-      }
-
-      // 메인 메뉴에서 도움말 제거
       mainMenu.removeButton("Help");
 
       // 저장 이름과 별개로 실제 저장된 장면을 카드의 제목으로 표시한다.
