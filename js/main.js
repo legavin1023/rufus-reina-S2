@@ -51,7 +51,7 @@ monogatari.translation("한국어", {
 monogatari.component("gallery-screen").prototype.render = function () {
   const entries = [
     ["Wedding", "함께할 평생", "트루 엔딩"],
-    ["GameFailure", "과연 실패일까...?", "베드 엔딩"],
+    ["GameFailure", "과연 실패일까...?", "배드 엔딩"],
     ["TreeFailure", "실패를 이렇게 하다니...", "히든 엔딩"],
   ];
   const count = entries.filter(([key]) =>
