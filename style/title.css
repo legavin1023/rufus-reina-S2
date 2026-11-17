@@ -174,3 +174,13 @@ body:has(main-screen.active) #game-snow {
   filter: drop-shadow(0 0 14px #fffd);
 }
 #monogatari .title-scene main-menu button[string="Gallery"]::after { content: none; }
+
+/* 모바일 화면에서 메인 메뉴 버튼 크기 확대 */
+@media (pointer: coarse) and (max-width: 1100px), (max-width: 768px), (max-height: 500px) {
+  #monogatari [data-screen="main"] .title-scene main-menu {
+    inset: 48% auto auto 3.5%;
+    width: 37.5%;
+    height: 50%;
+  }
+}
+
