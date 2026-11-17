@@ -46,7 +46,7 @@ function retryProposal(ring, name, destination) {
     's 자, 여기 있습니다.', 'r 감사합니다.', 'hide character s',
     'show character r energetic at left', 'r ‘좋아, 이걸로 다시 한 번 프로포즈를 해보는 거야……!’',
     'show character r smile at left', 'r 방금은 무효야 무효! 알겠지!?',
-    'show character ru smirk at right', 'ru ……예, 그런 걸로 하죠.',
+    'show character ru soft_smile at right', 'ru ……예, 그런 걸로 하죠.',
     'show character r closed at left', '레이나가 루퍼스 앞에 한쪽 무릎을 꿇는다.',
     `${name} 상자를 천천히 내밀어 보인다.`, `jump ${destination}`,
   ];

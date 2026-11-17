@@ -15,7 +15,7 @@
     [/예스야, 무조건 예스야|앞으로 평생 함께/, "glitter"],
   ];
   const emoji = { flustered: "💦", resolve: "✨", surprise: "❗", joy: "✨", heart: "💗", anger: "💢", "anger-strong": "💢", question: "❓", glitter: "💖" };
-  let layer, timer, anchor;
+  let layer, timer, anchor, followFrame;
   let visibleBounds = null;
   let revision = 0;
   const masks = new Map();
@@ -104,6 +104,7 @@
   const clear = () => {
     revision++;
     clearTimeout(timer);
+    cancelAnimationFrame(followFrame);
     layer?.replaceChildren();
     anchor = null;
     visibleBounds = null;
@@ -117,8 +118,18 @@
     const margin = halfIcon * 1.1 + 8;
     const ceiling = box && box.height > 0 ? box.top - margin : innerHeight - margin;
     const x = rect.left + rect.width * (visibleBounds?.right ?? 1) + halfIcon + 10;
-    layer.style.setProperty("--reaction-x", `${Math.max(margin, Math.min(innerWidth - margin, x))}px`);
-    layer.style.setProperty("--reaction-y", `${Math.max(margin, Math.min(ceiling, rect.top + rect.height * (visibleBounds?.y ?? .22)))}px`);
+    const y = rect.top + rect.height * (visibleBounds?.y ?? .22);
+    // 화면 좌표를 효과 레이어의 좌표로 변환한다. 게임 화면이 축소/이동되어도 머리 옆에 붙는다.
+    const layerRect = layer.getBoundingClientRect();
+    const scaleX = layerRect.width / (layer.offsetWidth || layerRect.width) || 1;
+    const scaleY = layerRect.height / (layer.offsetHeight || layerRect.height) || 1;
+    layer.style.setProperty("--reaction-x", `${(Math.max(margin, Math.min(innerWidth - margin, x)) - layerRect.left) / scaleX}px`);
+    layer.style.setProperty("--reaction-y", `${(Math.max(margin, Math.min(ceiling, y)) - layerRect.top) / scaleY}px`);
+  };
+  const followAnchor = () => {
+    if (!anchor?.isConnected || !layer?.firstChild) return;
+    place();
+    followFrame = requestAnimationFrame(followAnchor);
   };
   window.initStoryReactions = () => {
     if (layer) return;
@@ -145,7 +156,7 @@
       particle.textContent = emoji[cue[1]];
       layer.appendChild(particle);
       positionFromImage(anchor, revision);
-      place();
+      followAnchor();
       timer = setTimeout(clear, 2400);
     });
     monogatari.on("willRevertAction", clear);

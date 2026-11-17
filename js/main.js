@@ -119,6 +119,10 @@ $_ready(() => {
             statements[step] === "레이나가 어딘가 어색한 웃음소리를 흘린다.") {
           speaker = "r";
         }
+        if (monogatari.state("label") === "Ch3_Main" &&
+            statements[step] === "레이나는 두 눈을 한번 꼭 감고는, 팔을 팟! 하고 앞으로 뻗었다.") {
+          speaker = "r";
+        }
         document
           .querySelectorAll('#monogatari [data-screen="game"] [data-character]')
           .forEach((node) => {

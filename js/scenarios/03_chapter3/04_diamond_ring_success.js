@@ -1,7 +1,6 @@
 /* global monogatari */
 
 let scenario_Ch3_DiamondRing_Success = [
-
   "show character r shy at center",
   "r {glow}루퍼스, 나와 결혼해 줄래?{/glow}",
 
@@ -27,7 +26,7 @@ let scenario_Ch3_DiamondRing_Success = [
   "play music Romance loop",
   "ru {dreamy}제가 먼저 하려고 했는데, 한 발 늦었군요.{/dreamy}",
 
-  "루퍼스가 외투 안쪽 주머니에 손을 넣어 정사각형 상자를 꺼내고는, 달칵 뚜껑을 열어보인다.",
+  "루퍼스가 안쪽 주머니에 손을 넣어 정사각형 상자를 꺼내고는, 달칵 뚜껑을 열어보인다.",
   "디자인은 다르지만 분명 레이나가 고른 것과 비슷한 다이아몬드 백금 반지다.",
 
   "show character ru soft_smile at center",
@@ -40,7 +39,6 @@ let scenario_Ch3_DiamondRing_Success = [
 
   "r {happy}……응!{/happy}",
   "r {bold}{happy}예스야, 무조건 예스야!{/happy}{/bold}",
-
 
   "r {dreamy}‘처음에 계획했던 완벽한 프로포즈와는 많이 달랐지만…….’{/dreamy}",
   "r {glow}‘완벽하지 않아도 괜찮아!’{/glow}",

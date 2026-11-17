@@ -35,7 +35,7 @@ let scenario_Ch2_ChristmasMarket = [
 
   "r 많이 기다렸어?",
 
-  "show character ru smirk at right",
+  "show character ru soft_smile at right",
   "ru 전혀요. 방금 왔습니다.",
 
   "그렇다기엔 루퍼스의 뾰족한 귀 끝이 빨갛다.",
@@ -55,11 +55,12 @@ let scenario_Ch2_ChristmasMarket = [
   "r 헤헤. 잠깐이면 돼.",
   "r 내 손 따끈따끈하다구.",
 
-  "show character ru smirk at right",
+  "show character ru soft_smile at right",
   "ru 그건 제가 제일 잘 알죠.",
 
   "이제 됐다 싶었을 즈음, 루퍼스가 레이나의 손등을 감싸 잡는다.",
 
+  "show character ru smirk at right",
   "ru 이제 괜찮습니다.",
 
   "show character r shy at left",

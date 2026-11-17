@@ -69,7 +69,7 @@ let scenario_Ch3_ChristmasTree = [
   "r {sad}‘으으, 실패해 버리다니……!’{/sad}",
   "r {sad}‘내년을 기약할 수밖에……!’{/sad}",
 
-  "show character ru smirk at right",
+  "show character ru soft_smile at right",
   "ru 혹시 이것 말고 다른 걸 준비한 건 아닙니까?",
 
   "show character r surprised at left",
@@ -90,6 +90,7 @@ let scenario_Ch3_ChristmasTree = [
 
   "show character r shy at left",
   "r {shake}한 번만, 다시 하게 해주면 안 될까……?{/shake}",
+  "show character ru soft_smile at right",
   "루퍼스는 살짝 눈웃음 짓고는 고개를 끄덕인다.",
 
   "show character r closed at center",

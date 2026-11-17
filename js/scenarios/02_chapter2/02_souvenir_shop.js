@@ -35,7 +35,7 @@ let scenario_Ch2_SouvenirShop = [
   "루퍼스는 화려하게 진열된 아기자기한 상품을 흘긋 보았다.",
   "그러다가 초롱초롱 눈을 빛내는 레이나에게로 시선을 옮기고는, 피식 웃는다.",
 
-  "show character ru smirk at right",
+  "show character ru soft_smile at right",
   "ru 괜찮습니다. 충분합니다.",
 
   "show character r normal at left",
