@@ -182,6 +182,7 @@
             status.removeAttribute("aria-hidden");
             shakeCount += 1;
             if (shakeCount === 3) {
+              globe.querySelector(".globe-touch-hint").hidden = true;
               continueButton.disabled = false;
               continueButton.style.visibility = "visible";
               continueButton.removeAttribute("aria-hidden");
@@ -190,7 +191,7 @@
           globe.className = "snow-globe";
           globe.setAttribute("aria-label", "스노 글로브 흔들기");
           globe.innerHTML =
-            '<img class="globe-image" src="./assets/images/9. 스노우볼-아이디X.webp" alt="" draggable="false"><span class="globe-snow" aria-hidden="true"></span>';
+            '<img class="globe-image" src="./assets/images/9. 스노우볼-아이디X.webp" alt="" draggable="false"><span class="globe-snow" aria-hidden="true"></span><span class="globe-touch-hint" aria-hidden="true">touch!</span>';
           globe.focus();
           return;
         }

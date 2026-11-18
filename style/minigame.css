@@ -82,6 +82,26 @@
   pointer-events: none;
   user-select: none;
 }
+.globe-touch-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  z-index: 4;
+  color: #fff3f8;
+  font-size: clamp(22px, 5vw, 36px);
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: .06em;
+  line-height: 1.2;
+  text-shadow: 0 2px 3px #a44a73, 0 0 8px #d589a5, 0 0 18px #ffc5df;
+  pointer-events: none;
+  transform: translateX(-50%);
+  animation: globe-touch-bounce 1.4s ease-in-out infinite;
+}
+@keyframes globe-touch-bounce {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  50% { transform: translate(-50%, -8px) scale(1.08); }
+}
 .globe-snow {
   position: absolute;
   left: 19%;
@@ -384,6 +404,7 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .globe-touch-hint,
   .globe-shaking,
   .globe-snow i {
     animation: none;

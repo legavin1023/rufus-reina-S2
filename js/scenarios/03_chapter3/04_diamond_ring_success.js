@@ -29,7 +29,7 @@ let scenario_Ch3_DiamondRing_Success = [
   "루퍼스가 안쪽 주머니에 손을 넣어 정사각형 상자를 꺼내고는, 달칵 뚜껑을 열어보인다.",
   "디자인은 다르지만 분명 레이나가 고른 것과 비슷한 다이아몬드 백금 반지다.",
 
-  "show character ru soft_smile at center",
+  "show character ru soft_smile at cent`er",
   "ru {glow}당신보다 가치 있는 것은 이 세상에 없습니다.{/glow}",
   "ru {dreamy}레이나, 당신과 결혼하고 싶습니다.{/dreamy}",
   "ru {bold}{glow}그러니 저와 결혼해 주시겠습니까?{/glow}{/bold}",
