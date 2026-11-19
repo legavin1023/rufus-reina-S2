@@ -223,16 +223,28 @@
           const renderBox = (el, ring, label, closed = false) => {
             el.dataset.ring = closed ? "closed" : ring;
             el.classList.toggle("box-open", !closed);
-            putImage(el, closed ? "14. 닫힌 반지 상자X.webp" : ringImages[ring]);
+            putImage(
+              el,
+              closed ? "14. 닫힌 반지 상자X.webp" : ringImages[ring],
+            );
             if (!closed && ring === "diamond") {
               const sparkles = document.createElement("span");
               sparkles.className = "diamond-sparkles";
               sparkles.setAttribute("aria-hidden", "true");
-              [[45.8, 49.8], [43, 47.5], [48.5, 48.5], [44, 52], [48, 51.5]].forEach(([x, y], index) => {
+              [
+                [45.8, 49.8],
+                [43, 47.5],
+                [48.5, 48.5],
+                [44, 52],
+                [48, 51.5],
+              ].forEach(([x, y], index) => {
                 const particle = document.createElement("i");
                 particle.style.left = x + "%";
                 particle.style.top = y + "%";
-                particle.style.setProperty("--sparkle-delay", `${index * .37}s`);
+                particle.style.setProperty(
+                  "--sparkle-delay",
+                  `${index * 0.37}s`,
+                );
                 sparkles.appendChild(particle);
               });
               el.appendChild(sparkles);
@@ -384,9 +396,7 @@
           "deer",
           "merchant",
         ];
-        const lives = [
-          6200, 4400, 5000, 5500, 4800, 5500, 3400, 4700, 3700,
-        ];
+        const lives = [6200, 4400, 5000, 5500, 4800, 5500, 3400, 4700, 3700];
         const repeatable = new Set([
           "snowman",
           "gift",
@@ -563,7 +573,7 @@
               status.textContent =
                 failures === 3
                   ? "실패 · 도전 종료"
-                  : "실패 · 남은 도전 " + (3 - failures) + "회";
+                  : "실패 · 남은 도전 " + (1 - failures) + "회";
               button(
                 controls,
                 failures === 3 ? "이야기로 돌아가기" : "다시 도전하기",
@@ -573,7 +583,8 @@
               ).focus();
             }
           };
-          stage.querySelector("img").src = "./assets/images/상점게임-lossless.webp";
+          stage.querySelector("img").src =
+            "./assets/images/상점게임-lossless.webp";
           const frame = (now) => {
             if (paused || document.hidden) {
               last = null;
@@ -660,7 +671,7 @@
                   if (paused || document.hidden || !obstacles.has(obstacle))
                     return;
                   obstacles.delete(obstacle);
-                  window.gameSfx?.play(Math.random() < .5 ? "popA" : "popB");
+                  window.gameSfx?.play(Math.random() < 0.5 ? "popA" : "popB");
                   cleared++;
                   combo++;
                   bestCombo = Math.max(bestCombo, combo);

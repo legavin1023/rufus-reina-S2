@@ -1712,3 +1712,19 @@ html.theme-off body {
   filter: brightness(1.15);
 }
 #monogatari game-screen choice-container button:focus-visible { outline: 2px solid #ffd1e2; outline-offset: 3px; }
+@media (pointer: coarse), (max-height: 500px) {
+  #monogatari game-screen choice-container {
+    width: min(70vw, 400px, calc(100dvh * .6 * 639 / 131 / 3));
+    top: 42%;
+    max-height: 70dvh;
+    gap: 4px;
+  }
+  #monogatari game-screen choice-container [data-content="wrapper"] {
+    gap: 4px;
+  }
+  #monogatari game-screen choice-container button {
+    padding: 3% 7%;
+    font-size: clamp(12px, 1.7vw, 16px);
+    line-height: 1.3;
+  }
+}
