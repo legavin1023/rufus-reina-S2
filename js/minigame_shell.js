@@ -408,7 +408,6 @@
         const reducedMotion = window.matchMedia?.(
           "(prefers-reduced-motion: reduce)",
         ).matches;
-        let failures = 0;
         const hud = document.createElement("div");
         hud.className = "merchant-hud";
         hud.innerHTML = '<span class="hud-hearts"></span>';
@@ -547,6 +546,10 @@
           };
           const endRound = (success) => {
             window.gameSfx?.play(success ? "success" : "failure");
+            if (!success) {
+              finish("treeGameResult", "failure");
+              return;
+            }
             cleanup();
             obstacles.clear();
             effects.clear();
@@ -567,19 +570,6 @@
               status.textContent = "성공";
               button(controls, "고백 이어서 보기", () =>
                 finish("treeGameResult", "success"),
-              ).focus();
-            } else {
-              failures++;
-              status.textContent =
-                failures === 3
-                  ? "실패 · 도전 종료"
-                  : "실패 · 남은 도전 " + (1 - failures) + "회";
-              button(
-                controls,
-                failures === 3 ? "이야기로 돌아가기" : "다시 도전하기",
-                failures === 3
-                  ? () => finish("treeGameResult", "failure")
-                  : round,
               ).focus();
             }
           };
@@ -608,10 +598,7 @@
               "초 · 충돌 " +
               missed +
               "/5 · 제거 " +
-              cleared +
-              " · 도전 " +
-              (3 - failures) +
-              "회";
+              cleared;
             if (status.textContent !== hud) status.textContent = hud;
             updateHud();
             panel.classList.toggle("merchant-danger", total - elapsed <= 8000);

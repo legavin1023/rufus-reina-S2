@@ -333,6 +333,8 @@ centered-dialog::before {
 }
 /* Full-body shopkeeper silhouettes need a closer crop than the main sprites. */
 [data-screen="game"] [data-character="s"] {
+  height: 80vh;
+  width: auto;
   scale: 2.45;
   translate: 0 123%;
 }
