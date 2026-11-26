@@ -442,6 +442,7 @@
           if (document.hidden) pauseGame?.(true);
         });
         listen(window, "mobileorientationblocked", () => pauseGame?.(true));
+        let failures = 0;
         const round = () => {
           cleanup();
           items.replaceChildren();
@@ -546,7 +547,7 @@
           };
           const endRound = (success) => {
             window.gameSfx?.play(success ? "success" : "failure");
-            if (!success) {
+            if (!success && ++failures >= 2) {
               finish("treeGameResult", "failure");
               return;
             }
@@ -571,6 +572,9 @@
               button(controls, "고백 이어서 보기", () =>
                 finish("treeGameResult", "success"),
               ).focus();
+            } else {
+              status.textContent = "실패 · 남은 기회 1회";
+              button(controls, "다시 도전하기", round).focus();
             }
           };
           stage.querySelector("img").src =

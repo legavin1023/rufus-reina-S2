@@ -152,6 +152,16 @@ $_ready(() => {
         const action = event.detail.action;
         const id = action?.constructor.id;
         if (id !== "Show::Character" && id !== "Hide::Character") return;
+        // 아이스링크장의 같은 자리 교체: 퇴장 중인 인물이 새 인물과 겹치지 않게 정리한다.
+        if (id === "Show::Character" && monogatari.state("label") === "Ch2_IceRink" &&
+            ["ru", "s"].includes(action.asset) && action.classes?.includes("right")) {
+          document.querySelectorAll('#monogatari [data-screen="game"] [data-character][data-visibility="invisible"]').forEach(node => {
+            if (["ru", "s"].includes(node.dataset.character) &&
+                (node.dataset.position === "right" || node.classList.contains("right"))) {
+              node.remove();
+            }
+          });
+        }
         const visible = [
           ...document.querySelectorAll("#monogatari [data-character]"),
         ].some(
