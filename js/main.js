@@ -152,6 +152,14 @@ $_ready(() => {
         const action = event.detail.action;
         const id = action?.constructor.id;
         if (id !== "Show::Character" && id !== "Hide::Character") return;
+        // "내일은 오픈합니까?" 이후 직원과 교대하는 부분만 즉시 전환한다.
+        if (monogatari.state("label") === "Ch2_IceRink" && ["ru", "s"].includes(action.asset)) {
+          const statements = monogatari.label() || [];
+          const question = statements.indexOf("ru 내일은 오픈합니까?");
+          const end = statements.indexOf("show character ru soft_smile at right", question);
+          const step = monogatari.state("step");
+          if (question >= 0 && end > question && step >= question - 1 && step < end) return;
+        }
         // 아이스링크장의 같은 자리 교체: 퇴장 중인 인물이 새 인물과 겹치지 않게 정리한다.
         if (id === "Show::Character" && monogatari.state("label") === "Ch2_IceRink" &&
             ["ru", "s"].includes(action.asset) && action.classes?.includes("right")) {
